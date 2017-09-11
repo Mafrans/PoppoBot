@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="google-api">
+    <CLASSES>
+      <root url="jar://D:/malte/Downloads/google-api-java-client/libs/google-api-client-1.22.0.jar!/" />
+      <root url="jar://D:/malte/Downloads/google-api-java-client/libs/google-http-client-1.22.0.jar!/" />
+      <root url="jar://D:/malte/Downloads/google-api-java-client/libs/google-oauth-client-1.22.0.jar!/" />
+      <root url="jar://D:/malte/Downloads/json-path-2.4.0.jar!/" />
+      <root url="jar://D:/malte/Downloads/json-smart-2.1.0.jar!/" />
+      <root url="jar://D:/malte/Downloads/asm-1.0.2.jar!/" />
+      <root url="jar://D:/malte/Downloads/slf4j-api-1.7.25.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
