@@ -1,4 +1,4 @@
-package me.mafrans.poppo.commands;
+package me.mafrans.poppo.commands.util;
 
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;

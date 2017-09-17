@@ -1,12 +1,10 @@
 package me.mafrans.poppo.listeners;
 
-import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.ConfigEntry;
-import me.mafrans.poppo.util.ServerPrefs;
+import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.config.ServerPrefs;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

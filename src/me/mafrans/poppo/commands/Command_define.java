@@ -1,12 +1,15 @@
 package me.mafrans.poppo.commands;
 
+import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandMeta;
+import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.*;
+import me.mafrans.poppo.util.objects.Definition;
+import me.mafrans.poppo.util.web.DefinitionGetter;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class Command_define implements ICommand {

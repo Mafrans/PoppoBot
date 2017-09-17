@@ -1,15 +1,15 @@
 package me.mafrans.poppo.listeners;
 
 import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.ConfigEntry;
-import me.mafrans.poppo.util.HtmlUtil;
-import me.mafrans.poppo.util.ServerPrefs;
+import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.web.HtmlUtil;
+import me.mafrans.poppo.util.config.ServerPrefs;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TwitchEvents {
@@ -50,7 +50,9 @@ class TwitchEventRunner implements Runnable {
                 if(twitchLink == null) break;
                 boolean streamRunning = false;
                 try {
-                    streamRunning = !HtmlUtil.getRawText("https://api.twitch.tv/kraken/streams/" + twitchLink.toLowerCase() + "?client_id=" + ConfigEntry.TWITCH_TOKEN.getString()).startsWith("{\"stream\":null");
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("client-id", ConfigEntry.TWITCH_TOKEN.getString());
+                    streamRunning = !HtmlUtil.getJSON("https://api.twitch.tv/kraken/streams/" + twitchLink.toLowerCase(), params).getString("stream").equalsIgnoreCase("null");
                 }
                 catch (IOException e) {
                     e.printStackTrace();

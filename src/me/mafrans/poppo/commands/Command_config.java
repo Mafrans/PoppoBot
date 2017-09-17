@@ -1,13 +1,12 @@
 package me.mafrans.poppo.commands;
 
-import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.ServerPrefs;
+import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandMeta;
+import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.config.ServerPrefs;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class Command_config implements ICommand {
     @Override

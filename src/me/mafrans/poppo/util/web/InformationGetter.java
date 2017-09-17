@@ -1,4 +1,4 @@
-package me.mafrans.poppo.util;
+package me.mafrans.poppo.util.web;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
@@ -6,6 +6,8 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.objects.Information;
 import org.json.JSONObject;
 
 import java.io.IOException;

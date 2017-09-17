@@ -2,11 +2,11 @@ package me.mafrans.poppo;
 
 
 import me.mafrans.poppo.commands.*;
+import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.listeners.CommandListener;
 import me.mafrans.poppo.listeners.SelectionListener;
-import me.mafrans.poppo.listeners.TwitchEvents;
-import me.mafrans.poppo.util.ConfigEntry;
-import me.mafrans.poppo.util.ServerPrefs;
+import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.TimerTasks;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;

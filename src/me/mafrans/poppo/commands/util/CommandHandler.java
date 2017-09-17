@@ -1,6 +1,9 @@
-package me.mafrans.poppo.commands;
+package me.mafrans.poppo.commands.util;
 
-import me.mafrans.poppo.util.ConfigEntry;
+import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandMeta;
+import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.config.ConfigEntry;
 import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
 

@@ -1,12 +1,14 @@
 package me.mafrans.poppo.commands;
 
-import me.mafrans.poppo.util.Information;
-import me.mafrans.poppo.util.InformationGetter;
+import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandMeta;
+import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.objects.Information;
+import me.mafrans.poppo.util.web.InformationGetter;
 import me.mafrans.poppo.util.SelectionList;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

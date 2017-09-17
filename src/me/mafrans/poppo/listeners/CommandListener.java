@@ -1,7 +1,7 @@
 package me.mafrans.poppo.listeners;
 
-import me.mafrans.poppo.commands.Command;
-import me.mafrans.poppo.commands.CommandHandler;
+import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandHandler;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;

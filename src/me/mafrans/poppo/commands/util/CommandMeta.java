@@ -1,4 +1,4 @@
-package me.mafrans.poppo.commands;
+package me.mafrans.poppo.commands.util;
 
 import java.util.List;
 
