@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TwitchEvents {
     public static List<String> runningStreams = new ArrayList<>();
@@ -46,8 +47,7 @@ class TwitchEventRunner implements Runnable {
         @Override
         public void run() {
             for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
-                String twitchLink = ServerPrefs.TWITCH_LINK.getString(guild).toLowerCase();
-                if(twitchLink == null) break;
+                String twitchLink = Objects.requireNonNull(ServerPrefs.TWITCH_LINK.getString(guild)).toLowerCase();
                 boolean streamRunning = false;
                 try {
                     HashMap<String, String> params = new HashMap<>();
