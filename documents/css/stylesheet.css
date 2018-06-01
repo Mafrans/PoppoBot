@@ -1,0 +1,14 @@
+* {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 1%;
+}
+
+.login-box {
+    padding: 10px 15px;
+    background: #7289da;
+}
