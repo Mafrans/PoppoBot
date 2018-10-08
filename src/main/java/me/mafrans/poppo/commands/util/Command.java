@@ -9,16 +9,22 @@ public class Command {
     private User author;
     private ICommand executor;
     private Message message;
+    private String label;
 
-    public Command(String cmd, String[] args, User author, ICommand executor, Message message) {
+    public Command(String cmd, String[] args, User author, ICommand executor, Message message, String label) {
         this.cmd = cmd;
         this.args = args;
         this.author = author;
         this.executor = executor;
         this.message = message;
+        this.label = label;
     }
 
     public Command() { }
+
+    public String getLabel() {
+        return label;
+    }
 
     public ICommand getExecutor() {
         return executor;
@@ -38,6 +44,10 @@ public class Command {
 
     public Message getMessage() {
         return message;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public void setArgs(String[] args) {

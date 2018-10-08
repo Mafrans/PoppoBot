@@ -28,6 +28,7 @@ public class CommandHandler {
             CommandMeta meta = cmd.getMeta();
 
             if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() == null ? false : meta.getAliases().contains(words[0].toLowerCase()))) {
+                outCommand.setLabel(words[0]);
                 System.out.println("Found command " + cmd.getName());
                 outCommand.setCmd(name);
                 outCommand.setExecutor(cmd);

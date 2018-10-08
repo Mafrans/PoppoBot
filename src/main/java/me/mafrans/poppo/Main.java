@@ -56,6 +56,7 @@ public class Main {
         CommandHandler.addCommand(new Command_identify());
         CommandHandler.addCommand(new Command_help());
         CommandHandler.addCommand(new Command_roll());
+        CommandHandler.addCommand(new Command_8ball());
 
         maHTTPD = new MaHTTPD();
 
