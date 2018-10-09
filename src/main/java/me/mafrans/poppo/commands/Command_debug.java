@@ -22,6 +22,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Command_debug implements ICommand {
@@ -59,7 +60,7 @@ public class Command_debug implements ICommand {
                     if(Main.userList.getByUuid(user.getId()).size() == 0) {
                         System.out.println(String.format("[UpdateUsers] Creating new entry: %s", user.getName() + user.getDiscriminator()));
                         Main.userList.add(new SQLDataUser(new DataUser(
-                                Arrays.asList(user.getName()),
+                                Collections.singletonList(user.getName()),
                                 user.getId(),
                                 onlineStatus == OnlineStatus.ONLINE || onlineStatus == OnlineStatus.DO_NOT_DISTURB || onlineStatus == OnlineStatus.IDLE  ? "Currently Online" : GUtil.currentParsedDate(ZoneOffset.UTC),
                                 user.getAvatarUrl())));

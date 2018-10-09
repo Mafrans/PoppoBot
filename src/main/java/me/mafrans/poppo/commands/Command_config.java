@@ -30,37 +30,35 @@ public class Command_config implements ICommand {
         if(args[0].equalsIgnoreCase("set")) {
             if(args.length < 3) return false;
 
-            if(ServerPrefs.valueOf(args[1].toUpperCase()) != null) {
-                ServerPrefs entry = ServerPrefs.valueOf(args[1].toUpperCase());
-                String value = StringUtils.join(ArrayUtils.subarray(args, 2, args.length), " ");
+            ServerPrefs.valueOf(args[1].toUpperCase());
+            ServerPrefs entry = ServerPrefs.valueOf(args[1].toUpperCase());
+            String value = StringUtils.join(ArrayUtils.subarray(args, 2, args.length), " ");
 
-                entry.setString(channel.getGuild(), value);
-                channel.sendMessage("Set config entry " + entry.toString() + " to: \"" + value + "\"").queue();
-                return true;
-            }
-            channel.sendMessage("Couldnt find a config entry with the name \"" + args[0].toUpperCase() + "\"\nUse `config list` to see a list of all entries.").queue();
+            entry.setString(channel.getGuild(), value);
+            channel.sendMessage("Set config entry " + entry.toString() + " to: \"" + value + "\"").queue();
             return true;
         }
+
         if(args[0].equalsIgnoreCase("remove")) {
             if(args.length != 2) return false;
 
-            if(ServerPrefs.valueOf(args[1].toUpperCase()) != null) {
-                ServerPrefs entry = ServerPrefs.valueOf(args[1].toUpperCase());
+            ServerPrefs.valueOf(args[1].toUpperCase());
+            ServerPrefs entry = ServerPrefs.valueOf(args[1].toUpperCase());
 
-                entry.remove(channel.getGuild());
-                channel.sendMessage("Removed config entry " + entry.toString()).queue();
-                return true;
-            }
-            channel.sendMessage("Couldnt find a config entry with the name \"" + args[0].toUpperCase() + "\"\nUse `config list` to see a list of all entries.").queue();
+            entry.remove(channel.getGuild());
+            channel.sendMessage("Removed config entry " + entry.toString()).queue();
             return true;
         }
+
         if(args[0].equalsIgnoreCase("list")) {
             if(args.length != 1) return false;
             StringBuilder builder = new StringBuilder();
             builder.append("**List of config entries:**\n");
 
             for(ServerPrefs entry : ServerPrefs.values()) {
-                builder.append("\n`" + entry.toString().replace(" ", "_") + "` - " + entry.getInfo());
+                builder.append("\n`")
+                        .append(entry.toString().replace(" ", "_"))
+                        .append("` - ").append(entry.getInfo());
             }
 
             channel.sendMessage(builder.toString()).queue();

@@ -4,9 +4,11 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import net.dv8tion.jda.client.managers.EmoteManager;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -45,7 +47,7 @@ public class Command_roll implements ICommand {
             if(!NumberUtils.isParsable(args[0])) {
                 return false;
             }
-            amount = Integer.parseInt(args[0]);
+            amount = (int) Math.round(Double.parseDouble(args[0]));
             if(amount > maxAmount) {
                 channel.sendMessage("I'm sorry, but I only have " + maxAmount + " dice in my backpack.").queue();
                 return true;
@@ -59,9 +61,8 @@ public class Command_roll implements ICommand {
                 total += rolledNumber;
             }
 
-            channel.sendMessage(":game_die: Rolling " + amount + " D" + sides + " dice.").complete();
-            Thread.sleep(1000);
-            channel.sendMessage("You rolled:").complete();
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setAuthor(command.getMessage().getMember().getEffectiveName() + " rolled:", "https://google.com", command.getAuthor().getAvatarUrl());
 
             int count = 0;
             StringBuilder diceBuilder = new StringBuilder();
@@ -72,18 +73,14 @@ public class Command_roll implements ICommand {
                 else {
                     diceBuilder.append(" " + getNumberEmote(d));
                 }
-
-                count++;
-                if((amount >= 20 && count == 20) || (count == amount)) {
-                    diceBuilder.append("\u2063");
-                    channel.sendMessage(diceBuilder.toString()).queue();
-                    diceBuilder = new StringBuilder();
-                    amount -= count;
-                    count = 0;
-                }
             }
 
-            channel.sendMessage("The sum of all your dice rolls is **" + total + "**").queue();
+            Random random = new Random();
+            embedBuilder.setDescription(diceBuilder.toString());
+            embedBuilder.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+            embedBuilder.addField("Result", "The sum of all your dice rolls is **" + total + "**", false);
+
+            channel.sendMessage(embedBuilder.build()).queue();
             return true;
         }
 

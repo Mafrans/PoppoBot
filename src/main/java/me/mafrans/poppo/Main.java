@@ -64,6 +64,10 @@ public class Main {
         CommandHandler.addCommand(new Command_roll());
         CommandHandler.addCommand(new Command_8ball());
 
+        for(ConfigEntry entry : ConfigEntry.values()) {
+            System.out.println(entry.getKey() + ": " + entry.getString());
+        }
+
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
 

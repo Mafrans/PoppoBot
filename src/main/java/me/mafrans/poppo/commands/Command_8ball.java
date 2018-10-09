@@ -46,7 +46,7 @@ public class Command_8ball implements ICommand {
     }
 
     @Override
-    public boolean onCommand(Command command, TextChannel channel) throws Exception {
+    public boolean onCommand(Command command, TextChannel channel) {
 
 
         String question;

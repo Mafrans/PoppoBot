@@ -1,7 +1,6 @@
 package me.mafrans.poppo.httpd.servitors;
 
 import com.mrpowergamerbr.temmiediscordauth.utils.TemmieGuild;
-import com.sun.security.ntlm.Server;
 import me.mafrans.mahttpd.MaHTTPD;
 import me.mafrans.mahttpd.events.DocumentServeEvent;
 import me.mafrans.mahttpd.exceptions.HTTPForbiddenException;
