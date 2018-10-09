@@ -1,5 +1,5 @@
 # PoppoBot
-A discord bot created by [Mafrans](http://mafrans.is-my-nig.ga).
+A discord bot created by [Mafrans](http://mafrans.me).
 
 **Features:**
 - Search for information through the Google Knowledge API.
