@@ -4,16 +4,22 @@ import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.StringFormatter;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.config.DataUser;
+import me.mafrans.poppo.util.config.SQLDataUser;
+import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +48,39 @@ public class Command_debug implements ICommand {
         String[] args = command.getArgs();
 
         switch(args[0].toLowerCase()) {
+            case "updateusers":
+                if(args.length != 1) {
+                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug updateusers`");
+                    return true;
+                }
+                for(User user : Main.jda.getUsers()) {
+                    OnlineStatus onlineStatus = Main.jda.getMutualGuilds(user).get(0).getMember(user).getOnlineStatus();
+
+                    if(Main.userList.getByUuid(user.getId()).size() == 0) {
+                        System.out.println(String.format("[UpdateUsers] Creating new entry: %s", user.getName() + user.getDiscriminator()));
+                        Main.userList.add(new SQLDataUser(new DataUser(
+                                Arrays.asList(user.getName()),
+                                user.getId(),
+                                onlineStatus == OnlineStatus.ONLINE || onlineStatus == OnlineStatus.DO_NOT_DISTURB || onlineStatus == OnlineStatus.IDLE  ? "Currently Online" : GUtil.currentParsedDate(ZoneOffset.UTC),
+                                user.getAvatarUrl())));
+                    }
+                    else {
+                        System.out.println(String.format("[UpdateUsers] Updating old entry: %s", user.getName() + user.getDiscriminator()));
+                        DataUser dataUser = Main.userList.getByUuid(user.getId()).get(0);
+                        if(!dataUser.getNames().contains(user.getName())) {
+                            List<String> names = new ArrayList<>(dataUser.getNames());
+                            names.add(user.getName());
+                        }
+                        if(dataUser.getLastOnlineTag().equals("Currently Online")) {
+                            if(onlineStatus == OnlineStatus.OFFLINE || onlineStatus == OnlineStatus.INVISIBLE || onlineStatus == OnlineStatus.UNKNOWN) {
+                                dataUser.setLastOnlineTag(GUtil.currentParsedDate(ZoneOffset.UTC));
+                            }
+                        }
+                        Main.userList.add(new SQLDataUser(dataUser));
+                    }
+                }
+                break;
+
             case "run":
                 if(args.length != 2) {
                     debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug run <class>`");
@@ -128,18 +167,24 @@ public class Command_debug implements ICommand {
                         }
 
                         int time = Integer.parseInt(args[2]);
-                        final Message message = guild.getDefaultChannel().sendMessage(StringUtils.join(ArrayUtils.subarray(args, 3, args.length))).complete();
+                        try {
+                            final Message message = guild.getDefaultChannel().sendMessage(StringUtils.join(ArrayUtils.subarray(args, 3, args.length), " ")).complete();
 
-                        TimerTasks.queueTask(new Runnable() {
-                            @Override
-                            public void run() {
-                                message.delete();
-                            }
-                        }, time);
+                            TimerTasks.queueTask(new Runnable() {
+                                @Override
+                                public void run() {
+                                    message.delete();
+                                }
+                            }, time);
+                        }
+                        catch(IndexOutOfBoundsException ex) {
+                            System.out.println(ex);
+                        }
+
                         break;
                     }
 
-                    final Message message = guild.getDefaultChannel().sendMessage(StringUtils.join(ArrayUtils.subarray(args, 1, args.length))).complete();
+                    final Message message = guild.getDefaultChannel().sendMessage(StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ")).complete();
 
                     break;
                 }

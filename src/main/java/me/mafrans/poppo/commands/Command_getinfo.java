@@ -39,7 +39,7 @@ public class Command_getinfo implements ICommand {
             return true;
         }
 
-        final SelectionList selectionList = new SelectionList("Select result to show.", channel);
+        final SelectionList selectionList = new SelectionList("Select result to show.", channel, command.getAuthor());
 
         for(final Information info : informationList) {
             selectionList.addAlternative(info.getTitle() + " - " + info.getDescription(), new Runnable() {

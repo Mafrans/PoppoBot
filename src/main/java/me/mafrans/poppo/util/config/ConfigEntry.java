@@ -20,6 +20,9 @@ public enum ConfigEntry {
     AUTOINSULT_RATE("autoinsult-rate", "100"),
     DEBUG_USERS("debug-users", ""),
     OVERLORD_USERS("overlord-users", ""),
+    DATABASE_TABLE("database-table", "userlist"),
+    DATABASE_USERNAME("database-username", "username"),
+    DATABASE_PASSWORD("database-password", "password"),
     HTTPD_URL("httpd-url", "http://localhost:8081");
 
     private String key;

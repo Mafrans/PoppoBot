@@ -7,7 +7,7 @@ import me.mafrans.mahttpd.util.FileUtils;
 import me.mafrans.poppo.commands.*;
 import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.httpd.SessionHandler;
-import me.mafrans.poppo.httpd.servitors.Servitor_authenticated;
+import me.mafrans.poppo.httpd.servitors.Servitor_guilds;
 import me.mafrans.poppo.httpd.servitors.Servitor_login;
 import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
 import me.mafrans.poppo.listeners.CommandListener;
@@ -16,7 +16,8 @@ import me.mafrans.poppo.listeners.UserListener;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.config.ServerPrefs;
-import me.mafrans.poppo.util.config.UserSpecificData;
+import me.mafrans.poppo.util.objects.Rank;
+import me.mafrans.poppo.util.objects.UserList;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -28,15 +29,20 @@ import java.io.IOException;
 
 public class Main {
     public static JDA jda;
-    public static UserSpecificData userSpecificData;
     public static SessionHandler sessionHandler;
     public static MaHTTPD maHTTPD;
     public static HTTPDServer httpdServer;
+    public static UserList userList;
 
-    public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException {
+    public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException {
         ConfigEntry.load(new File("config.properties"));
 
-        userSpecificData = new UserSpecificData(new File("./userdata/users.json"));
+        File databaseFile = new File("userdata/users.db");
+        if(!databaseFile.getParentFile().exists()) {
+            databaseFile.getParentFile().mkdirs();
+        }
+        userList = new UserList();
+        userList.connect(databaseFile.getAbsolutePath(), ConfigEntry.DATABASE_USERNAME.getString(), ConfigEntry.DATABASE_PASSWORD.getString());
 
         sessionHandler = new SessionHandler(ConfigEntry.HTTPD_URL.getString() + "/redirect", ConfigEntry.CLIENT_ID.getString(), ConfigEntry.CLIENT_SECRET.getString());
 
@@ -58,12 +64,13 @@ public class Main {
         CommandHandler.addCommand(new Command_roll());
         CommandHandler.addCommand(new Command_8ball());
 
+        System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
 
         httpdServer = maHTTPD.startServer(8081);
         httpdServer.registerServitor(new Servitor_login(maHTTPD));
         httpdServer.registerServitor(new Servitor_loginprocess(maHTTPD));
-        httpdServer.registerServitor(new Servitor_authenticated(maHTTPD));
+        httpdServer.registerServitor(new Servitor_guilds(maHTTPD));
         httpdServer.setHomePage(new Servitor_login(maHTTPD));
 
         // Create Header and stylesheet file
@@ -71,5 +78,9 @@ public class Main {
         FileUtils.createResource("documents/css/stylesheet.css", stylesheet);
 
         httpdServer.addGlobalStylesheet(stylesheet);
+
+        for(Rank rank : Rank.values()) {
+            rank.initialize();
+        }
     }
 }

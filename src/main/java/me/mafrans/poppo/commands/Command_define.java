@@ -1,5 +1,6 @@
 package me.mafrans.poppo.commands;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
@@ -52,7 +53,7 @@ public class Command_define implements ICommand {
             return true;
         }
 
-        final SelectionList selectionList = new SelectionList("Select result to show.", channel);
+        final SelectionList selectionList = new SelectionList("Select result to show.", channel, command.getAuthor());
 
         for(final Definition definition : definitionList) {
             selectionList.addAlternative(definition.getTitle() + (definition.getType() == null ? "" : " - " + definition.getType()), new Runnable() {
@@ -71,6 +72,7 @@ public class Command_define implements ICommand {
                     if(definition.getSource() != null)
                         builder.append("\nSource: " + definition.getSource());
 
+                    System.out.println(selectionList.getMessage());
                     selectionList.getMessage().editMessage(builder.toString()).queue();
                 }
             });

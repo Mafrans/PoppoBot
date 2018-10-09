@@ -63,25 +63,24 @@ public class Command_roll implements ICommand {
             Thread.sleep(1000);
             channel.sendMessage("You rolled:").complete();
 
-            int count = 1;
+            int count = 0;
             StringBuilder diceBuilder = new StringBuilder();
-            diceBuilder.append("\u2063");
             for(int d : rolledDice) {
-                if(count == 1) {
+                if(count == 0) {
                     diceBuilder.append(getNumberEmote(d));
                 }
                 else {
                     diceBuilder.append(" " + getNumberEmote(d));
                 }
 
+                count++;
                 if((amount >= 20 && count == 20) || (count == amount)) {
+                    diceBuilder.append("\u2063");
                     channel.sendMessage(diceBuilder.toString()).queue();
                     diceBuilder = new StringBuilder();
-                    diceBuilder.append("\u2063");
-                    count = 1;
+                    amount -= count;
+                    count = 0;
                 }
-
-                count++;
             }
 
             channel.sendMessage("The sum of all your dice rolls is **" + total + "**").queue();

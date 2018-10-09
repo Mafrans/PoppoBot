@@ -31,7 +31,6 @@ public class Command_ping implements ICommand {
         long end_time = System.nanoTime();
         double difference = (end_time - start_time) / 1e6;
 
-        Emote em = channel.getGuild().getEmotes().get(0);
         message.editMessage("pong! (" + Math.round(difference) + "ms)").queue();
 
         return true;

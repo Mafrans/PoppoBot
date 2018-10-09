@@ -6,11 +6,16 @@ import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.StringFormatter;
 import me.mafrans.poppo.util.config.DataUser;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.awt.*;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Command_identify implements ICommand {
     @Override
@@ -47,30 +52,38 @@ public class Command_identify implements ICommand {
             return true;
         }
 
-        DataUser userData = Main.userSpecificData.getUser(uuid) != null ? Main.userSpecificData.getUser(uuid) : null;
+        DataUser userData = Main.userList.getByUuid(uuid).get(0);
 
         if(userData == null) {
             channel.sendMessage("Couldn't find any cached user with the id of \"" + uuid + "\"").queue();
             return true;
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
 
         User user = Main.jda.getUserById(uuid);
-        stringBuilder.append("**" + user.getName() + "#" + user.getDiscriminator() + ":**");
+        Random random = new Random();
 
+        MessageEmbed embed = new EmbedBuilder()
+                .setColor(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)))
+                .setTitle(user.getName() + "#" + user.getDiscriminator() + ":")
+                .setThumbnail(user.getAvatarUrl())
+                .addField("Names", StringUtils.join(userData.getNames().toArray(new String[]{}), ", "), false)
+                .addField("UUID", userData.getUuid(), false)
+                .addField("Last Online", userData.getLastOnlineTag(), false)
+                .addField("Avatar URL", userData.getAvatarUrl(), false).build();
+
+        StringBuilder stringBuilder = new StringBuilder();
         String[] unparsedString = new String[] {
                 "```lua",
                 "Names: " + StringFormatter.arrayToString(userData.getNames().toArray(new String[]{}), "\'%s\'"),
                 "UUID: \'" + userData.getUuid() + "\'",
                 "Last Online: \'" + userData.getLastOnlineTag() + "\'",
-                "Avatar URL: \'" + userData.getAvatarURL() + "\'",
+                "Avatar URL: \'" + userData.getAvatarUrl() + "\'",
                 "```"
             };
-
         stringBuilder.append(StringFormatter.parseLines(unparsedString));
 
-        channel.sendMessage(stringBuilder.toString()).queue();
+        channel.sendMessage(embed).queue();
 
         return true;
     }

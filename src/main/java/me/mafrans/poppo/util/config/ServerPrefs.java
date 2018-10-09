@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 public enum ServerPrefs {
-    TWITCH_LINK("twitch-link", "Linked Twitch username."),
+    TWITCH_LINKS("twitch-links", "Linked Twitch usernames."),
     TWITCH_MESSAGE_CHANNEL("twitch-message-channel", "Message channel for announcements."),
     TWITCH_START_MESSAGE("twitch-start-message", "`%name` - channel name, `%url` - channel url, `\\n` - line break"),
     TWITCH_STOP_MESSAGE("twitch-stop-message", "`%name` - channel name, `%url` - channel url, `\\n` - line break");

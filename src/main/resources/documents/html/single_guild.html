@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function addCurrent() {
+            var linkToAdd = document.getElementById("twitchNameTextField").value;
+
+            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&addlink=" + linkToAdd.replace(" ","_"),"_self");
+        }
+
+        function deleteLink(linkToDelete) {
+            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&deletelink=" + linkToDelete.replace(" ","_"),"_self");
+        }
+    </script>
+</head>
+<body>
+    <div class="twitchLinkListContainer">
+        {variable.twitch_link_list}
+    </div>
+    <div class="addTwitchLinkContainer">
+        <input id="twitchNameTextField" type="text" name=\"twitchName\" value="Twitch Name">
+        <button type="button" onclick="addCurrent()">Add</button>
+     </div>
+</body>
+</html>

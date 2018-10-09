@@ -2,6 +2,7 @@ package me.mafrans.poppo.listeners;
 
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandHandler;
+import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -14,7 +15,7 @@ public class CommandListener extends ListenerAdapter {
             final Command command = CommandHandler.parseCommand(event.getMessage());
             if(command == null) return;
 
-            if(command.getExecutor().getMeta().isBotCommanderOnly() && !event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            if(command.getExecutor().getMeta().isBotCommanderOnly() && !Rank.getRank(event.getMember()).hasRank(Rank.BOT_COMMANDER)) {
                 return;
             }
 
