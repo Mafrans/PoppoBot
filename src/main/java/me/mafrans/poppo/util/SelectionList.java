@@ -2,6 +2,7 @@ package me.mafrans.poppo.util;
 
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,16 @@ public class SelectionList {
     private List<Runnable> outputs = new ArrayList<>();
     private Message message;
     private TextChannel channel;
+    private User owner;
 
-    public SelectionList(String title, TextChannel channel, List<String> alternatives, List<Runnable> outputs) {
+    public SelectionList(String title, TextChannel channel, User owner, List<String> alternatives, List<Runnable> outputs) {
         this.title = title;
         this.channel = channel;
         this.alternatives = alternatives;
         this.outputs = outputs;
     }
 
-    public SelectionList(String title, TextChannel channel) {
+    public SelectionList(String title, TextChannel channel, User owner) {
         this.title = title;
         this.channel = channel;
     }
@@ -76,5 +78,13 @@ public class SelectionList {
 
     public TextChannel getChannel() {
         return channel;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

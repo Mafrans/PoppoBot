@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class TwitchEventRunner implements Runnable {
     @Override
     public void run() {
-        for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
+        /*for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
             String twitchLink = ServerPrefs.TWITCH_LINK.getString(guild).toLowerCase();
             if(twitchLink == null) break;
             boolean streamRunning = false;
@@ -39,5 +39,6 @@ public class TwitchEventRunner implements Runnable {
                 }
             }
         }
+        */
     }
 }

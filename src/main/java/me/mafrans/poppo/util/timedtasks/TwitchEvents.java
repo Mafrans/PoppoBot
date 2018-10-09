@@ -20,24 +20,24 @@ public class TwitchEvents {
     }
 
     public static void onStreamStart(String streamName) {
-        for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
+        /*for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
             String msgChannel = ServerPrefs.TWITCH_MESSAGE_CHANNEL.getString(guild); //getString(Guild guild) contains null checking
 
             if(msgChannel == null) break;
 
             TextChannel textChannel = Main.jda.getTextChannelById(msgChannel);
             textChannel.sendMessage(ServerPrefs.TWITCH_START_MESSAGE.getString(guild).replace("%name", ServerPrefs.TWITCH_LINK.getString(guild)).replace("%url", "https://twitch.tv/" + ServerPrefs.TWITCH_LINK.getString(guild).toLowerCase()).replace("\\n","\n")).queue();
-        }
+        }*/
     }
 
     public static void onStreamStop(String streamName) {
-        for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
+        /*for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
             String msgChannel = ServerPrefs.TWITCH_MESSAGE_CHANNEL.getString(guild); //getString(Guild guild) contains null checking
 
             if(msgChannel == null) break;
 
             TextChannel textChannel = Main.jda.getTextChannelById(msgChannel);
             textChannel.sendMessage(ServerPrefs.TWITCH_STOP_MESSAGE.getString(guild).replace("%name", ServerPrefs.TWITCH_LINK.getString(guild)).replace("%url", "https://twitch.tv/" + ServerPrefs.TWITCH_LINK.getString(guild).toLowerCase()).replace("\\n","\n")).queue();
-        }
+        }*/
     }
 }
