@@ -63,6 +63,7 @@ public class Main {
         CommandHandler.addCommand(new Command_help());
         CommandHandler.addCommand(new Command_roll());
         CommandHandler.addCommand(new Command_8ball());
+        CommandHandler.addCommand(new Command_move());
 
         for(ConfigEntry entry : ConfigEntry.values()) {
             System.out.println(entry.getKey() + ": " + entry.getString());

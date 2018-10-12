@@ -57,6 +57,10 @@ public class Command_8ball implements ICommand {
             question = String.format("%s %s", command.getLabel(), StringUtils.join(command.getArgs(), " "));
         }
 
+        if(question.isEmpty()) {
+            return false;
+        }
+
         Random random = new Random();
         String answer = answers[random.nextInt(answers.length)];
 
