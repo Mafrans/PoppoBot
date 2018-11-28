@@ -1,6 +1,7 @@
 package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import net.dv8tion.jda.client.managers.EmoteManager;
@@ -22,6 +23,7 @@ public class Command_roll implements ICommand {
     @Override
     public CommandMeta getMeta() {
         return new CommandMeta(
+                CommandCategory.FUN,
                 "Rolls any amount of dice and sums the values.",
                 "roll [amount] [type]",
                 null,

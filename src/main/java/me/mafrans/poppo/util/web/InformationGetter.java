@@ -2,6 +2,7 @@ package me.mafrans.poppo.util.web;
 
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.objects.Information;
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ public class InformationGetter {
             url.put("query", query);
             url.put("limit", "1");
             url.put("indent", "false");
-            url.put("key", ConfigEntry.GOOGLE_TOKEN.getString());
+            url.put("key", Main.config.google_token);
 
             HttpRequest request = requestFactory.buildGetRequest(url);
             HttpResponse httpResponse = request.execute();
@@ -45,7 +46,7 @@ public class InformationGetter {
             url.put("query", query);
             url.put("limit", "9");
             url.put("indent", "false");
-            url.put("key", ConfigEntry.GOOGLE_TOKEN.getString());
+            url.put("key", Main.config.google_token);
 
             HttpRequest request = requestFactory.buildGetRequest(url);
             HttpResponse httpResponse = request.execute();

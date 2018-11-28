@@ -2,6 +2,7 @@ package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
@@ -25,6 +26,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static me.mafrans.poppo.Main.config;
+
 public class Command_debug implements ICommand {
     @Override
     public String getName() {
@@ -34,6 +37,7 @@ public class Command_debug implements ICommand {
     @Override
     public CommandMeta getMeta() {
         return new CommandMeta(
+                CommandCategory.UTILITY,
                 "Runs debug scripts.",
                 "debug <arguments>",
                 null,
@@ -43,12 +47,18 @@ public class Command_debug implements ICommand {
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
-        if(!Arrays.asList(ConfigEntry.DEBUG_USERS.getString().split(",")).contains(command.getAuthor().getId())) {
+        if(!config.debug_users.contains(command.getAuthor().getId())) {
             return true;
         }
         String[] args = command.getArgs();
 
         switch(args[0].toLowerCase()) {
+            case "help": {
+                channel.sendMessage("debug updateusers\n" +
+                        "debug run <runnable class>\n" +
+                        "debuguser <add|remove> <userid>").queue();
+                return true;
+            }
             case "updateusers":
                 if(args.length != 1) {
                     debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug updateusers`");
@@ -57,7 +67,7 @@ public class Command_debug implements ICommand {
                 for(User user : Main.jda.getUsers()) {
                     OnlineStatus onlineStatus = Main.jda.getMutualGuilds(user).get(0).getMember(user).getOnlineStatus();
 
-                    if(Main.userList.getByUuid(user.getId()).size() == 0) {
+                    if(Main.userList.getUsersFrom("uuid", user.getId()).size() == 0) {
                         System.out.println(String.format("[UpdateUsers] Creating new entry: %s", user.getName() + user.getDiscriminator()));
                         Main.userList.add(new SQLDataUser(new DataUser(
                                 Collections.singletonList(user.getName()),
@@ -67,7 +77,7 @@ public class Command_debug implements ICommand {
                     }
                     else {
                         System.out.println(String.format("[UpdateUsers] Updating old entry: %s", user.getName() + user.getDiscriminator()));
-                        DataUser dataUser = Main.userList.getByUuid(user.getId()).get(0);
+                        DataUser dataUser = Main.userList.getUsersFrom("uuid", user.getId()).get(0);
                         if(!dataUser.getNames().contains(user.getName())) {
                             List<String> names = new ArrayList<>(dataUser.getNames());
                             names.add(user.getName());
@@ -106,7 +116,7 @@ public class Command_debug implements ICommand {
                 break;
 
             case "debuguser":
-                if(!Arrays.asList(ConfigEntry.OVERLORD_USERS.getString().split(",")).contains(command.getAuthor().getId())) {
+                if(!config.overlord_users.contains(command.getAuthor().getId())) {
                     debugSendMessageAsync(channel, "You do not have permission to use this command.");
                     break;
                 }
@@ -116,37 +126,24 @@ public class Command_debug implements ICommand {
                 }
 
                 if(args[1].equalsIgnoreCase("add")) {
-                    ConfigEntry.DEBUG_USERS.set(ConfigEntry.DEBUG_USERS.getString() + "," + args[1]);
+                    config.debug_users.add(args[2]);
 
                     debugSendMessageAsync(channel, "Added " + args[2] + " as a debug user.");
                 }
                 else if(args[1].equalsIgnoreCase("remove")) {
-                    String[] debugusers = ConfigEntry.DEBUG_USERS.getString().split(",");
-                    List<String> sl = new ArrayList<>();
-                    boolean response = false;
-
-                    for(String user : debugusers) {
-                        if(!user.equalsIgnoreCase(args[2])) {
-                            sl.add(user);
-                        }
-                        else {
-                            response = true;
-                        }
-                    }
-
-                    if(response) {
+                    if(config.debug_users.contains(args[2])) {
                         debugSendMessageAsync(channel, "Added `" + args[2] + "` as a debug user.");
                     }
                     else {
                         debugSendMessageAsync(channel, "Could not find a debug user with the id: `" + args[2] + "`");
                     }
 
-                    ConfigEntry.DEBUG_USERS.set(StringUtils.join(sl, ","));
+                    config.debug_users.add(args[2]);
 
                     channel.sendMessage("Added " + args[1] + " as a debug user.");
                 }
                 else if(args[1].equalsIgnoreCase("list")) {
-                    String[] debugUsers = ConfigEntry.DEBUG_USERS.getString().split(",");
+                    String[] debugUsers = config.debug_users.toArray(new String[0]);
                     debugSendMessageAsync(channel, StringFormatter.parseLines(new String[] {"```lua", Arrays.toString(debugUsers), "```"}));
                 }
                 else {

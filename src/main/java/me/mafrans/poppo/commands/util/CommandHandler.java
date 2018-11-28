@@ -8,17 +8,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static me.mafrans.poppo.Main.config;
+
 public class CommandHandler {
     private static List<ICommand> commandList = new ArrayList();
 
     public static Command parseCommand(Message message) {
         String content = message.getContent();
-        if(!content.toLowerCase().startsWith(ConfigEntry.COMMAND_PREFIX.getString().toLowerCase())) {
+        if(!content.toLowerCase().startsWith(config.command_prefix.toLowerCase())) {
             System.out.println("Not Command: " + message.getId());
             return null;
         }
 
-        String[] words = content.substring(ConfigEntry.COMMAND_PREFIX.getString().length()).split(" ");
+        String[] words = content.substring(config.command_prefix.length()).split(" ");
 
         System.out.println(Arrays.toString(words));
 

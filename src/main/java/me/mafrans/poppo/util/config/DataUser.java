@@ -2,6 +2,7 @@ package me.mafrans.poppo.util.config;
 
 import lombok.Data;
 import lombok.Setter;
+import me.mafrans.poppo.util.StringFormatter;
 import net.dv8tion.jda.core.entities.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,26 +35,11 @@ public class DataUser {
     }
 
     public static DataUser parse(SQLDataUser sqlDataUser) {
-        List<String> names = Arrays.asList(sqlDataUser.getNames().split("\uE081"));
+        List<String> names = Arrays.asList(StringFormatter.stringToArray(sqlDataUser.getNames()));
         String uuid = sqlDataUser.getUuid();
         String lastOnlineTag = sqlDataUser.getLastOnlineTag();
         String avatarUrl = sqlDataUser.getAvatarUrl();
 
         return new DataUser(names, uuid, lastOnlineTag, avatarUrl);
-    }
-
-    public JSONObject encode() {
-        JSONObject json = new JSONObject();
-
-        JSONArray nameArray = new JSONArray();
-        for(String name : names) {
-            nameArray.put(name);
-        }
-        json.put("names", nameArray);
-        json.put("uuid", uuid);
-        json.put("lastonline", lastOnlineTag);
-        json.put("avatar", avatarUrl);
-
-        return json;
     }
 }

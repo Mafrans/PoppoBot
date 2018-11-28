@@ -22,4 +22,8 @@ public class GUtil {
         Random random = new Random();
         return new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
     }
+
+    public static String capitalize(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1, string.length());
+    }
 }

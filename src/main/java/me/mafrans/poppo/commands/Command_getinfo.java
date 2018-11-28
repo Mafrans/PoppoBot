@@ -1,6 +1,7 @@
 package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.SelectionList;
@@ -21,6 +22,7 @@ public class Command_getinfo implements ICommand {
     @Override
     public CommandMeta getMeta() {
         return new CommandMeta(
+                CommandCategory.WEB,
                 "Gets information from Google.",
                 "getinfo <query>",
                 Arrays.asList("whats", "what's"),

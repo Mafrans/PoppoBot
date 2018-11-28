@@ -4,7 +4,9 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -15,17 +17,22 @@ public class StringFormatter {
         return StringUtils.join(lines, "\n");
     }
 
-    public static String arrayToString(Object[] objects, String formatting) {
-        StringBuilder builder = new StringBuilder();
+    public static String arrayToString(String[] strings) {
+        JSONArray jsonArray = new JSONArray();
 
-        builder.append("[");
-        builder.append(String.format(formatting, objects[0].toString()));
-        for(Object object : ArrayUtils.subarray(objects, 1, objects.length)) {
-            builder.append(String.format(formatting, object.toString()));
+        for(String string : strings) {
+            jsonArray.put(string);
         }
-        builder.append("]");
 
-        return builder.toString();
+        return jsonArray.toString();
+    }
+
+    public static String[] stringToArray(String string) {
+        if(!string.startsWith("[") || !string.endsWith("]")) {
+            return new String[0];
+        }
+
+        return new JSONArray(string).toList().toArray(new String[0]);
     }
 
     public static String getRandom(int length) {

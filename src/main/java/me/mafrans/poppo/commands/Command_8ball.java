@@ -1,6 +1,7 @@
 package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -33,6 +34,7 @@ public class Command_8ball implements ICommand {
             "Poppo says: No",                                   // No
             "I'd consider that a subjective question",          // Maybe
 
+
     };
 
     @Override
@@ -42,7 +44,7 @@ public class Command_8ball implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta("Ask a question, get an answer!", "8ball <question>", Arrays.asList("can", "is", "does", "do", "a", "are", "has", "have", "why", "was", "are"), false);
+        return new CommandMeta(CommandCategory.FUN, "Ask a question, get an answer!", "8ball <question>", Arrays.asList("can", "is", "does", "do", "a", "are", "has", "have", "why", "was", "are"), false);
     }
 
     @Override

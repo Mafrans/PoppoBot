@@ -21,6 +21,17 @@
     </build>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.23</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-kgsearch</artifactId>
+            <version>v1-rev230-1.25.0</version>
+        </dependency>
         <dependency>
             <groupId>com.asm</groupId>
             <artifactId>asm</artifactId>
