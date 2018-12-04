@@ -4,10 +4,12 @@ autoinsult_rate: '100'
 autoinsult_use: 'false'
 pearson_token: iiiijjjjkkkkllll
 database_table: userlist
-overlord_users: ''
+overlord_users:
+  -
 token: aaaabbbbccccdddd
 twitch_token: mmmmnnnnoooopppp
-debug_users: ''
+debug_users:
+  -
 client_secret: POxCSgSZvMVB7zpYG2Gu8rMAaEREFjfy
 database_password: password
 client_id: '12345678987654321'

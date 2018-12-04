@@ -14,7 +14,7 @@ import java.util.HashMap;
 public enum Rank {
     BOT_COMMANDER("Bot Commander", new Color(30, 170, 170), new Object[0][0], true),
 
-    MEMBER("Member", Color.WHITE, new Object[][]{{}}, false),
+    MEMBER("Member", Color.WHITE, new Object[][]{}, false),
 
     MUTED("Muted", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}}, true),
     TIMED_OUT("Timed Out", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}, true)
@@ -99,7 +99,7 @@ public enum Rank {
 
     public boolean hasRole(Member member) {
         for(Role role : member.getRoles()) {
-            if(role.getName() == this.name) {
+            if(role.getId().equals(getRole(member.getGuild()).getId())) {
                 return true;
             }
         }

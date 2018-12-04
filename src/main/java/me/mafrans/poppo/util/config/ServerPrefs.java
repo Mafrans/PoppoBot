@@ -28,6 +28,7 @@ public enum ServerPrefs {
     public static Properties getPreferences(Guild guild) throws IOException {
         if(serverPrefList.containsKey(guild)) return serverPrefList.get(guild);
 
+        System.out.println(guild);
         File pathFile = new File("./servers/" + guild.getId() + "/preferences.properties");
         Properties properties = new Properties();
         if(!pathFile.exists()) {

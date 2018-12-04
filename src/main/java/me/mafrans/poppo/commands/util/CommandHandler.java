@@ -1,5 +1,6 @@
 package me.mafrans.poppo.commands.util;
 
+import me.mafrans.poppo.Main;
 import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -27,7 +28,7 @@ public class CommandHandler {
         outCommand.setAuthor(message.getAuthor());
         outCommand.setMessage(message);
 
-        if(ConfigEntry.OVERLORD_USERS.getString().contains(message.getAuthor().getId()) && (words[words.length-1].equalsIgnoreCase("please")||words[words.length-1].equalsIgnoreCase("pls"))) {
+        if(Main.config.overlord_users.contains(message.getAuthor().getId()) && (words[words.length-1].equalsIgnoreCase("please")||words[words.length-1].equalsIgnoreCase("pls"))) {
             outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length - 1));
             outCommand.setOverride(true);
         }

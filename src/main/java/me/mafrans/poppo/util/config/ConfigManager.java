@@ -1,6 +1,6 @@
 package me.mafrans.poppo.util.config;
 
-import me.mafrans.mahttpd.util.FileUtils;
+import me.mafrans.poppo.util.FileUtils;
 import me.mafrans.poppo.util.StringFormatter;
 import org.apache.commons.io.IOUtils;
 import org.yaml.snakeyaml.Yaml;
@@ -59,7 +59,7 @@ public enum ConfigManager {
     }
 
     public static void saveDefaults() throws IOException {
-        FileUtils.createResource("config.yml", new File("C:\\Users\\Malte.Kluft\\IdeaProjects\\PoppoBot\\config.yml"));
+        FileUtils.createResource("config.yml", new File("config.yml"));
     }
 
     public static void saveConfig() {
