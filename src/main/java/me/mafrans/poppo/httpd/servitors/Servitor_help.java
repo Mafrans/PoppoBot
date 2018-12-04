@@ -7,6 +7,7 @@ import me.mafrans.mahttpd.exceptions.HTTPInternalErrorException;
 import me.mafrans.mahttpd.exceptions.HTTPNotFoundException;
 import me.mafrans.mahttpd.servitors.HTMLServitor;
 import me.mafrans.mahttpd.util.FileUtils;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.commands.util.ICommand;
 

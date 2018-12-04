@@ -2,6 +2,7 @@ package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.StringFormatter;
