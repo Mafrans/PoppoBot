@@ -29,7 +29,7 @@ public class Command_move implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor("No Permission!", ConfigEntry.HTTPD_URL.getString(), command.getAuthor().getAvatarUrl());
             embedBuilder.setDescription("You need the MESSAGE_MANAGE permission to use this command!");

@@ -1,47 +1,81 @@
 package me.mafrans.poppo.util.objects;
 
+import lombok.Getter;
 import me.mafrans.poppo.Main;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.exceptions.ErrorResponseException;
 import net.dv8tion.jda.core.managers.RoleManager;
 import net.dv8tion.jda.core.requests.restaction.RoleAction;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public enum Rank {
-    BOT_COMMANDER("Bot Commander", new Color(30, 170, 170)),
+    BOT_COMMANDER("Bot Commander", new Color(30, 170, 170), new MapArray<>(new Object[0][0]), true),
+
+    MEMBER("Member", Color.WHITE, new MapArray<>(new Object[][]{{}}), false),
+
+    MUTED("Muted", new Color(120, 120, 120), new MapArray<>(new Object[][] {{Permission.MESSAGE_WRITE, false}}), true),
+    TIMED_OUT("Timed Out", new Color(120, 120, 120), new MapArray<>(new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}), true)
     ;
 
 
 
-    private String name;
-    private Color color;
-    private Role role;
+    private @Getter String name;
+    private @Getter Color color;
+    private @Getter HashMap<Guild, Role> roleMap;
+    private @Getter HashMap<Permission, Boolean> permissions;
+    private boolean initialize;
 
-    Rank(String name, Color color) {
+    Rank(String name, Color color, MapArray<Permission, Boolean> permissions, boolean initialize) {
         this.name = name;
         this.color = color;
-        this.role = null;
+
+        if(permissions != null) {
+            this.permissions = permissions.build();
+        }
+        this.roleMap = new HashMap<>();
+        this.initialize = initialize;
     }
 
     public void initialize() {
+        if(!this.doInitialize()) return;
+
         for (Guild guild : Main.jda.getGuilds()) {
             try {
                 System.out.println("Initializing " + this.name + " for guild " + guild.getName());
                 if (guild.getRolesByName(name, false).size() == 1) {
-                    this.role = guild.getRolesByName(name, false).get(0);
-                } else if (guild.getRolesByName(name, false).size() > 1) {
+                    this.roleMap.put(guild, guild.getRolesByName(name, false).get(0));
+                }
+                else if (guild.getRolesByName(name, false).size() > 1) {
                     guild.getOwner().getDefaultChannel().sendMessage("There are too many roles named '" + name + "' in your server, there should be at most 1.").queue();
-                    this.role = null;
-                } else {
+                }
+                else {
                     RoleAction roleAction = guild.getController().createRole();
                     roleAction.setName(name);
                     roleAction.setColor(color);
-
                     Role role = roleAction.complete();
-                    this.role = role;
+
+                    for(TextChannel textChannel : guild.getTextChannels()) {
+                        PermissionOverride permissionOverride = textChannel.getPermissionOverride(role);
+
+                        System.out.println(textChannel + ", " + permissionOverride);
+                        if(permissionOverride == null) {
+                            permissionOverride = textChannel.createPermissionOverride(role).complete();
+                        }
+
+                        for(Permission value : permissions.keySet()) {
+                            if(permissions.get(value)) {
+                                permissionOverride.getManager().grant(value).queue();
+                            }
+                            else {
+                                permissionOverride.getManager().deny(value).queue();
+                            }
+                        }
+                    }
+
+                    this.roleMap.put(guild, role);
                 }
             }
             catch (ErrorResponseException e) {
@@ -67,24 +101,30 @@ public enum Rank {
     }
 
     public static Rank getRank(Member member) {
-        if(member == null) return null;
-        if(member.getRoles() == null) return null;
-        if(member.getRoles().size() < 1) return null;
+        if(member == null) return MEMBER;
+        if(member.getRoles() == null) return MEMBER;
+        if(member.getRoles().size() < 1) return MEMBER;
 
-        Rank outRank = null;
+        Rank outRank = MEMBER;
 
         for(Role role : member.getRoles()) {
             for(Rank rank : values()) {
-                if(role.getName().equals(rank.role.getName())) {
-                    if(outRank == null) {
+                if(role.getId().equals(rank.roleMap.get(member.getGuild()).getId())) {
+                    if(outRank == MEMBER) {
                         outRank = rank;
                     }
                     outRank = outRank.hasRank(rank) ? outRank : rank;
                 }
-                else {
-                }
             }
         }
         return outRank;
+    }
+
+    public boolean doInitialize() {
+        return initialize;
+    }
+
+    public Role getRole(Guild guild) {
+        return roleMap.get(guild);
     }
 }

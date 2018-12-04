@@ -4,9 +4,11 @@ import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.Definition;
 import me.mafrans.poppo.util.web.DefinitionGetter;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -59,21 +61,28 @@ public class Command_define implements ICommand {
             selectionList.addAlternative(definition.getTitle() + (definition.getType() == null ? "" : " - " + definition.getType()), new Runnable() {
                 @Override
                 public void run() {
-                    StringBuilder builder = new StringBuilder();
+                    EmbedBuilder embedBuilder = new EmbedBuilder();
+                    embedBuilder.setColor(GUtil.randomColor());
 
-                    if(definition.getTitle() != null)
-                        builder.append("**" + definition.getTitle() + ":**");
-                    if(definition.getType() != null)
-                        builder.append(" *(" + definition.getType() + ")*");
+                    if(definition.getTitle() != null) {
+                        if (definition.getType() != null)
+                            embedBuilder.setTitle(definition.getTitle() + " (" + definition.getType() + ")");
+                        else
+                            embedBuilder.setTitle(definition.getTitle());
+                    }
                     if(definition.getDefinition() != null)
-                        builder.append("\n```\n" + definition.getDefinition() + "\n```");
+                        embedBuilder.setDescription(definition.getDefinition());
                     if(definition.getExample() != null)
-                        builder.append("\nExample: `" + definition.getExample() + "`");
+                        embedBuilder.addField("Example", definition.getExample(), false);
                     if(definition.getSource() != null)
-                        builder.append("\nSource: " + definition.getSource());
+                        if(definition.getSource().equalsIgnoreCase("urbandictionary"))
+                            embedBuilder.setAuthor("Source: " + definition.getSource(), "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
+                        else
+                            embedBuilder.setAuthor("Source: " + definition.getSource(), "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
 
                     System.out.println(selectionList.getMessage());
-                    selectionList.getMessage().editMessage(builder.toString()).queue();
+                    selectionList.getMessage().delete().queue();
+                    channel.sendMessage(embedBuilder.build()).queue();
                 }
             });
         }

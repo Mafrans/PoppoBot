@@ -23,9 +23,16 @@ public class CommandHandler {
         System.out.println(Arrays.toString(words));
 
         Command outCommand = new Command();
-        outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length));
         outCommand.setAuthor(message.getAuthor());
         outCommand.setMessage(message);
+
+        if(ConfigEntry.OVERLORD_USERS.getString().contains(message.getAuthor().getId()) && (words[words.length-1].equalsIgnoreCase("please")||words[words.length-1].equalsIgnoreCase("pls"))) {
+            outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length - 1));
+            outCommand.setOverride(true);
+        }
+        else {
+            outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length));
+        }
 
         for(ICommand cmd : getCommands()) {
             String name = cmd.getName().toLowerCase();

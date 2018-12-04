@@ -10,11 +10,9 @@ import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
+import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -49,6 +47,24 @@ public class Command_debug implements ICommand {
         String[] args = command.getArgs();
 
         switch(args[0].toLowerCase()) {
+            case "updateroles":
+                if(args.length != 1) {
+                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug updateroles`");
+                    return true;
+                }
+                for(Guild guild : Main.jda.getGuilds()) {
+                    for(Rank rank : Rank.values()) {
+                        System.out.println(rank.getRoleMap());
+                        if(rank.getRole(guild) != null) {
+                            rank.getRole(guild).delete().queue();
+                        }
+
+                        rank.initialize();
+                    }
+                }
+                break;
+
+
             case "updateusers":
                 if(args.length != 1) {
                     debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug updateusers`");

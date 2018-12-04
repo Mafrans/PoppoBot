@@ -11,10 +11,10 @@ import java.util.List;
 
 public class DefinitionGetter {
     public static List<Definition> getHits(String query) throws IOException {
-        if(getPearsonHits(query).isEmpty()) {
-            return getUrbanHits(query);
+        if(getUrbanHits(query).isEmpty()) {
+            return getPearsonHits(query);
         }
-        else return getPearsonHits(query);
+        else return getUrbanHits(query);
     }
 
     public static List<Definition> getPearsonHits(String query) throws IOException {
