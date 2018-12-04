@@ -1,0 +1,16 @@
+httpd_url: 'http://localhost:8081'
+command_prefix: 'poppo '
+autoinsult_rate: '100'
+autoinsult_use: 'false'
+pearson_token: iiiijjjjkkkkllll
+database_table: userlist
+overlord_users: ''
+token: aaaabbbbccccdddd
+twitch_token: mmmmnnnnoooopppp
+debug_users: ''
+client_secret: POxCSgSZvMVB7zpYG2Gu8rMAaEREFjfy
+database_password: password
+client_id: '12345678987654321'
+database_username: username
+google_token: eeeeffffgggghhhh
+httpd_port: '8081'
