@@ -8,7 +8,6 @@ import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.StringFormatter;
 import me.mafrans.poppo.util.TimerTasks;
-import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import net.dv8tion.jda.core.OnlineStatus;
