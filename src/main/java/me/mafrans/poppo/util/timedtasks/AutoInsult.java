@@ -1,13 +1,5 @@
 package me.mafrans.poppo.util.timedtasks;
 
-import me.mafrans.poppo.util.StringFormatter;
-import me.mafrans.poppo.util.config.ConfigEntry;
-import me.mafrans.poppo.util.config.ServerPrefs;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -18,12 +10,12 @@ public class AutoInsult implements Runnable {
     public void run() {
         /* AutoInsult is not a thing right now
 
-        if(!ConfigEntry.AUTOINSULT_USE.getBoolean()) return;
+        if(!ConfigManager.AUTOINSULT_USE.getBoolean()) return;
 
         for(Guild guild : ServerPrefs.serverPrefList.keySet()) { // Iterate over all guilds
             if(!ServerPrefs.USE_AUTOINSULT.getString(guild).equalsIgnoreCase("true")) continue;
             Random random = new Random();
-            if(random.nextInt(100) + 1 > ConfigEntry.AUTOINSULT_RATE.getInteger()) continue;
+            if(random.nextInt(100) + 1 > ConfigManager.AUTOINSULT_RATE.getInteger()) continue;
 
             List<OnlineStatus> ignoredStatuses = Arrays.asList(
                     OnlineStatus.OFFLINE,

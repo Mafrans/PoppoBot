@@ -1,7 +1,6 @@
 package me.mafrans.poppo.util.web;
 
 import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.objects.Definition;
 import org.json.JSONObject;
 

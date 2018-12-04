@@ -11,7 +11,6 @@ import me.mafrans.poppo.Main;
 import me.mafrans.poppo.httpd.Machine;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.UserSession;
-import me.mafrans.poppo.util.config.ConfigEntry;
 
 import java.io.File;
 import java.io.IOException;
