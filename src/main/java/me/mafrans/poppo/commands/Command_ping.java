@@ -1,6 +1,7 @@
 package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import net.dv8tion.jda.core.entities.Emote;
@@ -16,6 +17,7 @@ public class Command_ping implements ICommand {
     @Override
     public CommandMeta getMeta() {
         return new CommandMeta(
+                CommandCategory.UTILITY,
                 "Pings the bot and recieves an answer.",
                 "ping",
                 null,

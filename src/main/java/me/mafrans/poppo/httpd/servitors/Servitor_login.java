@@ -24,7 +24,8 @@ public class Servitor_login extends HTMLServitor {
             throw new HTTPNotFoundException();
         }
 
-        VARIABLES.put("oauth_url", "https://discordapp.com/oauth2/authorize?redirect_uri=" + ConfigEntry.HTTPD_URL.getString() + "/redirect&scope=identify%20guilds&response_type=code&client_id=" + ConfigEntry.CLIENT_ID.getString());
+        VARIABLES.put("oauth_url", "https://discordapp.com/oauth2/authorize?redirect_uri=" + Main.config.httpd_url + "/redirect&scope=identify%20guilds&response_type=code&client_id=" + Main.config.client_id);
+        VARIABLES.put("add_url", "https://discordapp.com/api/oauth2/authorize?client_id=" + Main.config.client_id + "&permissions=8&redirect_uri=" + Main.config.httpd_url+ "/redirect&scope=bot");
         return event.getDocument();
     }
 

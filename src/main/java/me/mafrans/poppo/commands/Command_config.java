@@ -1,6 +1,7 @@
 package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.config.ServerPrefs;
@@ -17,6 +18,7 @@ public class Command_config implements ICommand {
     @Override
     public CommandMeta getMeta() {
         return new CommandMeta(
+                CommandCategory.MODERATION,
                 "Links information to the bot.",
                 "config set|list <key> <value>",
                 null,

@@ -1,11 +1,14 @@
 package me.mafrans.poppo.util.config;
 
+import me.mafrans.mahttpd.util.FileUtils;
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.StringFormatter;
+import org.apache.commons.io.IOUtils;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public enum ConfigEntry {
@@ -23,12 +26,14 @@ public enum ConfigEntry {
     DATABASE_TABLE("database-table", "userlist"),
     DATABASE_USERNAME("database-username", "username"),
     DATABASE_PASSWORD("database-password", "password"),
-    HTTPD_URL("httpd-url", "http://localhost:8081");
+    HTTPD_URL("httpd-url", "http://localhost:8081"),
+    HTTPD_PORT("httpd-port", "8081");
 
     private String key;
     private String defaultEntry;
+    private static Yaml yaml;
+    private static ConfigObject config;
     private static Properties properties = new Properties();
-    private File propertiesFile = null;
 
     ConfigEntry(String key, String defaultEntry) {
         this.key = key;
@@ -43,48 +48,28 @@ public enum ConfigEntry {
         return key;
     }
 
-    public static Properties load(File file) throws IOException {
+    public static ConfigObject load() throws IOException {
+        File file = new File("config.yml");
+        yaml = new Yaml();
         if(!file.exists()) {
-            file.createNewFile();
-            saveDefaults(file);
+            saveDefaults();
         }
 
-        properties.load(new FileReader(file));
-        return properties;
+        System.out.println(IOUtils.toString(new FileReader(file)));
+        config = yaml.loadAs(IOUtils.toString(new FileReader(file)), ConfigObject.class);
+        //properties.load(new FileReader(file));
+        return config;
     }
 
-    public static void saveDefaults(File file) throws IOException {
-
-        for(ConfigEntry entry : ConfigEntry.values()) {
-            properties.setProperty(entry.getKey(), entry.getDefaultEntry());
-        }
-
-        properties.store(new FileWriter(file), "Configuration for Poppo");
+    public static void saveDefaults() throws IOException {
+        FileUtils.createResource("config.yml", new File("C:\\Users\\Malte.Kluft\\IdeaProjects\\PoppoBot\\config.yml"));
     }
 
-    public String getString() {
-        return (String) properties.getProperty(getKey());
-    }
-
-    public int getInteger() {
-        return Integer.parseInt(getString());
-    }
-
-    public double getDouble() {
-        return Double.parseDouble(getString());
-    }
-
-    public float getFloat() {
-        return Float.parseFloat(getString());
-    }
-
-    public boolean getBoolean() { return Boolean.parseBoolean(getString()); }
-
-    public void set(String value) {
-        if(propertiesFile == null) System.out.println("Something went wrong when setting the config value, please contact a Poppo developer!");
+    public static void saveConfig() {
+        //if(propertiesFile == null) System.out.println("Something went wrong when setting the config value, please contact a Poppo developer!");
         try {
-            properties.setProperty(key, value);
-            properties.store(new FileWriter(propertiesFile), "Configuration for Poppo");
+            FileWriter fileWriter = new FileWriter(new File("config.yml"));
+            IOUtils.write(yaml.dump(config), fileWriter);
         }
         catch (IOException e) {
             e.printStackTrace();

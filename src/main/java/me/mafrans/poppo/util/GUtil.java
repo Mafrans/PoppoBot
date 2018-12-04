@@ -27,6 +27,10 @@ public class GUtil {
         return new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
     }
 
+    public static String capitalize(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1, string.length());
+    }
+
 
     /// Data Offset Parser - Courtesy of Jerom van der Sar (Prozza)
     public static Date parseDateOffset(String time) {

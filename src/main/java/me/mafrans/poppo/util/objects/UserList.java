@@ -1,9 +1,12 @@
 package me.mafrans.poppo.util.objects;
 
+import me.mafrans.poppo.Main;
+import me.mafrans.poppo.util.StringFormatter;
 import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
 import java.sql.DatabaseMetaData;
@@ -12,15 +15,13 @@ import java.sql.SQLData;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class UserList {
     Sql2o sql2o;
     List<DataUser> cache;
 
-    private final String table = ConfigEntry.DATABASE_TABLE.getString();
+    private String table = Main.config.database_table;
 
     public void connect(String url, String user, String password) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
@@ -64,23 +65,36 @@ public class UserList {
     }
 
     public boolean removeByUuid(String uuid) {
-        return remove(new SQLDataUser(getByUuid(uuid).get(0)));
+        return remove(new SQLDataUser(getUsersFrom("uuid", uuid).get(0)));
     }
 
     public boolean add(SQLDataUser dataUser) {
-        if(getByUuid(dataUser.getUuid()).size() != 0) {
+        if(getUsersFrom("uuid", dataUser.getUuid()).size() != 0) {
             if(!removeByUuid(dataUser.getUuid())) return false;
         }
 
-        String query = "INSERT INTO " + table + "(names, uuid, lastOnlineTag, avatarUrl) values(:names, :uuid, :lastOnlineTag, :avatarUrl)";
+        String keys = "";
+        String values = "";
+
+        for(String key : getFieldMap(dataUser).keySet()) {
+            if(keys.isEmpty()) keys = key;
+            else keys += ", " + key;
+
+            if(values.isEmpty()) values = ":" + key;
+            else values += ", :" + key;
+        }
+
+        String query = "INSERT INTO " + table + "(" + keys + ") values(" + values + ")";
 
         try (Connection con = sql2o.open()) {
-            con.createQuery(query)
-                    .addParameter("names", dataUser.getNames())
-                    .addParameter("uuid", dataUser.getUuid())
-                    .addParameter("lastOnlineTag", dataUser.getLastOnlineTag())
-                    .addParameter("avatarUrl", dataUser.getAvatarUrl())
-                    .executeUpdate();
+            Query query1 = con.createQuery(query);
+
+            for(String key : getFieldMap(dataUser).keySet()) {
+                String value = getFieldMap(dataUser).get(key);
+                query1.addParameter(key, value);
+            }
+
+            query1.executeUpdate();
 
             updateCache();
             return true;
@@ -92,15 +106,30 @@ public class UserList {
     }
 
     public boolean remove(SQLDataUser dataUser) {
-        String query = "DELETE FROM " + table + " WHERE names = :names AND uuid = :uuid AND lastOnlineTag = :lastOnlineTag AND avatarUrl = :avatarUrl";
+        String where = "";
+
+        boolean b = true;
+        for(String key : getFieldMap(dataUser).keySet()) {
+            if(b) {
+                b = false;
+                where += key + " = :" + key;
+            }
+            else {
+                where += " AND " + key + " = :" + key;
+            }
+        }
+
+        String query = "DELETE FROM " + table + " WHERE " + where;
 
         try (Connection con = sql2o.open()) {
-            con.createQuery(query)
-                    .addParameter("names", dataUser.getNames())
-                    .addParameter("uuid", dataUser.getUuid())
-                    .addParameter("lastOnlineTag", dataUser.getLastOnlineTag())
-                    .addParameter("avatarUrl", dataUser.getAvatarUrl())
-                    .executeUpdate();
+            Query query1 = con.createQuery(query);
+
+            for(String key : getFieldMap(dataUser).keySet()) {
+                String value = getFieldMap(dataUser).get(key);
+                query1.addParameter(key, value);
+            }
+
+            query1.executeUpdate();
 
             updateCache();
             return true;
@@ -151,26 +180,6 @@ public class UserList {
         return outUsers;
     }
 
-    public List<DataUser> getByUuid(String uuid) {
-        String query = "SELECT * FROM " + table + " WHERE uuid = :uuid";
-
-        try(Connection con = sql2o.open()) {
-            return parseUsers(con.createQuery(query)
-                    .addParameter("uuid", uuid)
-                    .executeAndFetch(SQLDataUser.class));
-        }
-    }
-
-    public List<DataUser> getOnline() {
-        String query = "SELECT * FROM " + table + " WHERE lastOnlineTag = :lastOnlineTag";
-
-        try(Connection con = sql2o.open()) {
-            return parseUsers(con.createQuery(query)
-                    .addParameter("lastOnlineTag", "Currently Online")
-                    .executeAndFetch(SQLDataUser.class));
-        }
-    }
-
     private List<SQLDataUser> fetchSQLUsers() {
         String query = "SELECT * FROM " + table;
 
@@ -185,5 +194,35 @@ public class UserList {
             dataUsers.add(DataUser.parse(sqlDataUser));
         }
         return dataUsers;
+    }
+
+    public List<DataUser> getUsersFrom(String field, String value) {
+        String query = "SELECT * FROM " + table + " WHERE " + field + " = :" + field;
+
+        try(Connection con = sql2o.open()) {
+            return parseUsers(con.createQuery(query)
+                    .addParameter(field, value)
+                    .executeAndFetch(SQLDataUser.class));
+        }
+    }
+
+    private Map<String, String> getFieldMap(DataUser dataUser) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("names", StringFormatter.arrayToString(dataUser.getNames().toArray(new String[0])));
+        hashMap.put("uuid", dataUser.getUuid());
+        hashMap.put("lastOnlineTag", dataUser.getLastOnlineTag());
+        hashMap.put("avatarUrl", dataUser.getAvatarUrl());
+
+        return hashMap;
+    }
+
+    Map<String, String> getFieldMap(SQLDataUser dataUser) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("names", dataUser.getNames());
+        hashMap.put("uuid", dataUser.getUuid());
+        hashMap.put("lastOnlineTag", dataUser.getLastOnlineTag());
+        hashMap.put("avatarUrl", dataUser.getAvatarUrl());
+
+        return hashMap;
     }
 }

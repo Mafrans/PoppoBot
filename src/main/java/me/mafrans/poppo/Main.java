@@ -15,6 +15,7 @@ import me.mafrans.poppo.listeners.SelectionListener;
 import me.mafrans.poppo.listeners.UserListener;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.config.ConfigObject;
 import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.Rank;
 import me.mafrans.poppo.util.objects.UserList;
@@ -22,6 +23,7 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
+import sun.security.krb5.Config;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -33,20 +35,21 @@ public class Main {
     public static MaHTTPD maHTTPD;
     public static HTTPDServer httpdServer;
     public static UserList userList;
+    public static ConfigObject config;
 
     public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException {
-        ConfigEntry.load(new File("config.properties"));
+        config = ConfigEntry.load();
 
         File databaseFile = new File("userdata/users.db");
         if(!databaseFile.getParentFile().exists()) {
             databaseFile.getParentFile().mkdirs();
         }
         userList = new UserList();
-        userList.connect(databaseFile.getAbsolutePath(), ConfigEntry.DATABASE_USERNAME.getString(), ConfigEntry.DATABASE_PASSWORD.getString());
+        userList.connect(databaseFile.getAbsolutePath(), config.database_username, config.database_username);
 
-        sessionHandler = new SessionHandler(ConfigEntry.HTTPD_URL.getString() + "/redirect", ConfigEntry.CLIENT_ID.getString(), ConfigEntry.CLIENT_SECRET.getString());
+        sessionHandler = new SessionHandler(config.httpd_url + "/redirect", config.client_id, config.client_secret);
 
-        jda = new JDABuilder(AccountType.BOT).setToken(ConfigEntry.TOKEN.getString()).buildBlocking();
+        jda = new JDABuilder(AccountType.BOT).setToken(config.token).buildBlocking();
         jda.addEventListener(new CommandListener());
         jda.addEventListener(new SelectionListener());
         jda.addEventListener(new UserListener());
@@ -67,14 +70,10 @@ public class Main {
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_shutdown());
 
-        for(ConfigEntry entry : ConfigEntry.values()) {
-            System.out.println(entry.getKey() + ": " + entry.getString());
-        }
-
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
 
-        httpdServer = maHTTPD.startServer(8081);
+        httpdServer = maHTTPD.startServer(config.httpd_port);
         httpdServer.registerServitor(new Servitor_login(maHTTPD));
         httpdServer.registerServitor(new Servitor_loginprocess(maHTTPD));
         httpdServer.registerServitor(new Servitor_guilds(maHTTPD));

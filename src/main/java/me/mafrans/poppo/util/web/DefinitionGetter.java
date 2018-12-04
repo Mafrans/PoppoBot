@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util.web;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.objects.Definition;
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ public class DefinitionGetter {
         List<Definition> definitionList = new ArrayList<>();
         HashMap<String, String> preferences = new HashMap<>();
         preferences.put("headword", query.toLowerCase());
-        preferences.put("apikey", ConfigEntry.PEARSON_TOKEN.getString());
+        preferences.put("apikey", Main.config.pearson_token);
 
         JSONObject json = HTTPUtil.getJSON("https://api.pearson.com/v2/dictionaries/ldoce5/entries", preferences);
 

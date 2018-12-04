@@ -72,7 +72,7 @@ public class Servitor_guilds extends HTMLServitor {
                 }
             }
 
-            VARIABLES.put("httpd_url", ConfigEntry.HTTPD_URL.getString());
+            VARIABLES.put("httpd_url", Main.config.httpd_url);
             VARIABLES.put("guild_id", guild.getId());
 
             if(event.getSimpleParameters().containsKey("addlink")) {

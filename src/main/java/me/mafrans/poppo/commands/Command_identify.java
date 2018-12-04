@@ -2,6 +2,7 @@ package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.StringFormatter;
@@ -26,6 +27,7 @@ public class Command_identify implements ICommand {
     @Override
     public CommandMeta getMeta() {
         return new CommandMeta(
+                CommandCategory.UTILITY,
                 "Identifies a user.",
                 "identify <user>",
                 Arrays.asList("whos", "who's"),
@@ -52,7 +54,7 @@ public class Command_identify implements ICommand {
             return true;
         }
 
-        DataUser userData = Main.userList.getByUuid(uuid).get(0);
+        DataUser userData = Main.userList.getUsersFrom("uuid", uuid).get(0);
 
         if(userData == null) {
             channel.sendMessage("Couldn't find any cached user with the id of \"" + uuid + "\"").queue();
@@ -75,7 +77,7 @@ public class Command_identify implements ICommand {
         StringBuilder stringBuilder = new StringBuilder();
         String[] unparsedString = new String[] {
                 "```lua",
-                "Names: " + StringFormatter.arrayToString(userData.getNames().toArray(new String[]{}), "\'%s\'"),
+                "Names: " + StringFormatter.arrayToString(userData.getNames().toArray(new String[]{})),
                 "UUID: \'" + userData.getUuid() + "\'",
                 "Last Online: \'" + userData.getLastOnlineTag() + "\'",
                 "Avatar URL: \'" + userData.getAvatarUrl() + "\'",

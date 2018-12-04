@@ -42,7 +42,7 @@ public class Servitor_loginprocess extends HTMLServitor {
         handler.unloadSession(userSession); // Unload previous sessions
         handler.loadSession(machine, userSession); // Load new session
 
-        VARIABLES.put("httpd_url", ConfigEntry.HTTPD_URL.getString());
+        VARIABLES.put("httpd_url", Main.config.httpd_url);
 
         return event.getDocument();
     }

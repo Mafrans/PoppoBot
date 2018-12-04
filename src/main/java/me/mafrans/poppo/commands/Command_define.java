@@ -2,6 +2,7 @@ package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
+import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
@@ -25,6 +26,7 @@ public class Command_define implements ICommand {
     public CommandMeta getMeta() {
         String[] ignored = new String[] {"'"};
         return new CommandMeta(
+                CommandCategory.WEB,
                 "Gets definition data from Pearson or alternatively Urbandictionary.",
                 "define <query>",
                 null,
