@@ -3,7 +3,6 @@ package me.mafrans.poppo.util.web;
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.objects.Information;
 import org.json.JSONObject;
 

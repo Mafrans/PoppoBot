@@ -1,6 +1,5 @@
 package me.mafrans.poppo.commands.util;
 
-import me.mafrans.poppo.util.config.ConfigEntry;
 import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
 

@@ -14,7 +14,7 @@ import me.mafrans.poppo.listeners.CommandListener;
 import me.mafrans.poppo.listeners.SelectionListener;
 import me.mafrans.poppo.listeners.UserListener;
 import me.mafrans.poppo.util.TimerTasks;
-import me.mafrans.poppo.util.config.ConfigEntry;
+import me.mafrans.poppo.util.config.ConfigManager;
 import me.mafrans.poppo.util.config.ConfigObject;
 import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.Rank;
@@ -23,7 +23,6 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
-import sun.security.krb5.Config;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -38,7 +37,7 @@ public class Main {
     public static ConfigObject config;
 
     public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException {
-        config = ConfigEntry.load();
+        config = ConfigManager.load();
 
         File databaseFile = new File("userdata/users.db");
         if(!databaseFile.getParentFile().exists()) {

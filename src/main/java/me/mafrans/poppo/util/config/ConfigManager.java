@@ -1,17 +1,14 @@
 package me.mafrans.poppo.util.config;
 
 import me.mafrans.mahttpd.util.FileUtils;
-import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.StringFormatter;
 import org.apache.commons.io.IOUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
-public enum ConfigEntry {
+public enum ConfigManager {
     COMMAND_PREFIX("command-prefix", "poppo "),
     TOKEN("token", "aaaabbbbccccdddd"),
     CLIENT_ID("client-id", "12345678987654321"),
@@ -35,7 +32,7 @@ public enum ConfigEntry {
     private static ConfigObject config;
     private static Properties properties = new Properties();
 
-    ConfigEntry(String key, String defaultEntry) {
+    ConfigManager(String key, String defaultEntry) {
         this.key = key;
         this.defaultEntry = defaultEntry;
     }

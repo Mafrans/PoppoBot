@@ -2,7 +2,6 @@ package me.mafrans.poppo.util.objects;
 
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.StringFormatter;
-import me.mafrans.poppo.util.config.ConfigEntry;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import org.sql2o.Connection;
@@ -11,10 +10,8 @@ import org.sql2o.Sql2o;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.sql.SQLData;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class UserList {

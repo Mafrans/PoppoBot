@@ -8,7 +8,6 @@ import me.mafrans.mahttpd.exceptions.HTTPNotFoundException;
 import me.mafrans.mahttpd.servitors.HTMLServitor;
 import me.mafrans.mahttpd.util.FileUtils;
 import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.config.ConfigEntry;
 
 import java.io.File;
 import java.io.IOException;

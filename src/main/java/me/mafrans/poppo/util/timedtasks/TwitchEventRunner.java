@@ -1,13 +1,5 @@
 package me.mafrans.poppo.util.timedtasks;
 
-import me.mafrans.poppo.util.config.ConfigEntry;
-import me.mafrans.poppo.util.config.ServerPrefs;
-import me.mafrans.poppo.util.web.HTTPUtil;
-import net.dv8tion.jda.core.entities.Guild;
-
-import java.io.IOException;
-import java.util.HashMap;
-
 public class TwitchEventRunner implements Runnable {
     @Override
     public void run() {
@@ -17,7 +9,7 @@ public class TwitchEventRunner implements Runnable {
             boolean streamRunning = false;
             try {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("client_id", ConfigEntry.TWITCH_TOKEN.getString());
+                params.put("client_id", ConfigManager.TWITCH_TOKEN.getString());
                 streamRunning = !(HTTPUtil.getJSON("https://api.twitch.tv/kraken/streams/" + twitchLink.toLowerCase(), params).get("stream") instanceof String);
             }
             catch (IOException e) {
