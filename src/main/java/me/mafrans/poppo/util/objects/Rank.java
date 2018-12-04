@@ -12,12 +12,12 @@ import java.awt.*;
 import java.util.HashMap;
 
 public enum Rank {
-    BOT_COMMANDER("Bot Commander", new Color(30, 170, 170), new MapArray<>(new Object[0][0]), true),
+    BOT_COMMANDER("Bot Commander", new Color(30, 170, 170), new Object[0][0], true),
 
-    MEMBER("Member", Color.WHITE, new MapArray<>(new Object[][]{{}}), false),
+    MEMBER("Member", Color.WHITE, new Object[][]{{}}, false),
 
-    MUTED("Muted", new Color(120, 120, 120), new MapArray<>(new Object[][] {{Permission.MESSAGE_WRITE, false}}), true),
-    TIMED_OUT("Timed Out", new Color(120, 120, 120), new MapArray<>(new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}), true)
+    MUTED("Muted", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}}, true),
+    TIMED_OUT("Timed Out", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}, true)
     ;
 
 
@@ -28,12 +28,18 @@ public enum Rank {
     private @Getter HashMap<Permission, Boolean> permissions;
     private boolean initialize;
 
-    Rank(String name, Color color, MapArray<Permission, Boolean> permissions, boolean initialize) {
+    Rank(String name, Color color, Object[][] permissions, boolean initialize) {
         this.name = name;
         this.color = color;
 
         if(permissions != null) {
-            this.permissions = permissions.build();
+            this.permissions = new HashMap<Permission, Boolean>(permissions.length);
+            for (Object[] mapping : permissions)
+            {
+                this.permissions.put((Permission) mapping[0], (boolean) mapping[1]);
+            }
+
+
         }
         this.roleMap = new HashMap<>();
         this.initialize = initialize;
