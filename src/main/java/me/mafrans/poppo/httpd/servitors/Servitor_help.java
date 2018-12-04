@@ -1,6 +1,5 @@
 package me.mafrans.poppo.httpd.servitors;
 
-import com.mrpowergamerbr.temmiediscordauth.utils.TemmieGuild;
 import me.mafrans.mahttpd.MaHTTPD;
 import me.mafrans.mahttpd.events.DocumentServeEvent;
 import me.mafrans.mahttpd.exceptions.HTTPForbiddenException;
@@ -8,24 +7,11 @@ import me.mafrans.mahttpd.exceptions.HTTPInternalErrorException;
 import me.mafrans.mahttpd.exceptions.HTTPNotFoundException;
 import me.mafrans.mahttpd.servitors.HTMLServitor;
 import me.mafrans.mahttpd.util.FileUtils;
-import me.mafrans.poppo.Main;
-import me.mafrans.poppo.commands.util.Command;
-import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.commands.util.ICommand;
-import me.mafrans.poppo.httpd.Machine;
-import me.mafrans.poppo.httpd.SessionHandler;
-import me.mafrans.poppo.httpd.UserSession;
-import me.mafrans.poppo.util.config.ServerPrefs;
-import me.mafrans.poppo.util.objects.Rank;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.User;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
 public class Servitor_help extends HTMLServitor {
     public Servitor_help(MaHTTPD maHTTPD) {
