@@ -1,30 +1,33 @@
 package me.mafrans.poppo.httpd;
 
+import com.adamratzman.oauth.models.Guild;
+import com.adamratzman.oauth.models.Identify;
+import com.adamratzman.oauth.models.Token;
 import com.mrpowergamerbr.temmiediscordauth.responses.CurrentUserResponse;
 import com.mrpowergamerbr.temmiediscordauth.utils.TemmieGuild;
 
 import java.util.List;
 
 public class UserSession {
-    private String token = null;
-    private CurrentUserResponse user = null;
-    private List<TemmieGuild> guilds = null;
+    private Token token = null;
+    private Identify user = null;
+    private Guild[] guilds = null;
 
-    public UserSession(String token, CurrentUserResponse user, List<TemmieGuild> guilds) {
+    public UserSession(Token token, Identify user, Guild[] guilds) {
         this.token = token;
         this.user = user;
         this.guilds = guilds;
     }
 
-    public String getToken() {
+    public Token getToken() {
         return token;
     }
 
-    public CurrentUserResponse getUser() {
+    public Identify getUser() {
         return user;
     }
 
-    public List<TemmieGuild> getGuilds() {
+    public Guild[] getGuilds() {
         return guilds;
     }
 

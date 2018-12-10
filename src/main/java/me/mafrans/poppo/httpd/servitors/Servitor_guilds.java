@@ -1,6 +1,5 @@
 package me.mafrans.poppo.httpd.servitors;
 
-import com.mrpowergamerbr.temmiediscordauth.utils.TemmieGuild;
 import me.mafrans.mahttpd.MaHTTPD;
 import me.mafrans.mahttpd.events.DocumentServeEvent;
 import me.mafrans.mahttpd.exceptions.HTTPForbiddenException;
@@ -44,6 +43,7 @@ public class Servitor_guilds extends HTMLServitor {
         }
 
         UserSession userSession = loadedSessions.get(thisMachine);
+        System.out.println(userSession);
         User user = Main.jda.getUserById(userSession.getUser().getId());
         List<Guild> allowedGuilds = new ArrayList<>();
         for (Guild g : Main.jda.getGuilds()) {
@@ -165,8 +165,8 @@ public class Servitor_guilds extends HTMLServitor {
 
             StringBuilder listBuilder = new StringBuilder();
             listBuilder.append("<ul>");
-            for (TemmieGuild guild : userSession.getGuilds()) {
-                listBuilder.append("<li>" + guild.getName() + (guild.isOwner() ? " (Owner)" : "") + "</li>");
+            for (com.adamratzman.oauth.models.Guild guild : userSession.getGuilds()) {
+                listBuilder.append("<li>" + guild.getName() + (guild.getOwner() ? " (Owner)" : "") + "</li>");
             }
             listBuilder.append("</ul>");
             VARIABLES.put("guilds", listBuilder.toString());

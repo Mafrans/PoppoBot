@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util.config;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.FileUtils;
 import me.mafrans.poppo.util.StringFormatter;
 import org.apache.commons.io.IOUtils;
@@ -8,24 +9,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.util.Properties;
 
-public enum ConfigManager {
-    COMMAND_PREFIX("command-prefix", "poppo "),
-    TOKEN("token", "aaaabbbbccccdddd"),
-    CLIENT_ID("client-id", "12345678987654321"),
-    CLIENT_SECRET("client-secret", StringFormatter.getRandom(32)),
-    GOOGLE_TOKEN("google-token", "eeeeffffgggghhhh"),
-    PEARSON_TOKEN("pearson-token", "iiiijjjjkkkkllll"),
-    TWITCH_TOKEN("twitch-token", "mmmmnnnnoooopppp"),
-    AUTOINSULT_USE("autoinsult-use", "false"),
-    AUTOINSULT_RATE("autoinsult-rate", "100"),
-    DEBUG_USERS("debug-users", ""),
-    OVERLORD_USERS("overlord-users", ""),
-    DATABASE_TABLE("database-table", "userlist"),
-    DATABASE_USERNAME("database-username", "username"),
-    DATABASE_PASSWORD("database-password", "password"),
-    HTTPD_URL("httpd-url", "http://localhost:8081"),
-    HTTPD_PORT("httpd-port", "8081");
-
+public class ConfigManager {
     private String key;
     private String defaultEntry;
     private static Yaml yaml;
@@ -59,7 +43,7 @@ public enum ConfigManager {
     }
 
     public static void saveDefaults() throws IOException {
-        FileUtils.createResource("config.yml", new File("config.yml"));
+        FileUtils.createResource("config.yml", new File("config.yml"), Main.class);
     }
 
     public static void saveConfig() {

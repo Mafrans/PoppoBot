@@ -107,6 +107,19 @@ public class Command_debug implements ICommand {
                 }
                 break;
 
+            case "purgeself":
+                if(args.length != 2) {
+                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug run <class>`");
+                    return true;
+                }
+
+                for(Message message : channel.getHistory().retrievePast(Integer.parseInt(args[1])).complete()) {
+                    if(message.getAuthor().getId().equals(Main.jda.getSelfUser().getId())) {
+                        message.delete().queue();
+                    }
+                }
+                break;
+
             case "run":
                 if(args.length != 2) {
                     debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug run <class>`");

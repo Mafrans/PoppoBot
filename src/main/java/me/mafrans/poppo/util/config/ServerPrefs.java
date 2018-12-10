@@ -3,10 +3,9 @@ package me.mafrans.poppo.util.config;
 import me.mafrans.poppo.Main;
 import net.dv8tion.jda.core.entities.Guild;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -28,11 +27,13 @@ public enum ServerPrefs {
     public static Properties getPreferences(Guild guild) throws IOException {
         if(serverPrefList.containsKey(guild)) return serverPrefList.get(guild);
 
-        System.out.println(guild);
-        File pathFile = new File("./servers/" + guild.getId() + "/preferences.properties");
+        if(guild == null) return null;
+
+        System.out.println("Guild: " + guild);
+        File pathFile = new File("servers/" + guild.getId(), "preferences.properties");
         Properties properties = new Properties();
         if(!pathFile.exists()) {
-            return null;
+            return new Properties();
         }
         else {
             properties.load(new FileReader(pathFile));
@@ -42,15 +43,20 @@ public enum ServerPrefs {
     }
 
     public static void initPreferences() throws IOException {
-        File serversPath = new File("./servers");
+        File serversPath = new File("servers");
         if(!serversPath.exists()) serversPath.mkdirs();
+        System.out.println("Exists");
 
         File[] fList = serversPath.listFiles();
+        System.out.println("Flist: " + Arrays.toString(fList));
         if(fList.length < 1) return;
         for(File f : fList) {
+            System.out.println(f);
             if(f.isDirectory()) {
-                File pref = new File(f.getPath() + "./preferences.properties");
+                File pref = new File(f.getPath(),"preferences.properties");
+                System.out.println("Pref");
                 if(pref.exists()) {
+                    System.out.println("Pref Exists");
                     Guild guild = Main.jda.getGuildById(f.getName());
                     serverPrefList.put(guild, getPreferences(guild));
                 }
@@ -70,13 +76,13 @@ public enum ServerPrefs {
     }
 
     public void setString(Guild guild, String value) throws IOException {
-        Properties pref = new Properties();
+        Properties pref;
 
-        File file = new File("./servers/" + guild.getId() + "/preferences.properties");
+        File file = new File("servers/" + guild.getId() + "/preferences.properties");
         if(file.exists()) {
             pref = getPreferences(guild);
             pref.setProperty(key, value);
-            pref.store(new FileWriter(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
+            pref.store(new FileOutputStream(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
             return;
         }
 
@@ -84,7 +90,7 @@ public enum ServerPrefs {
         file.getParentFile().mkdirs();
         file.createNewFile();
         pref.setProperty(key, value);
-        pref.store(new FileWriter(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
+        pref.store(new FileOutputStream(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
     }
 
     public boolean exists(Guild guild) {
@@ -101,7 +107,7 @@ public enum ServerPrefs {
     public void remove(Guild guild) throws IOException {
         Properties pref = new Properties();
 
-        File file = new File("./servers/" + guild.getId() + "/preferences.properties");
+        File file = new File("servers/" + guild.getId() + "/preferences.properties");
         if(file.exists()) {
             pref = getPreferences(guild);
             pref.remove(key);

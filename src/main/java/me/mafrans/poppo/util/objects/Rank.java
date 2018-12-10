@@ -115,6 +115,10 @@ public enum Rank {
 
         for(Role role : member.getRoles()) {
             for(Rank rank : values()) {
+                if(role == null) continue;
+                if(rank == null) continue;
+                if(!rank.roleMap.containsKey(member.getGuild())) continue;
+
                 if(role.getId().equals(rank.roleMap.get(member.getGuild()).getId())) {
                     if(outRank == MEMBER) {
                         outRank = rank;

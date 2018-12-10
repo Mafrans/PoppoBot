@@ -22,6 +22,7 @@ import me.mafrans.poppo.util.objects.UserList;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 import javax.security.auth.login.LoginException;
@@ -68,6 +69,7 @@ public class Main {
         CommandHandler.addCommand(new Command_move());
         CommandHandler.addCommand(new Command_mute());
         CommandHandler.addCommand(new Command_timeout());
+        CommandHandler.addCommand(new Command_shutdown());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
@@ -87,5 +89,6 @@ public class Main {
         for(Rank rank : Rank.values()) {
             rank.initialize();
         }
+        Main.jda.getPresence().setStatus(OnlineStatus.ONLINE);
     }
 }

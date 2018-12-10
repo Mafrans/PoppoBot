@@ -1,9 +1,14 @@
 package me.mafrans.poppo.httpd;
 
+import com.adamratzman.oauth.main.DiscordAuthenticator;
+import com.adamratzman.oauth.models.Guild;
+import com.adamratzman.oauth.models.Identify;
+import com.adamratzman.oauth.models.Token;
 import com.mrpowergamerbr.temmiediscordauth.TemmieDiscordAuth;
 import com.mrpowergamerbr.temmiediscordauth.responses.CurrentUserResponse;
 import com.mrpowergamerbr.temmiediscordauth.utils.TemmieGuild;
 import fi.iki.elonen.NanoHTTPD;
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.StringFormatter;
 
 import java.util.HashMap;
@@ -42,17 +47,21 @@ public class SessionHandler {
     }
 
     public UserSession makeSession(String auth) {
-        TemmieDiscordAuth temmie = new TemmieDiscordAuth(auth, callback, clientID, clientSecret);
+        DiscordAuthenticator authenticator = new DiscordAuthenticator.Builder()
+                .setOauthConfiguration(Main.config.httpd_url, callback)
+                .setBotConfiguration("Poppo", clientID, clientSecret, Main.config.token)
+                .build();
+        Token token = authenticator.getToken(auth);
 
-        if(!temmie.isValid()) {
+        if(token == null) {
             return null;
         }
-        temmie.doTokenExchange(); // ALWAYS do an token exchange before using any of the methods in TemmieDiscordAuth!
-        //String token = temmie.getAccessToken();
-        CurrentUserResponse user = temmie.getCurrentUserIdentification();
-        List<TemmieGuild> guilds = temmie.getUserGuilds();
 
-        return new UserSession("", user, guilds);
+        //String token = temmie.getAccessToken();
+        Identify user = authenticator.getUser(token);
+        Guild[] guilds = authenticator.getUserGuilds(token);
+
+        return new UserSession(token, user, guilds);
     }
 
     public boolean contains(Machine machine) {

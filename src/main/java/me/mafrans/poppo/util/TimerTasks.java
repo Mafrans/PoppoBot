@@ -13,24 +13,21 @@ public class TimerTasks {
     }
 
     public static void start() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                running = true;
-                while(running) {
+        Thread thread = new Thread(() -> {
+            running = true;
+            while(running) {
 
-                    queueTask(TwitchEvents.getRunner(), 10);
-                    queueTask(new AutoInsult(), 120); // 3h
+                queueTask(TwitchEvents.getRunner(), 10);
+                queueTask(new AutoInsult(), 120); // 3h
 
-                    try {
-                        Thread.sleep(1 * 60 * 1000);
-                    }
-                    catch (InterruptedException e) {
-                        return;
-                    }
-
-                    iteration++;
+                try {
+                    Thread.sleep(1 * 60 * 1000);
                 }
+                catch (InterruptedException e) {
+                    return;
+                }
+
+                iteration++;
             }
         });
         thread.start();
