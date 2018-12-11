@@ -39,12 +39,13 @@ public class Command_help implements ICommand {
             for(CommandCategory commandCategory : CommandCategory.values()) {
                 String content = "";
                 for (ICommand cmd : CommandHandler.getCommands()) {
+                    if(cmd.getMeta().isHidden()) continue;
                     if(cmd.getMeta().getCategory() == commandCategory) {
                         content += "**" + GUtil.capitalize(cmd.getName()) + ":** " + cmd.getMeta().getDescription() + "\n";
                     }
                 }
 
-                embedBuilder.addField(commandCategory.getName(), content + "\n\u00AD", false);
+                embedBuilder.addField(commandCategory.getEmote() + commandCategory.getName(), content + "\n\u00AD", false);
             }
             stringBuilder.append("```");
 

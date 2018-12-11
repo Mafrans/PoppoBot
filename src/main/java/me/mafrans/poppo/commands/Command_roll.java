@@ -24,7 +24,7 @@ public class Command_roll implements ICommand {
         return new CommandMeta(
                 CommandCategory.FUN,
                 "Rolls any amount of dice and sums the values.",
-                "roll [amount] [type]",
+                "roll [amount]",
                 null,
                 false);
     }
