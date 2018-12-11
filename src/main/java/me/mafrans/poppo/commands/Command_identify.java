@@ -46,8 +46,8 @@ public class Command_identify implements ICommand {
         else if(command.getMessage().getMentionedUsers().size() > 0) {
             uuid = command.getMessage().getMentionedUsers().get(0).getId();
         }
-        else if(Main.jda.getUsersByName(args[0], true).size() > 0) {
-            uuid = Main.jda.getUsersByName(args[0], true).get(0).getId();
+        else if(Main.jda.getUsersByName(StringUtils.join(args, " "), true).size() > 0) {
+            uuid = Main.jda.getUsersByName(StringUtils.join(args, " "), true).get(0).getId();
         }
         else {
             channel.sendMessage("Could not find a user with that name or id.").queue();

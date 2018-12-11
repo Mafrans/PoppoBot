@@ -70,6 +70,7 @@ public class Main {
         CommandHandler.addCommand(new Command_mute());
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_shutdown());
+        CommandHandler.addCommand(new Command_get());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
