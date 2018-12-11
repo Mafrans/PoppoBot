@@ -14,9 +14,8 @@ public class CommandHandler {
     private static List<ICommand> commandList = new ArrayList();
 
     public static Command parseCommand(Message message) {
-        String content = message.getContent();
+        String content = message.getContentRaw();
         if(!content.toLowerCase().startsWith(config.command_prefix.toLowerCase())) {
-            System.out.println("Not Command: " + message.getId());
             return null;
         }
 
@@ -42,7 +41,6 @@ public class CommandHandler {
 
             if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && meta.getAliases().contains(words[0].toLowerCase()))) {
                 outCommand.setLabel(words[0]);
-                System.out.println("Found command " + cmd.getName());
                 outCommand.setCmd(name);
                 outCommand.setExecutor(cmd);
                 break;

@@ -15,8 +15,8 @@ public class SelectionListener extends ListenerAdapter {
         if(SelectionList.openLists.isEmpty()) return;
         for(SelectionList list : SelectionList.getOpenLists()) {
             if(list.getChannel() == event.getTextChannel() && (list.getOwner() == null || list.getOwner().getId().equals(event.getAuthor().getId()))) {
-                if(NumberUtils.isDigits(event.getMessage().getContent())) {
-                    int index = Integer.parseInt(event.getMessage().getContent());
+                if(NumberUtils.isDigits(event.getMessage().getContentDisplay())) {
+                    int index = Integer.parseInt(event.getMessage().getContentDisplay());
 
                     if(index > list.getAlternatives().size()) return;
 

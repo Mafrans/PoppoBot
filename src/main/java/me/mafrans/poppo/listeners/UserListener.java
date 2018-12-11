@@ -5,9 +5,8 @@ import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.user.UserNameUpdateEvent;
-import net.dv8tion.jda.core.events.user.UserOnlineStatusUpdateEvent;
+import net.dv8tion.jda.core.events.user.update.UserUpdateNameEvent;
+import net.dv8tion.jda.core.events.user.update.UserUpdateOnlineStatusEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.xml.crypto.Data;
@@ -19,7 +18,7 @@ import java.util.*;
 
 public class UserListener extends ListenerAdapter {
     @Override
-    public void onUserNameUpdate(UserNameUpdateEvent event) {
+    public void onUserUpdateName(UserUpdateNameEvent event) {
         if(Main.userList.getUsersFrom("uuid", event.getUser().getId()).size() == 0) {
             DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl());
             Main.userList.add(new SQLDataUser(dataUser));
@@ -31,18 +30,19 @@ public class UserListener extends ListenerAdapter {
         if(!names.contains(event.getUser().getName())) {
             names.add(event.getUser().getName());
         }
+        dataUser.setNames(names);
 
         Main.userList.add(new SQLDataUser(dataUser));
     }
 
     @Override
-    public void onUserOnlineStatusUpdate(UserOnlineStatusUpdateEvent event) {
+    public void onUserUpdateOnlineStatus(UserUpdateOnlineStatusEvent event) {
         if(Main.userList.getUsersFrom("uuid", event.getUser().getId()).size() == 0) {
             DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl());
             Main.userList.add(new SQLDataUser(dataUser));
         }
 
-        OnlineStatus prevOnlineStatus = event.getPreviousOnlineStatus();
+        OnlineStatus prevOnlineStatus = event.getOldOnlineStatus();
         OnlineStatus currentOnlineStatus = event.getGuild().getMember(event.getUser()).getOnlineStatus();
 
         if((prevOnlineStatus == OnlineStatus.ONLINE || prevOnlineStatus == OnlineStatus.DO_NOT_DISTURB) && (currentOnlineStatus == OnlineStatus.IDLE || currentOnlineStatus == OnlineStatus.INVISIBLE || currentOnlineStatus == OnlineStatus.OFFLINE)) {

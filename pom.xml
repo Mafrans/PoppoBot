@@ -119,7 +119,7 @@
             <artifactId>jda</artifactId>
             <version>3.3.0_260</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/JDA-3.3.0_260.jar</systemPath>
+            <systemPath>${basedir}/lib/JDA-3.8.1_448.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>

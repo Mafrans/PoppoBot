@@ -105,7 +105,7 @@ public enum ServerPrefs {
     }
 
     public void remove(Guild guild) throws IOException {
-        Properties pref = new Properties();
+        Properties pref;
 
         File file = new File("servers/" + guild.getId() + "/preferences.properties");
         if(file.exists()) {

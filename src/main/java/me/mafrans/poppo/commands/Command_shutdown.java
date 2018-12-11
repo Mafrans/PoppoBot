@@ -34,8 +34,7 @@ public class Command_shutdown implements ICommand {
             return true;
         }
 
-        channel.sendMessage(":sleeping_accommodation:").complete();
-        channel.sendMessage("Good night!").complete();
+        channel.sendMessage(":sleeping_accommodation:\nGood night!").complete();
         Main.jda.getPresence().setStatus(OnlineStatus.OFFLINE);
 
         System.exit(0);

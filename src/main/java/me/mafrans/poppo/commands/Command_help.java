@@ -35,16 +35,18 @@ public class Command_help implements ICommand {
             //embedBuilder.setTitle("Command List");
             embedBuilder.setAuthor("Command List", "http://poppobot.ga/help", Main.jda.getSelfUser().getAvatarUrl());
             embedBuilder.setColor(GUtil.randomColor());
+            embedBuilder.addField("Command Prefix:", Main.config.command_prefix, false);
             stringBuilder.append("```");
             for(CommandCategory commandCategory : CommandCategory.values()) {
-                String content = "";
+                StringBuilder content = new StringBuilder();
                 for (ICommand cmd : CommandHandler.getCommands()) {
+                    if(cmd.getMeta().isHidden()) continue;
                     if(cmd.getMeta().getCategory() == commandCategory) {
-                        content += "**" + GUtil.capitalize(cmd.getName()) + ":** " + cmd.getMeta().getDescription() + "\n";
+                        content.append("**").append(GUtil.capitalize(cmd.getName())).append(":** ").append(cmd.getMeta().getDescription()).append("\n");
                     }
                 }
 
-                embedBuilder.addField(commandCategory.getName(), content + "\n\u00AD", false);
+                embedBuilder.addField(commandCategory.getEmote() + commandCategory.getName(), content + "\n\u00AD", false);
             }
             stringBuilder.append("```");
 
@@ -83,6 +85,6 @@ public class Command_help implements ICommand {
                 return true;
             }
         }
-        return false;
+        return true;
     }
 }

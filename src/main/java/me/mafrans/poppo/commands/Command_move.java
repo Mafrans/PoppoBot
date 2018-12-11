@@ -53,7 +53,7 @@ public class Command_move implements ICommand {
         embedBuilder.setColor(GUtil.randomColor());
         embedBuilder.setAuthor(message.getMember().getEffectiveName() + " said:", Main.config.httpd_url, message.getAuthor().getAvatarUrl());
         embedBuilder.setTimestamp(message.getCreationTime());
-        embedBuilder.setDescription(message.getContent());
+        embedBuilder.setDescription(message.getContentRaw());
         MessageEmbed embed = embedBuilder.build();
 
         for(TextChannel textChannel : command.getMessage().getMentionedChannels()) {

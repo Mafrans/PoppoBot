@@ -71,6 +71,8 @@ public class Main {
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_shutdown());
         CommandHandler.addCommand(new Command_get());
+        CommandHandler.addCommand(new Command_flip());
+        CommandHandler.addCommand(new Command_generate());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();

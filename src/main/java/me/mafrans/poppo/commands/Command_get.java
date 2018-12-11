@@ -55,7 +55,7 @@ public class Command_get implements ICommand {
             embedBuilder.setThumbnail(guild.getIconUrl());
             embedBuilder.setTitle(guild.getName());
             embedBuilder.addField("Members", String.valueOf(guild.getMembers().size()), true);
-            embedBuilder.addField("Owner", String.valueOf(guild.getOwner().getAsMention()), true);
+            embedBuilder.addField("  Owner", "  " + String.valueOf(guild.getOwner().getAsMention()), true);
             embedBuilder.addField("Creation Date", String.valueOf(guild.getCreationTime()), true);
             embedBuilder.addField("ID", String.valueOf(guild.getId()), true);
             embedBuilder.addField("Icon Url", String.valueOf(guild.getIconUrl()), true);
@@ -76,7 +76,7 @@ public class Command_get implements ICommand {
         embedBuilder.setThumbnail(guild.getIconUrl());
         embedBuilder.setTitle(guild.getName());
         embedBuilder.addField("Members", String.valueOf(guild.getMembers().size()), true);
-        embedBuilder.addField("Owner", String.valueOf(guild.getOwner().getAsMention()), true);
+        embedBuilder.addField("  Owner", "  " + String.valueOf(guild.getOwner().getAsMention()), true);
         embedBuilder.addField("Creation Date", String.valueOf(guild.getCreationTime()), true);
         embedBuilder.addField("ID", String.valueOf(guild.getId()), true);
         embedBuilder.addField("Icon Url", String.valueOf(guild.getIconUrl()), true);
@@ -115,7 +115,6 @@ public class Command_get implements ICommand {
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(GUtil.randomColor());
-        embedBuilder.setAuthor(user.getName(), null, user.getAvatarUrl());
         embedBuilder.setTitle(user.getName() + "'s Avatar", user.getAvatarUrl());
         embedBuilder.setImage(user.getAvatarUrl());
 
