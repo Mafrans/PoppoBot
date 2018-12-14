@@ -9,7 +9,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import me.mafrans.poppo.Main;
-import me.mafrans.poppo.listeners.TrackScheduler;
+import me.mafrans.poppo.listeners.MusicListener;
 import me.mafrans.poppo.util.objects.YoutubeVideo;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
@@ -36,7 +36,7 @@ public class MusicManager {
 
     public void joinChannel(TextChannel channel, VoiceChannel voiceChannel) {
         AudioPlayer player = audioPlayerManager.createPlayer();
-        TrackScheduler trackScheduler = new TrackScheduler(channel, voiceChannel);
+        MusicListener trackScheduler = new MusicListener(channel, voiceChannel);
         player.addListener(trackScheduler);
         audioPlayerMap.put(voiceChannel.getGuild(), player);
         AudioManager manager = voiceChannel.getGuild().getAudioManager();
@@ -91,24 +91,17 @@ public class MusicManager {
                 System.out.println(3);
                 embedBuilder.setTitle(scheduleMap.get(voiceChannel.getGuild()).get(0).getTitle());
                 System.out.println(4);
-                String durationStamp = String.format("%d:%d",
+                String durationStamp = String.format("%02d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(audioTrack.getDuration()),
                         TimeUnit.MILLISECONDS.toSeconds(audioTrack.getDuration()) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(audioTrack.getDuration()))
                 );
-                System.out.println(5);
 
                 embedBuilder.setDescription("Length: `" + durationStamp + "`\nUploaded By: `" + scheduleMap.get(voiceChannel.getGuild()).get(0).getChannelTitle() + "`");
-                System.out.println(6);
                 embedBuilder.setThumbnail(scheduleMap.get(voiceChannel.getGuild()).get(0).getImageUrl());
-                System.out.println(7);
                 embedBuilder.setColor(GUtil.randomColor());
-                System.out.println(8);
                 MessageEmbed embed = embedBuilder.build();
-                System.out.println(9);
                 System.out.println(embed);
-                System.out.println(10);
                 textChannel.sendMessage(embed).queue();
-                System.out.println(11);
                 audioPlayer.playTrack(audioTrack);
             }
 

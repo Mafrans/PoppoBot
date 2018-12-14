@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TrackScheduler extends AudioEventAdapter {
+public class MusicListener extends AudioEventAdapter {
     private TextChannel channel;
     private VoiceChannel voiceChannel;
-    public TrackScheduler(TextChannel channel, VoiceChannel voiceChannel) {
+    public MusicListener(TextChannel channel, VoiceChannel voiceChannel) {
         this.channel = channel;
         this.voiceChannel = voiceChannel;
     }
