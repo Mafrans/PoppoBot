@@ -27,9 +27,12 @@ public class UserListener extends ListenerAdapter {
 
         DataUser dataUser = Main.userList.getUsersFrom("uuid", event.getUser().getId()).get(0);
         List<String> names = new ArrayList<>(dataUser.getNames());
+        System.out.println("Old Names: " + names.toString());
         if(!names.contains(event.getUser().getName())) {
             names.add(event.getUser().getName());
         }
+
+        System.out.println("New Names: " + names.toString());
         dataUser.setNames(names);
 
         Main.userList.add(new SQLDataUser(dataUser));

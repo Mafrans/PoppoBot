@@ -66,20 +66,27 @@ public class Command_define implements ICommand {
                     embedBuilder.setColor(GUtil.randomColor());
 
                     if(definition.getTitle() != null) {
-                        if (definition.getType() != null)
-                            embedBuilder.setTitle(definition.getTitle() + " (" + definition.getType() + ")");
-                        else
-                            embedBuilder.setTitle(definition.getTitle());
+
+                        if (definition.getType() != null) {
+                            if(definition.getSource() != null)
+                                if(definition.getSource().equalsIgnoreCase("urbandictionary"))
+                                    embedBuilder.setAuthor(definition.getTitle() + " (" + definition.getType() + ")", "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
+                                else
+                                    embedBuilder.setAuthor(definition.getTitle() + " (" + definition.getType() + ")", "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
+
+                        }
+                        else {
+                            if(definition.getSource().equalsIgnoreCase("urbandictionary"))
+                                embedBuilder.setAuthor(definition.getTitle(), "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
+                            else
+                                embedBuilder.setAuthor(definition.getTitle(), "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
+
+                        }
                     }
                     if(definition.getDefinition() != null)
                         embedBuilder.setDescription(definition.getDefinition());
                     if(definition.getExample() != null)
                         embedBuilder.addField("Example", definition.getExample(), false);
-                    if(definition.getSource() != null)
-                        if(definition.getSource().equalsIgnoreCase("urbandictionary"))
-                            embedBuilder.setAuthor("Source: " + definition.getSource(), "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
-                        else
-                            embedBuilder.setAuthor("Source: " + definition.getSource(), "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
 
                     System.out.println(selectionList.getMessage());
                     selectionList.getMessage().delete().queue();

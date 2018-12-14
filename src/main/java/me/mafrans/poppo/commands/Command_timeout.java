@@ -89,7 +89,9 @@ public class Command_timeout implements ICommand {
                     Guild guild = (Guild) arguments[2];
 
                     guild.getController().removeRolesFromMember(target, Rank.TIMED_OUT.getRole(guild)).queue();
-                    target.getUser().openPrivateChannel().complete().sendMessage("You are no longer timed out in **" + guild.getName() + "**").queue();
+                    if(!target.getUser().isBot()) {
+                        target.getUser().openPrivateChannel().complete().sendMessage("You are no longer timed out in **" + guild.getName() + "**").queue();
+                    }
                     ((TextChannel)arguments[3]).sendMessage(target.getAsMention() + " is no longer timed out.").queue();
                 }
             });
@@ -97,20 +99,26 @@ public class Command_timeout implements ICommand {
             thread.start();
 
             channel.sendMessage("I've timed " + target.getAsMention() + " out for you!").queue();
-            target.getUser().openPrivateChannel().complete().sendMessage("You have been timed out in **" + channel.getGuild().getName() + "**. This means you will not be able to read or write any messages until **" + GUtil.DATE_TIME_FORMAT.format(dateOffset) + "**. I will notify you once you are able to read and write again!\n\n*If you think this timeout was unfair, please contact one of the moderators of **" + channel.getGuild().getName() + "** so they can release you from the timeout, you can still see their names in the member list!*").queue();
+            if(!target.getUser().isBot()) {
+                target.getUser().openPrivateChannel().complete().sendMessage("You have been timed out in **" + channel.getGuild().getName() + "**. This means you will not be able to read or write any messages until **" + GUtil.DATE_TIME_FORMAT.format(dateOffset) + "**. I will notify you once you are able to read and write again!\n\n*If you think this timeout was unfair, please contact one of the moderators of **" + channel.getGuild().getName() + "** so they can release you from the timeout, you can still see their names in the member list!*").queue();
+            }
             return true;
         }
 
         System.out.println(target.getRoles());
 
-        if(!Rank.MUTED.hasRole(target)) {
+        if(!Rank.TIMED_OUT.hasRole(target)) {
             channel.getGuild().getController().addRolesToMember(target, Rank.TIMED_OUT.getRole(channel.getGuild())).queue();
             channel.sendMessage("I've timed " + target.getAsMention() + " out for you!").queue();
-            target.getUser().openPrivateChannel().complete().sendMessage("You have been timed out in **" + channel.getGuild().getName() + "**. This means you will not be able to read or write any messages!\n\n*If you think this timeout was unfair, please contact one of the moderators of **" + channel.getGuild().getName() + "** so they can release you from the timeout, you can still see their names in the member list!*").queue();
+            if(!target.getUser().isBot()) {
+                target.getUser().openPrivateChannel().complete().sendMessage("You have been timed out in **" + channel.getGuild().getName() + "**. This means you will not be able to read or write any messages!\n\n*If you think this timeout was unfair, please contact one of the moderators of **" + channel.getGuild().getName() + "** so they can release you from the timeout, you can still see their names in the member list!*").queue();
+            }
         }
         else {
             channel.getGuild().getController().removeRolesFromMember(target, Rank.TIMED_OUT.getRole(channel.getGuild())).queue();
-            target.getUser().openPrivateChannel().complete().sendMessage("You're no longer timed out in **" + channel.getGuild().getName() + "**").queue();
+            if(!target.getUser().isBot()) {
+                target.getUser().openPrivateChannel().complete().sendMessage("You're no longer timed out in **" + channel.getGuild().getName() + "**").queue();
+            }
             channel.sendMessage(target.getAsMention() + " is no longer timed out.").queue();
         }
 

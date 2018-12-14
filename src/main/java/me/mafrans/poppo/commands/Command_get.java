@@ -55,7 +55,7 @@ public class Command_get implements ICommand {
             embedBuilder.setThumbnail(guild.getIconUrl());
             embedBuilder.setTitle(guild.getName());
             embedBuilder.addField("Members", String.valueOf(guild.getMembers().size()), true);
-            embedBuilder.addField("  Owner", "  " + String.valueOf(guild.getOwner().getAsMention()), true);
+            embedBuilder.addField("Owner", String.valueOf(guild.getOwner().getAsMention()), true);
             embedBuilder.addField("Creation Date", String.valueOf(guild.getCreationTime()), true);
             embedBuilder.addField("ID", String.valueOf(guild.getId()), true);
             embedBuilder.addField("Icon Url", String.valueOf(guild.getIconUrl()), true);
@@ -76,7 +76,7 @@ public class Command_get implements ICommand {
         embedBuilder.setThumbnail(guild.getIconUrl());
         embedBuilder.setTitle(guild.getName());
         embedBuilder.addField("Members", String.valueOf(guild.getMembers().size()), true);
-        embedBuilder.addField("  Owner", "  " + String.valueOf(guild.getOwner().getAsMention()), true);
+        embedBuilder.addField("Owner", String.valueOf(guild.getOwner().getAsMention()), true);
         embedBuilder.addField("Creation Date", String.valueOf(guild.getCreationTime()), true);
         embedBuilder.addField("ID", String.valueOf(guild.getId()), true);
         embedBuilder.addField("Icon Url", String.valueOf(guild.getIconUrl()), true);
@@ -95,7 +95,7 @@ public class Command_get implements ICommand {
             uuid = command.getAuthor().getId();
         }
         else {
-            if (args[1].length() == 18 && NumberUtils.isDigits(args[0])) {
+            if (args[1].length() == 18 && NumberUtils.isDigits(args[1])) {
                 uuid = args[1];
             } else if (command.getMessage().getMentionedUsers().size() > 0) {
                 uuid = command.getMessage().getMentionedUsers().get(0).getId();
@@ -112,11 +112,12 @@ public class Command_get implements ICommand {
             channel.sendMessage("Could not find a user with that name or id.").queue();
             return true;
         }
+        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".png?size=2048";
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(GUtil.randomColor());
-        embedBuilder.setTitle(user.getName() + "'s Avatar", user.getAvatarUrl());
-        embedBuilder.setImage(user.getAvatarUrl());
+        embedBuilder.setTitle(user.getName() + "'s Avatar", avatarUrl);
+        embedBuilder.setImage(avatarUrl);
 
         channel.sendMessage(embedBuilder.build()).queue();
 

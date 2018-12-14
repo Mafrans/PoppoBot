@@ -25,6 +25,11 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -73,11 +78,9 @@
             <systemPath>${basedir}/lib/commons-lang3-3.6 (1).jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.google</groupId>
-            <artifactId>google-api-client</artifactId>
-            <version>1.22.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/google-api-client-1.22.0.jar</systemPath>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-youtube</artifactId>
+            <version>v3-rev206-1.25.0</version>
         </dependency>
         <!--dependency>
             <groupId>com.google</groupId>
@@ -93,6 +96,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/google-http-client-1.22.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.25.0</version>
+        </dependency>
+
         <!--dependency>
             <groupId>com.google</groupId>
             <artifactId>google-oauth-client</artifactId>
@@ -106,6 +115,17 @@
             <version>2.8.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/gson-2.8.0.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sedmelluq</groupId>
+            <artifactId>lavaplayer</artifactId>
+            <version>1.3.10</version>
         </dependency>
         <dependency>
             <groupId>com.httprequest</groupId>

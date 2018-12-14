@@ -35,7 +35,7 @@ public class DataUser {
     }
 
     public static DataUser parse(SQLDataUser sqlDataUser) {
-        List<String> names = Arrays.asList(StringFormatter.stringToArray(sqlDataUser.getNames()));
+        List<String> names = Arrays.asList(sqlDataUser.getNames().split("\uE081"));
         String uuid = sqlDataUser.getUuid();
         String lastOnlineTag = sqlDataUser.getLastOnlineTag();
         String avatarUrl = sqlDataUser.getAvatarUrl();

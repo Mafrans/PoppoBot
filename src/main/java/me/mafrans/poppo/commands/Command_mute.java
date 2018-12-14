@@ -89,7 +89,9 @@ public class Command_mute implements ICommand {
                     Guild guild = (Guild) arguments[2];
 
                     guild.getController().removeRolesFromMember(target, Rank.MUTED.getRole(guild)).queue();
-                    target.getUser().openPrivateChannel().complete().sendMessage("You are no longer muted in **" + guild.getName() + "**").queue();
+                    if(!target.getUser().isBot()) {
+                        target.getUser().openPrivateChannel().complete().sendMessage("You are no longer muted in **" + guild.getName() + "**").queue();
+                    }
                     ((TextChannel)arguments[3]).sendMessage(target.getAsMention() + " is no longer muted.").queue();
                 }
             });
@@ -108,7 +110,9 @@ public class Command_mute implements ICommand {
         }
         else {
             channel.getGuild().getController().removeRolesFromMember(target, Rank.MUTED.getRole(channel.getGuild())).queue();
-            target.getUser().openPrivateChannel().complete().sendMessage("You're no longer muted in **" + channel.getGuild().getName() + "**").queue();
+            if(!target.getUser().isBot()) {
+                target.getUser().openPrivateChannel().complete().sendMessage("You're no longer muted in **" + channel.getGuild().getName() + "**").queue();
+            }
             channel.sendMessage(target.getAsMention() + " is no longer muted.").queue();
         }
 

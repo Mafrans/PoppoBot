@@ -4,9 +4,11 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.Information;
 import me.mafrans.poppo.util.web.InformationGetter;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
 
@@ -47,20 +49,25 @@ public class Command_getinfo implements ICommand {
             selectionList.addAlternative(info.getTitle() + " - " + info.getDescription(), new Runnable() {
                 @Override
                 public void run() {
-                    StringBuilder builder = new StringBuilder();
+                    EmbedBuilder embedBuilder = new EmbedBuilder();
+                    embedBuilder.setColor(GUtil.randomColor());
 
-                    if(info.getTitle() != null)
-                        builder.append("**" + info.getTitle() + ":**");
-                    if(info.getDescription() != null)
-                        builder.append("\n" + info.getDescription());
+                    if(info.getTitle() != null) {
+                        if(info.getDescription() != null)
+                            embedBuilder.setAuthor(info.getTitle() + " (" + info.getDescription() + ")", null, "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png");
+                        else
+                            embedBuilder.setAuthor(info.getTitle(), null, "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png");
+                    }
+
                     if(info.getDetailedDescription() != null)
-                        builder.append("\n```\n" + info.getDetailedDescription() + "\n```");
+                        embedBuilder.addField("Description", info.getDetailedDescription(), false);
                     if(info.getUrl() != null)
-                        builder.append("\nURL: <" + info.getUrl() + ">");
+                        embedBuilder.addField("URL", info.getUrl(), true);
                     if(info.getReadMoreUrl() != null)
-                        builder.append("\nRead More: <" + info.getReadMoreUrl() + ">");
+                        embedBuilder.addField("Read More", info.getReadMoreUrl(), true);
 
-                    selectionList.getMessage().editMessage(builder.toString()).queue();
+                    selectionList.getMessage().delete().queue();
+                    channel.sendMessage(embedBuilder.build()).queue();
                 }
             });
         }

@@ -2,6 +2,7 @@ package me.mafrans.poppo.util;
 
 import me.mafrans.poppo.util.timedtasks.AutoInsult;
 import me.mafrans.poppo.util.timedtasks.GameChangeRunner;
+import me.mafrans.poppo.util.timedtasks.PollEndDateRunner;
 import me.mafrans.poppo.util.timedtasks.TwitchEvents;
 
 public class TimerTasks {
@@ -21,6 +22,7 @@ public class TimerTasks {
                 queueTask(TwitchEvents.getRunner(), 10);
                 queueTask(new AutoInsult(), 120); // 3h
                 queueTask(new GameChangeRunner(), 60);
+                queueTask(new PollEndDateRunner(), 1);
 
                 try {
                     Thread.sleep(1 * 60 * 1000);

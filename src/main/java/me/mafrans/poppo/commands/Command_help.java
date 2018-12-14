@@ -35,7 +35,7 @@ public class Command_help implements ICommand {
             //embedBuilder.setTitle("Command List");
             embedBuilder.setAuthor("Command List", "http://poppobot.ga/help", Main.jda.getSelfUser().getAvatarUrl());
             embedBuilder.setColor(GUtil.randomColor());
-            embedBuilder.addField("Command Prefix:", Main.config.command_prefix, false);
+            embedBuilder.addField("Command Prefix:", Main.config.command_prefix + "\n\u00AD", false);
             stringBuilder.append("```");
             for(CommandCategory commandCategory : CommandCategory.values()) {
                 StringBuilder content = new StringBuilder();
@@ -66,7 +66,7 @@ public class Command_help implements ICommand {
                 if(cmd.getMeta().getAliases() != null && cmd.getMeta().getAliases().size() > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (String alias : cmd.getMeta().getAliases()) {
-                        stringBuilder.append("- " + alias);
+                        stringBuilder.append("- " + alias + "\n");
                     }
 
                     embedBuilder.addField("Aliases", stringBuilder.toString(), false);

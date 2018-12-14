@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -22,11 +23,13 @@ public class SelectionList {
         this.channel = channel;
         this.alternatives = alternatives;
         this.outputs = outputs;
+        this.owner = owner;
     }
 
     public SelectionList(String title, TextChannel channel, User owner) {
         this.title = title;
         this.channel = channel;
+        this.owner = owner;
     }
 
     public void addAlternative(String title, Runnable output) {
@@ -35,20 +38,20 @@ public class SelectionList {
     }
 
     public void show(TextChannel channel) {
-        StringBuilder builder = new StringBuilder();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        builder.append("**" + title + "**");
-        builder.append("\n");
+        embedBuilder.setTitle("**" + title + "**");
+        embedBuilder.setColor(GUtil.randomColor());
 
         int i = 1;
         for(String alternative : alternatives) {
             if(i > 10) break; // should only display 10 at a time
 
-            builder.append("\n" + i + " - " + alternative);
+            embedBuilder.addField(String.valueOf(i), alternative, false);
             i++;
         }
 
-        message = channel.sendMessage(builder.toString()).complete();
+        message = channel.sendMessage(embedBuilder.build()).complete();
         SelectionList.openLists.add(this);
     }
 
