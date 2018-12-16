@@ -50,7 +50,7 @@ public class Command_help implements ICommand {
             }
             stringBuilder.append("```");
 
-            channel.sendMessage(embedBuilder.build()).queue()           ;
+            channel.sendMessage(embedBuilder.build()).queue();
             return true;
         }
 

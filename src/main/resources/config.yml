@@ -8,6 +8,7 @@ overlord_users:
   -
 token: aaaabbbbccccdddd
 twitch_token: mmmmnnnnoooopppp
+cat_api_token: qqqqrrrrssssttttt
 debug_users:
   -
 client_secret: POxCSgSZvMVB7zpYG2Gu8rMAaEREFjfy
