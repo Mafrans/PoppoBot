@@ -19,9 +19,7 @@ import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigManager;
 import me.mafrans.poppo.util.config.ConfigObject;
 import me.mafrans.poppo.util.config.ServerPrefs;
-import me.mafrans.poppo.util.objects.Rank;
-import me.mafrans.poppo.util.objects.UserList;
-import me.mafrans.poppo.util.objects.YoutubeVideo;
+import me.mafrans.poppo.util.objects.*;
 import me.mafrans.poppo.util.web.YoutubeSearcher;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -90,6 +88,7 @@ public class Main {
         CommandHandler.addCommand(new Command_endpoll());
         CommandHandler.addCommand(new Command_play());
         CommandHandler.addCommand(new Command_skip());
+        CommandHandler.addCommand(new Command_cat());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
@@ -112,12 +111,9 @@ public class Main {
         Main.jda.getPresence().setStatus(OnlineStatus.ONLINE);
 
 
-        try {
-            for(YoutubeVideo video : youtubeSearcher.GetVideos("Skylent", 10)) {
-                System.out.println(video);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        CatBreed.cacheBreeds();
+        CatCategory.cacheCategories();
+
+        System.out.println("PoppoBot is Ready!");
     }
 }

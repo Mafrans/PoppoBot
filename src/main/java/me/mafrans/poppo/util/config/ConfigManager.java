@@ -10,24 +10,8 @@ import java.io.*;
 import java.util.Properties;
 
 public class ConfigManager {
-    private String key;
-    private String defaultEntry;
     private static Yaml yaml;
     private static ConfigObject config;
-    private static Properties properties = new Properties();
-
-    ConfigManager(String key, String defaultEntry) {
-        this.key = key;
-        this.defaultEntry = defaultEntry;
-    }
-
-    public String getDefaultEntry() {
-        return defaultEntry;
-    }
-
-    public String getKey() {
-        return key;
-    }
 
     public static ConfigObject load() throws IOException {
         File file = new File("config.yml");
@@ -38,7 +22,6 @@ public class ConfigManager {
 
         System.out.println(IOUtils.toString(new FileReader(file)));
         config = yaml.loadAs(IOUtils.toString(new FileReader(file)), ConfigObject.class);
-        //properties.load(new FileReader(file));
         return config;
     }
 
@@ -47,7 +30,6 @@ public class ConfigManager {
     }
 
     public static void saveConfig() {
-        //if(propertiesFile == null) System.out.println("Something went wrong when setting the config value, please contact a Poppo developer!");
         try {
             FileWriter fileWriter = new FileWriter(new File("config.yml"));
             IOUtils.write(yaml.dump(config), fileWriter);

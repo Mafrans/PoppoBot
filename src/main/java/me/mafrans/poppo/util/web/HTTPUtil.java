@@ -138,4 +138,19 @@ public class HTTPUtil {
         String response = GET(sUrl + "?" + urlParameters.toString(), new HashMap<>());
         return new JSONObject(response);
     }
+
+    public static String getWikipediaThumbnail(String title) throws IOException {
+        String baseUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + title.replace(" ", "_") + "&prop=pageimages&format=json&pithumbsize=100";
+
+        JSONObject jsonObject = getJSON(baseUrl, new HashMap<>());
+        if(jsonObject.getJSONObject("query").getJSONObject("pages").length() == 0) {
+            return null;
+        }
+
+        JSONObject firstMatch = jsonObject.getJSONObject("query").getJSONObject("pages").getJSONObject(jsonObject.getJSONObject("query").getJSONObject("pages").keySet().toArray(new String[0])[0]);
+        if(!firstMatch.has("thumbnail")) {
+            return null;
+        }
+        return firstMatch.getJSONObject("thumbnail").getString("source");
+    }
 }
