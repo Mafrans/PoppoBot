@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -152,5 +153,35 @@ public class HTTPUtil {
             return null;
         }
         return firstMatch.getJSONObject("thumbnail").getString("source");
+    }
+
+    public static String getWikipediaDescription(String title) throws IOException {
+
+        String baseUrl = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=" + title.replace(" ", "_");
+
+        JSONObject jsonObject = getJSON(baseUrl, new HashMap<>());
+        if(jsonObject.getJSONObject("query").getJSONObject("pages").length() == 0) {
+            return null;
+        }
+
+        JSONObject firstMatch = jsonObject.getJSONObject("query").getJSONObject("pages").getJSONObject(jsonObject.getJSONObject("query").getJSONObject("pages").keySet().toArray(new String[0])[0]);
+        if(!firstMatch.has("extract")) {
+            return null;
+        }
+        return firstMatch.getString("extract");
+
+    }
+
+    public static int getResponse(String url) throws IOException {
+        try {
+            URL u = new URL(url);
+            HttpURLConnection huc = (HttpURLConnection) u.openConnection ();
+            huc.setRequestMethod("HEAD");
+            huc.connect();
+            return huc.getResponseCode();
+        }
+        catch (SocketException ex) {
+            return 408;
+        }
     }
 }

@@ -148,10 +148,10 @@ public class Command_cat implements ICommand {
             String value = replacements.get(key);
 
             out = out.replace("${" + key + "}", value)
-                     .replace("${" + key + "_l}", value.toLowerCase())
-                     .replace("${" + key + "_u}", value.toUpperCase())
-                     .replace("${" + key + "_c}", GUtil.capitalize(value))
-                     .replace("${" + key + "_wc}", GUtil.capitalizeWords(value));
+                    .replace("${" + key + "_l}", value.toLowerCase())
+                    .replace("${" + key + "_u}", value.toUpperCase())
+                    .replace("${" + key + "_c}", GUtil.capitalize(value))
+                    .replace("${" + key + "_wc}", GUtil.capitalizeWords(value));
         }
 
         return new String[] {out, breed.getUrl()};
@@ -183,10 +183,10 @@ public class Command_cat implements ICommand {
             String value = replacements.get(key);
 
             out = out.replace("${" + key + "}", value)
-                     .replace("${" + key + "_l}", value.toLowerCase())
-                     .replace("${" + key + "_u}", value.toUpperCase())
-                     .replace("${" + key + "_c}", GUtil.capitalize(value))
-                     .replace("${" + key + "_wc}", GUtil.capitalizeWords(value));
+                    .replace("${" + key + "_l}", value.toLowerCase())
+                    .replace("${" + key + "_u}", value.toUpperCase())
+                    .replace("${" + key + "_c}", GUtil.capitalize(value))
+                    .replace("${" + key + "_wc}", GUtil.capitalizeWords(value));
         }
 
         return new String[] {out, breed.getUrl()};

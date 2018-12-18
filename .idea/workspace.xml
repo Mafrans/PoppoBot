@@ -7,26 +7,18 @@
   </component>
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_generate.java" line="31" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Poll.java" line="143" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="494dc410-0b50-4cc5-bd59-40d4aa34c4d2" name="Default" comment="A shitton of changes to the twitch">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_flip.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_generate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/GameChangeRunner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Cat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatBreed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatCategory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/PoppoBot_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PoppoBot_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_get.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_get.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_help.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_roll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_roll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_shutdown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_shutdown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/SelectionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/SelectionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/UserListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/UserListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ServerPrefs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ServerPrefs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_cat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_cat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/HTTPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/HTTPUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userdata/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/userdata/users.db" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -81,44 +73,58 @@
     <session id="1886855055">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.23" value="1" />
+          <entry key="project.open.time.24" value="2" />
           <entry key="project.open.time.27" value="1" />
+          <entry key="project.open.time.28" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.31" value="1" />
           <entry key="project.open.time.33" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.37" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.46" value="1" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="MF" value="2" />
-          <entry key="class" value="1" />
-          <entry key="java" value="44" />
-          <entry key="xml" value="4" />
-          <entry key="yml" value="1" />
+          <entry key="class" value="2" />
+          <entry key="html" value="4" />
+          <entry key="java" value="129" />
+          <entry key="xml" value="7" />
+          <entry key="yml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="44" />
+          <entry key="CLASS" value="2" />
+          <entry key="HTML" value="4" />
+          <entry key="JAVA" value="129" />
           <entry key="Manifest" value="2" />
-          <entry key="XML" value="4" />
-          <entry key="YAML" value="1" />
+          <entry key="XML" value="7" />
+          <entry key="YAML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="7396" />
-          <entry key="txt" value="73" />
-          <entry key="xml" value="20" />
+          <entry key="dummy" value="50" />
+          <entry key="html" value="39" />
+          <entry key="java" value="34154" />
+          <entry key="txt" value="249" />
+          <entry key="xml" value="29" />
+          <entry key="yml" value="51" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7396" />
-          <entry key="PLAIN_TEXT" value="73" />
-          <entry key="XML" value="20" />
+          <entry key="HTML" value="39" />
+          <entry key="JAVA" value="34154" />
+          <entry key="PLAIN_TEXT" value="299" />
+          <entry key="XML" value="29" />
+          <entry key="YAML" value="51" />
         </counts>
       </usages-collector>
     </session>
@@ -126,40 +132,60 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ServerPrefs.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_cat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="107" column="24" selection-start-line="107" selection-start-column="24" selection-end-line="107" selection-end-column="24" />
+            <state relative-caret-position="534">
+              <caret line="193" column="1" selection-start-line="193" selection-start-column="1" selection-end-line="193" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2875#2876#0" expanded="true" />
+                <element signature="e#2903#2904#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/CommandListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
+              <caret line="27" column="21" lean-forward="true" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/GameChangeRunner.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_dog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="239">
+              <caret line="104" column="85" selection-start-line="104" selection-start-column="85" selection-end-line="104" selection-end-column="85" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/HTTPUtil.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
-              <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/UserListener.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/GUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="18" column="51" lean-forward="true" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
+            <state relative-caret-position="189">
+              <caret line="74" selection-start-line="74" selection-end-line="74" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -168,37 +194,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/SelectionListener.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Cat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="18" column="78" selection-start-line="18" selection-start-column="78" selection-end-line="18" selection-end-column="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_move.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="55" column="59" selection-start-line="55" selection-start-column="59" selection-end-line="55" selection-end-column="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="121" column="56" selection-start-line="121" selection-start-column="56" selection-end-line="121" selection-end-column="56" />
+            <state relative-caret-position="17">
+              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -213,10 +215,25 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/DataUser.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatBreed.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="53">
+              <caret line="131" column="67" lean-forward="true" selection-start-line="131" selection-start-column="67" selection-end-line="131" selection-end-column="67" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatCategory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="60" column="74" lean-forward="true" selection-start-line="60" selection-start-column="74" selection-end-line="60" selection-end-column="74" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -238,6 +255,9 @@
       <find>event.getUser()</find>
       <find>prevOnlineStatus</find>
       <find>User</find>
+      <find>.getJSONObject(&quot;snippet&quot;)</find>
+      <find>.replace(&quot;United States&quot;, &quot;The United States&quot;)</find>
+      <find>deodo</find>
     </findStrings>
     <replaceStrings>
       <replace>user</replace>
@@ -251,57 +271,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/ParameterStringBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/AutoInsult.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/StringFormatter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Roles.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_authenticated.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/documents/html/guilds.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/documents/html/login_process.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/documents/html/single_guild.html" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/SelectionList.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/SQLDataUser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/Util.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/FUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/GUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/DataUser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/runnables/UpdateAll.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/UserList.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_8ball.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_config.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_define.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_getinfo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_ping.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_roll.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_help.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/MapArray.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/CommandListener.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/SessionHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/UserSession.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/FileUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_guilds.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Rank.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/TwitchEventRunner.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_debug.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/TwitchEvents.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_identify.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_get.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ServerPrefs.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandMeta.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_flip.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_generate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_help.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_shutdown.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/UserListener.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/SelectionListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_move.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/GameChangeRunner.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_identify.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_mute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_timeout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_untimeout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_unmute.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Anime.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/SelectionList.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Manga.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_mal.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_get.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Poll.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/PollListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/PollEndDateRunner.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/documents/html/login.html" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_endpoll.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_poll.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/AudioListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/Authenticator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/YoutubeVideo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/AudioPlayerSendHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/YoutubeSearcher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/TrackScheduler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_play.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_skip.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/MusicListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/MusicManager.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigManager.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/config.yml" />
+        <option value="$PROJECT_DIR$/config.yml" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_help.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/DogCategory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/abstracts/Category.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/abstracts/Breed.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/abstracts/Animal.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/interfaces/IBreed.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Breed.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Cat.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Dog.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/DogBreed.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatCategory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatBreed.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_dog.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/HTTPUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_cat.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/GUtil.java" />
       </list>
     </option>
   </component>
@@ -311,11 +331,39 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="poppo" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="434" />
-    <option name="y" value="-20" />
-    <option name="width" value="974" />
-    <option name="height" value="1057" />
+    <option name="x" value="941" />
+    <option name="y" value="186" />
+    <option name="width" value="1034" />
+    <option name="height" value="1017" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>General</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Duplicates</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -333,11 +381,6 @@
             <path>
               <item name="PoppoBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="PoppoBot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PoppoBot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PoppoBot" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PoppoBot" type="b2602c69:ProjectViewProjectNode" />
@@ -457,7 +500,9 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="poppo" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PoppoBot" type="b2602c69:ProjectViewProjectNode" />
@@ -472,7 +517,25 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="documents" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PoppoBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PoppoBot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="documents" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PoppoBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PoppoBot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="documents" type="462c0819:PsiDirectoryNode" />
+              <item name="html" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -484,25 +547,31 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544567670516" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545090908050" />
     <property name="last_opened_file_path" value="C:/Program Files/Git/bin/git.exe" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\malte\IdeaProjects\PoppoBot\src\main\resources\documents\css" />
+      <recent name="C:\Users\malte\IdeaProjects\PoppoBot\src\main\resources\documents\html" />
+      <recent name="C:\Users\malte\IdeaProjects\PoppoBot\src\main\resources\documents" />
+      <recent name="C:\Users\malte\IdeaProjects\PoppoBot\lib" />
+      <recent name="C:\Users\malte\IdeaProjects\PoppoBot-git\lib" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="me.mafrans.poppo.commands" />
+      <recent name="me.mafrans.poppo.util.objects" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\malte\IdeaProjects\PoppoBot" />
       <recent name="C:\Users\malte\IdeaProjects\PoppoBot\src\main\resources" />
       <recent name="C:\Users\malte\IdeaProjects\PoppoBot\src\main\java" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\malte\IdeaProjects\PoppoBot\lib" />
-      <recent name="C:\Users\malte\IdeaProjects\PoppoBot-git\lib" />
-      <recent name="C:\Users\malte\IdeaProjects\PoppoBot\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -545,7 +614,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
+    <configuration default="true" type="TestNG">
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
@@ -590,7 +659,15 @@
       <workItem from="1544384887361" duration="1398000" />
       <workItem from="1544387115714" duration="13967000" />
       <workItem from="1544463706911" duration="2504000" />
-      <workItem from="1544560363293" duration="7260000" />
+      <workItem from="1544560363293" duration="8259000" />
+      <workItem from="1544614572976" duration="3737000" />
+      <workItem from="1544637943967" duration="12734000" />
+      <workItem from="1544689124059" duration="623000" />
+      <workItem from="1544730875774" duration="26000" />
+      <workItem from="1544733625961" duration="11419000" />
+      <workItem from="1544811476516" duration="16390000" />
+      <workItem from="1544914046761" duration="11988000" />
+      <workItem from="1545080268228" duration="10667000" />
     </task>
     <task id="LOCAL-00001" summary="Add roll command and experimental HTTPD system">
       <created>1527859672190</created>
@@ -641,16 +718,60 @@
       <option name="project" value="LOCAL" />
       <updated>1544560522531</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Random Generation of commands and game changing system. Also update to newer JDA">
+      <created>1544567767198</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1544567767198</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Random Generation of commands and game changing system. Also update to newer JDA">
+      <created>1544567794356</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1544567794356</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Polls, Music and other awesome things!">
+      <created>1544828918578</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1544828918579</updated>
+    </task>
+    <task id="LOCAL-00011" summary="KITTY CATS!">
+      <created>1544926008264</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1544926008267</updated>
+    </task>
+    <task id="LOCAL-00012" summary="KITTY CATS!">
+      <created>1544926041594</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1544926041594</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72605000" />
+    <option name="totallyTimeSpent" value="141188000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="0" width="1936" height="1047" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49893844" visible="true" weight="0.20904645" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49893844" visible="true" weight="0.17270789" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -659,23 +780,23 @@
       <window_info id="Nl-Palette" order="6" />
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3280757" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49684212" visible="true" weight="0.3251121" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39957938" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3274918" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49684212" weight="0.3253012" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39868566" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295583" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5031579" side_tool="true" weight="0.32842582" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49816626" weight="0.3295964" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49511003" weight="0.32623318" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49816626" weight="0.3295583" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49511003" weight="0.3242059" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info active="true" anchor="right" id="Maven Projects" order="5" visible="true" weight="0.32995737" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Properties" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -693,286 +814,467 @@
     <MESSAGE value="Make shit into SQL" />
     <MESSAGE value="Merge" />
     <MESSAGE value="A shitton of changes to the twitch system and some minor additions." />
+    <MESSAGE value="Random Generation of commands and game changing system. Also update to newer JDA" />
+    <MESSAGE value="Polls, Music and other awesome things!" />
     <MESSAGE value="A shitton of changes to the twitch" />
-    <option name="LAST_COMMIT_MESSAGE" value="A shitton of changes to the twitch" />
+    <MESSAGE value="KITTY CATS!" />
+    <option name="LAST_COMMIT_MESSAGE" value="KITTY CATS!" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/UserList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/SQLDataUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigEntry.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/SelectionList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="51" column="42" selection-start-line="51" selection-start-column="42" selection-end-line="51" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_define.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/MapArray.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_ping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_roll.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_help.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_getinfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_login.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Information.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_loginprocess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="38" column="55" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_8ball.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/UserSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_timeout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="45" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/MaHTTPD.jar!/me/mafrans/mahttpd/util/FileUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="13" selection-end-line="119" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/SessionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="50" column="47" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="47" />
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Rank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="118" column="42" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-432">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/TwitchEvents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/TwitchEventRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="57" column="55" selection-start-line="57" selection-start-column="55" selection-end-line="57" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_debug.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1615">
-          <caret line="120" column="22" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_guilds.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
-          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="118" column="42" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_identify.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/UserList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="54" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_get.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="116" column="51" selection-start-line="116" selection-start-column="51" selection-end-line="116" selection-end-column="51" />
+        <state relative-caret-position="470">
+          <caret line="92" column="20" lean-forward="true" selection-start-line="92" selection-start-column="20" selection-end-line="92" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="38" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Poll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2440">
+          <caret line="15" column="44" lean-forward="true" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2081#2082#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#2162#2163#0" expanded="true" />
+            <element signature="e#2200#2201#0" expanded="true" />
+            <element signature="e#1322#1323#0" expanded="true" />
+            <element signature="e#1352#1353#0" expanded="true" />
+            <element signature="e#1396#1397#0" expanded="true" />
+            <element signature="e#1434#1435#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="e#1129#1130#0" expanded="true" />
+            <element signature="e#1176#1177#0" expanded="true" />
+            <element signature="e#1214#1215#0" expanded="true" />
+            <element signature="e#1245#1246#0" expanded="true" />
+            <element signature="e#1274#1275#0" expanded="true" />
+            <element signature="e#1316#1317#0" expanded="true" />
+            <element signature="e#1352#1353#0" expanded="true" />
+            <element signature="e#1390#1391#0" expanded="true" />
+            <element signature="e#1424#1425#0" expanded="true" />
+            <element signature="e#1478#1479#0" expanded="true" />
+            <element signature="e#1524#1525#0" expanded="true" />
+            <element signature="e#2042#2043#0" expanded="true" />
+            <element signature="e#2080#2081#0" expanded="true" />
+            <element signature="e#2135#2136#0" expanded="true" />
+            <element signature="e#2173#2174#0" expanded="true" />
+            <element signature="e#2585#2586#0" expanded="true" />
+            <element signature="e#2627#2628#0" expanded="true" />
+            <element signature="e#2735#2736#0" expanded="true" />
+            <element signature="e#2765#2766#0" expanded="true" />
+            <element signature="e#2661#2662#0" expanded="true" />
+            <element signature="e#2694#2695#0" expanded="true" />
+            <element signature="e#3934#3935#0" expanded="true" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4013#4014#0" expanded="true" />
+            <element signature="e#4053#4054#0" expanded="true" />
+            <element signature="e#4085#4086#0" expanded="true" />
+            <element signature="e#4113#4114#0" expanded="true" />
+            <element signature="e#4155#4156#0" expanded="true" />
+            <element signature="e#4189#4190#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/documents/html/header.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/documents/html/not_authenticated.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/documents/html/login_process.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/documents/html/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_poll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="603">
+          <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/CommandListener.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_endpoll.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="27" column="21" lean-forward="true" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+        <state relative-caret-position="544">
+          <caret line="49" column="65" selection-start-line="49" selection-start-column="65" selection-end-line="49" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/Command.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/UserListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandCategory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandMeta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="65" column="54" selection-start-line="65" selection-start-column="54" selection-end-line="65" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_generate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="897">
-          <caret line="86" column="51" selection-start-line="86" selection-start-column="51" selection-end-line="86" selection-end-column="51" />
+        <state relative-caret-position="68">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#327#328#0" expanded="true" />
-            <element signature="e#354#355#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/httpd/servitors/Servitor_help.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/PollEndDateRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="26" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/PollListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/Authenticator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/YoutubeSearcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/MusicManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="94" column="44" selection-start-line="94" selection-start-column="44" selection-end-line="94" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_skip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="51" column="80" selection-start-line="51" selection-start-column="80" selection-end-line="51" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_play.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="43" column="93" selection-start-line="43" selection-start-column="93" selection-end-line="43" selection-end-column="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Manga.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="17" selection-end-column="25" />
+          <folding>
+            <element signature="e#1100#1101#0" expanded="true" />
+            <element signature="e#1128#1129#0" expanded="true" />
+            <element signature="e#1167#1168#0" expanded="true" />
+            <element signature="e#1201#1202#0" expanded="true" />
+            <element signature="e#1231#1232#0" expanded="true" />
+            <element signature="e#1257#1258#0" expanded="true" />
+            <element signature="e#1295#1296#0" expanded="true" />
+            <element signature="e#1325#1326#0" expanded="true" />
+            <element signature="e#1360#1361#0" expanded="true" />
+            <element signature="e#1391#1392#0" expanded="true" />
+            <element signature="e#1439#1440#0" expanded="true" />
+            <element signature="e#1479#1480#0" expanded="true" />
+            <element signature="e#1515#1516#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1598#1599#0" expanded="true" />
+            <element signature="e#1640#1641#0" expanded="true" />
+            <element signature="e#1675#1676#0" expanded="true" />
+            <element signature="e#1706#1707#0" expanded="true" />
+            <element signature="e#1754#1755#0" expanded="true" />
+            <element signature="e#1794#1795#0" expanded="true" />
+            <element signature="e#1825#1826#0" expanded="true" />
+            <element signature="e#1852#1853#0" expanded="true" />
+            <element signature="e#1892#1893#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1956#1957#0" expanded="true" />
+            <element signature="e#1987#1988#0" expanded="true" />
+            <element signature="e#2032#2033#0" expanded="true" />
+            <element signature="e#2072#2073#0" expanded="true" />
+            <element signature="e#2103#2104#0" expanded="true" />
+            <element signature="e#2133#2134#0" expanded="true" />
+            <element signature="e#2176#2177#0" expanded="true" />
+            <element signature="e#2214#2215#0" expanded="true" />
+            <element signature="e#2246#2247#0" expanded="true" />
+            <element signature="e#2274#2275#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2350#2351#0" expanded="true" />
+            <element signature="e#2384#2385#0" expanded="true" />
+            <element signature="e#2416#2417#0" expanded="true" />
+            <element signature="e#2464#2465#0" expanded="true" />
+            <element signature="e#2506#2507#0" expanded="true" />
+            <element signature="e#2538#2539#0" expanded="true" />
+            <element signature="e#2568#2569#0" expanded="true" />
+            <element signature="e#2612#2613#0" expanded="true" />
+            <element signature="e#2650#2651#0" expanded="true" />
+            <element signature="e#2681#2682#0" expanded="true" />
+            <element signature="e#2711#2712#0" expanded="true" />
+            <element signature="e#2754#2755#0" expanded="true" />
+            <element signature="e#2792#2793#0" expanded="true" />
+            <element signature="e#2824#2825#0" expanded="true" />
+            <element signature="e#2852#2853#0" expanded="true" />
+            <element signature="e#2894#2895#0" expanded="true" />
+            <element signature="e#2928#2929#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_mal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1734">
+          <caret line="123" selection-start-line="123" selection-end-line="124" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/AudioPlayerSendHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/YoutubeVideo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+          <folding>
+            <element signature="e#764#765#0" expanded="true" />
+            <element signature="e#794#795#0" expanded="true" />
+            <element signature="e#840#841#0" expanded="true" />
+            <element signature="e#878#879#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/MusicListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="56" column="70" selection-start-line="56" selection-start-column="70" selection-end-line="56" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_help.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="37" column="86" selection-start-line="37" selection-start-column="86" selection-end-line="37" selection-end-column="86" />
+        <state relative-caret-position="663">
+          <caret line="48" column="104" selection-start-line="48" selection-start-column="104" selection-end-line="48" selection-end-column="114" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_shutdown.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ConfigManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="36" column="66" selection-start-line="36" selection-start-column="66" selection-end-line="36" selection-end-column="66" />
+        <state relative-caret-position="408">
+          <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/abstracts/Category.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Anime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/abstracts/Animal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="21" lean-forward="true" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_flip.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/interfaces/IBreed.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="37" column="50" selection-start-line="37" selection-start-column="50" selection-end-line="37" selection-end-column="50" />
+        <state relative-caret-position="34">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Breed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/DogCategory.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Dog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/DogBreed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="107" column="47" selection-start-line="107" selection-start-column="47" selection-end-line="107" selection-end-column="115" />
+          <folding>
+            <element signature="e#918#919#0" expanded="true" />
+            <element signature="e#949#950#0" expanded="true" />
+            <element signature="e#997#998#0" expanded="true" />
+            <element signature="e#1037#1038#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/CommandListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="27" column="21" lean-forward="true" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/GUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/Cat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -983,72 +1285,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/DataUser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatCategory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="406">
+          <caret line="60" column="74" lean-forward="true" selection-start-line="60" selection-start-column="74" selection-end-line="60" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/config/ServerPrefs.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/objects/CatBreed.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="107" column="24" selection-start-line="107" selection-start-column="24" selection-end-line="107" selection-end-column="24" />
+        <state relative-caret-position="53">
+          <caret line="131" column="67" lean-forward="true" selection-start-line="131" selection-start-column="67" selection-end-line="131" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_cat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="121" column="56" selection-start-line="121" selection-start-column="56" selection-end-line="121" selection-end-column="56" />
+        <state relative-caret-position="534">
+          <caret line="193" column="1" selection-start-line="193" selection-start-column="1" selection-end-line="193" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2875#2876#0" expanded="true" />
+            <element signature="e#2903#2904#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/TimerTasks.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/web/HTTPUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/UserListener.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_dog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="18" column="51" lean-forward="true" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/Command_move.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="55" column="59" selection-start-line="55" selection-start-column="59" selection-end-line="55" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/listeners/SelectionListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="18" column="78" selection-start-line="18" selection-start-column="78" selection-end-line="18" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/commands/util/CommandHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/mafrans/poppo/util/timedtasks/GameChangeRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="239">
+          <caret line="104" column="85" selection-start-line="104" selection-start-column="85" selection-end-line="104" selection-end-column="85" />
         </state>
       </provider>
     </entry>

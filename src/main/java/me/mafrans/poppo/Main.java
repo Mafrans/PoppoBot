@@ -30,7 +30,6 @@ import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 
 public class Main {
     public static JDA jda;
@@ -89,6 +88,7 @@ public class Main {
         CommandHandler.addCommand(new Command_play());
         CommandHandler.addCommand(new Command_skip());
         CommandHandler.addCommand(new Command_cat());
+        CommandHandler.addCommand(new Command_dog());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
@@ -113,6 +113,7 @@ public class Main {
 
         CatBreed.cacheBreeds();
         CatCategory.cacheCategories();
+        DogBreed.cacheBreeds();
 
         System.out.println("PoppoBot is Ready!");
     }
