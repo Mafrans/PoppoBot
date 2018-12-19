@@ -1,6 +1,7 @@
 package me.mafrans.poppo.util.objects;
 
 import org.apache.commons.validator.routines.UrlValidator;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,15 +38,11 @@ public class Dog {
 
     public static Dog parseDog(JSONObject jsonObject) {
         Dog dog = new Dog();
-        UrlValidator urlValidator = new UrlValidator();
-        String message = jsonObject.getString("message");
-        if(!urlValidator.isValid(message)) {
-            System.out.println("Error! " + jsonObject.getString("message"));
-            return null;
-        }
-        dog.setUrl(message);
+        dog.setUrl(jsonObject.getString("url"));
         List<DogBreed> breeds = new ArrayList<>();
-        breeds.add(DogBreed.getBreed(message.split("/")[4]));
+        for(int i = 0; i < jsonObject.getJSONArray("breeds").length(); i++) {
+            breeds.add(DogBreed.getBreed(jsonObject.getJSONArray("breeds").getJSONObject(i).getInt("id")));
+        }
 
         dog.setBreeds(breeds);
         return dog;

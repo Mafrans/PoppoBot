@@ -83,6 +83,10 @@ public class GUtil {
         return StringUtils.join(outList, " ");
     }
 
+    public static String[] splitTitleCase(String string) {
+        return new ArrayList<>(Arrays.asList(string.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"))).toArray(new String[0]);
+    }
+
     public static String joinNatural(Object[] array) {
         return StringUtils.join(ArrayUtils.subarray(array, 0, array.length-1), ", ") + " and " + array[array.length-1];
     }

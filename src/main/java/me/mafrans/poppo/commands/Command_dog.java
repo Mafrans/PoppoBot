@@ -1,5 +1,6 @@
 package me.mafrans.poppo.commands;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
@@ -11,14 +12,12 @@ import me.mafrans.poppo.util.web.HTTPUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Command_dog implements ICommand {
 
@@ -33,18 +32,6 @@ public class Command_dog implements ICommand {
             "Remmy says: Fuck!",
             "Remmy says: Woof!",
 
-    };
-    private String[] messagesBoth = new String[] {
-            "It's a ${display_name}!",
-            "This is not just a ${name}, it's a ${display_name}!",
-            "${display_name}s are cute, aren't they?",
-            "It's a ${name}, but it's also a ${sub_name}!",
-            "\"You often find ${name} at the ${sub_name} idfk xd.\" -Fionn",
-            "You should also see my cat!",
-            "Woof!",
-            "Remmy sit! Speak!",
-            "Remmy says: Fuck!",
-            "Remmy says: Woof!"
     };
 
     @Override
@@ -74,14 +61,40 @@ public class Command_dog implements ICommand {
         }
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(searchBreed.getDisplayName(), searchBreed.getUrl());
+        embedBuilder.setAuthor(searchBreed.getName(), searchBreed.getUrl());
         if(searchBreed.getImageUrl() != null) {
             embedBuilder.setThumbnail(searchBreed.getImageUrl());
         }
 
-        embedBuilder.addField("Description", HTTPUtil.getWikipediaDescription(searchBreed.getUrl().split("/")[searchBreed.getUrl().split("/").length-1]) + "\n\u00AD", false);
+        if(searchBreed.getUrl() != null && HTTPUtil.getWikipediaDescription(searchBreed.getUrl().split("/")[searchBreed.getUrl().split("/").length - 1]) != null) {
+            if (HTTPUtil.getWikipediaDescription(searchBreed.getUrl().split("/")[searchBreed.getUrl().split("/").length - 1]).length() > 1000) {
+                embedBuilder.addField("Description", HTTPUtil.getWikipediaDescription(searchBreed.getUrl().split("/")[searchBreed.getUrl().split("/").length - 1]).substring(0, 1000) + "...", false);
+            }
+            else {
+                embedBuilder.addField("Description", HTTPUtil.getWikipediaDescription(searchBreed.getUrl().split("/")[searchBreed.getUrl().split("/").length - 1]), false);
+            }
+        }
+
+        if(searchBreed.getBredFor() != null) {
+            embedBuilder.addField("Bred For", searchBreed.getBredFor(), true);
+        }
+
+        if(searchBreed.getLifespan() != null) {
+            embedBuilder.addField("Lifespan", searchBreed.getLifespan()[0] + " to " + searchBreed.getLifespan()[1] + " years", true);
+        }
+        else if(searchBreed.getStringLifespan() != null) {
+            embedBuilder.addField("Lifespan", searchBreed.getStringLifespan(), true);
+        }
+
+        if(searchBreed.getWeight() != null) {
+            embedBuilder.addField("Weight", searchBreed.getWeight()[0] + " to " + searchBreed.getWeight()[1] + "kg", true);
+        }
+        else if(searchBreed.getStringWeight() != null) {
+            embedBuilder.addField("Weight", searchBreed.getStringWeight(), true);
+        }
+
         embedBuilder.setColor(GUtil.randomColor());
-        embedBuilder.setFooter("Provided by the DaaS (Dogs-as-a-Service) API", null);
+        embedBuilder.setFooter("Provided by The DOG API", null);
 
         channel.sendMessage(embedBuilder.build()).queue();
 
@@ -90,6 +103,9 @@ public class Command_dog implements ICommand {
 
     public void sendRandomDog(TextChannel channel) throws IOException {
         Random random = new Random();
+
+        Map<String, String> header = new HashMap<>();
+        header.put("x-api-key", Main.config.dog_api_token);
 
         if(new Date().getTime() % 666 == 0) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -102,13 +118,13 @@ public class Command_dog implements ICommand {
         Dog dog = null;
         int i = 0;
         while(dog == null) {
-            String stringJson = HTTPUtil.GET("http://dog.ceo/api/breeds/image/random", new HashMap<>());
+            String stringJson = HTTPUtil.GET("https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1", header);
             System.out.println(stringJson);
-            JSONObject jsonObject = new JSONObject(stringJson);
+            JSONObject jsonObject = new JSONArray(stringJson).getJSONObject(0);
             dog = Dog.parseDog(jsonObject);
 
             if(i == 10) {
-                channel.sendMessage("Sorry, we can't reach the DaaS API right now!").queue();
+                channel.sendMessage("Sorry, we can't reach the Dog API right now!").queue();
                 return;
             }
             i++;
@@ -118,17 +134,12 @@ public class Command_dog implements ICommand {
         embedBuilder.setColor(GUtil.randomColor());
         embedBuilder.setImage(dog.getUrl());
 
-        if (dog.getBreeds().size() > 0) {
+        /*if (dog.getBreeds().size() > 0) {
             DogBreed dogBreed = dog.getBreeds().get(0);
-            if(dogBreed.getSubName() != null) {
-                embedBuilder.setTitle(messagesSingle[random.nextInt(messagesSingle.length)].replace("${display_name}", dogBreed.getDisplayName()).replace("${name}", dogBreed.getName()), dogBreed.getUrl());
-            }
-            else {
-                embedBuilder.setTitle(messagesBoth[random.nextInt(messagesBoth.length)].replace("${display_name}", dogBreed.getDisplayName()).replace("${name}", dogBreed.getName()).replace("${sub_name}", dogBreed.getSubName()), dogBreed.getUrl());
-            }
-        }
+            embedBuilder.setTitle("Information about " + dogBreed);
+        }*/
 
-        embedBuilder.setFooter("Provided by the DaaS (Dogs-as-a-Service) API", null);
+        embedBuilder.setFooter("Provided by the Dog API", null);
         channel.sendMessage(embedBuilder.build()).queue();
     }
 }

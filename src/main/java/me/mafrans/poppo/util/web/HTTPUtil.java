@@ -1,8 +1,9 @@
 package me.mafrans.poppo.util.web;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
-import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,6 +11,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.SocketException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +35,9 @@ public class HTTPUtil {
         }
 
         int responseCode = connection.getResponseCode();
+        if(responseCode == 301) {
+            return GET(connection.getHeaderField("location"), header);
+        }
         if(!(responseCode >= 200 && responseCode < 300)) { // Something went wrong
             return String.valueOf(responseCode);
         }
@@ -96,7 +104,7 @@ public class HTTPUtil {
 
     public static String getRawText(String sUrl, Map<String, String> params) throws IOException {
         URL url = new URL(sUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
         con.setDoOutput(true);
@@ -141,9 +149,9 @@ public class HTTPUtil {
     }
 
     public static String getWikipediaThumbnail(String title) throws IOException {
-        String baseUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + title.replace(" ", "_") + "&prop=pageimages&format=json&pithumbsize=100";
+        String baseUrl = "https://en.wikipedia.org/w/api.php?action=query&titles=" + title.replace(" ", "_") + "&prop=pageimages&format=json&pithumbsize=1000";
 
-        JSONObject jsonObject = getJSON(baseUrl, new HashMap<>());
+        JSONObject jsonObject = new JSONObject(GET(baseUrl, new HashMap<>()));
         if(jsonObject.getJSONObject("query").getJSONObject("pages").length() == 0) {
             return null;
         }
@@ -159,7 +167,7 @@ public class HTTPUtil {
 
         String baseUrl = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=" + title.replace(" ", "_");
 
-        JSONObject jsonObject = getJSON(baseUrl, new HashMap<>());
+        JSONObject jsonObject = new JSONObject(GET(baseUrl, new HashMap<>()));
         if(jsonObject.getJSONObject("query").getJSONObject("pages").length() == 0) {
             return null;
         }
@@ -183,5 +191,34 @@ public class HTTPUtil {
         catch (SocketException ex) {
             return 408;
         }
+    }
+
+    public static void disableSecurity() throws NoSuchAlgorithmException, KeyManagementException {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            }
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            }
+        }
+        };
+
+        // Install the all-trusting trust manager
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        // Create all-trusting host name verifier
+        HostnameVerifier allHostsValid = new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+
+        // Install the all-trusting host verifier
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
     }
 }

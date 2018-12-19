@@ -2,6 +2,7 @@ package me.mafrans.poppo.util.objects;
 
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.web.HTTPUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,35 +12,66 @@ import javax.measure.unit.NonSI;
 import javax.measure.unit.SI;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class DogBreed {
     private static List<DogBreed> allBreeds;
-    private String id;
+    private int id;
     private String name;
-    private String subName;
     private String url;
-    private String imageUrl;
+    private String[] temperament;
+    private String description;
+    private String bredFor;
+    private int[] lifespan;
+    private String stringLifespan;
+    private double[] weight;
+    private String stringWeight;
 
     public DogBreed() {
     }
 
-    public DogBreed(String id, String name, String subName, String url, String imageUrl) {
+    public DogBreed(int id, String name, String url, String[] temperament, String description, String bredFor, int[] lifespan, double[] weight) {
         this.id = id;
         this.name = name;
-        this.subName = subName;
         this.url = url;
-        this.imageUrl = imageUrl;
+        this.temperament = temperament;
+        this.description = description;
+        this.bredFor = bredFor;
+        this.lifespan = lifespan;
+        this.weight = weight;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getBredFor() {
+        return bredFor;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setBredFor(String bredFor) {
+        this.bredFor = bredFor;
+    }
+
+    public String[] getTemperament() {
+        return temperament;
+    }
+
+    public void setTemperament(String[] temperament) {
+        this.temperament = temperament;
+    }
+
+    public String getStringLifespan() {
+        return stringLifespan;
+    }
+
+    public void setStringLifespan(String stringLifespan) {
+        this.stringLifespan = stringLifespan;
+    }
+
+    public String getStringWeight() {
+        return stringWeight;
+    }
+
+    public void setStringWeight(String stringWeight) {
+        this.stringWeight = stringWeight;
     }
 
     public static List<DogBreed> getAllBreeds() {
@@ -58,37 +90,55 @@ public class DogBreed {
         this.url = url;
     }
 
-    public String getSubName() {
-        return subName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSubName(String subName) {
-        this.subName = subName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getId() {
+    public int[] getLifespan() {
+        return lifespan;
+    }
+
+    public void setLifespan(int[] lifespan) {
+        this.lifespan = lifespan;
+    }
+
+    public double[] getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double[] weight) {
+        this.weight = weight;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getName() {
         return name;
     }
-    public String getDisplayName() {
-        return (subName != null && subName.length() > 1 ? GUtil.capitalize(subName) + " " : "")+ GUtil.capitalize(name);
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public static DogBreed getBreed(String id) {
-        for(DogBreed dogBreed : getAllBreeds()) {
-            if(dogBreed.getId().equals(id)) {
-                return dogBreed;
+    public String getImageUrl() throws IOException {
+        if(getUrl() == null) return null;
+        return HTTPUtil.getWikipediaThumbnail(getUrl().split("/")[4]);
+    }
+
+    public static DogBreed getBreed(int id) {
+        for(DogBreed catBreed : getAllBreeds()) {
+            if(catBreed.getId() == id) {
+                return catBreed;
             }
         }
         return null;
@@ -101,84 +151,111 @@ public class DogBreed {
                 dogBreeds.add(dogBreed);
             }
         }
+
+        if(dogBreeds.size() == 0) {
+            for(DogBreed dogBreed : getAllBreeds()) {
+                if(dogBreed.getName().split(" ").length > 1) {
+                    if (dogBreed.getName().split(" ")[1].toLowerCase().startsWith(name.toLowerCase())){
+                        dogBreeds.add(dogBreed);
+                    }
+                }
+            }
+        }
         return dogBreeds;
     }
 
     public static List<DogBreed> cacheBreeds() throws IOException {
-        JSONObject jsonObject = new JSONObject(HTTPUtil.GET("https://dog.ceo/api/breeds/list/all", new HashMap<>())).getJSONObject("message");
+
+
+        JSONArray jsonArray = new JSONArray(HTTPUtil.GET("https://api.thedogapi.com/v1/breeds", new HashMap<>()).replace(" ", ""));
         allBreeds = new ArrayList<>();
-        int c = 0;
-        for(String breed : jsonObject.keySet()) {
-            JSONArray subBreeds = jsonObject.getJSONArray(breed);
-            c++;
+        for(int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            DogBreed dogBreed = new DogBreed();
+            dogBreed.setId(jsonObject.getInt("id"));
+            dogBreed.setName(StringUtils.join(GUtil.splitTitleCase(jsonObject.getString("name")), " "));
 
-            if(subBreeds.length() > 0) {
-                for (int i = 0; i < subBreeds.length(); i++) {
-                    DogBreed dogBreed = new DogBreed();
-                    dogBreed.setName(breed);
-                    dogBreed.setSubName(subBreeds.getString(i));
-                    int response = HTTPUtil.getResponse("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getSubName()) + "_" + GUtil.capitalize(dogBreed.getName()));
-                    if(response >= 200 && response <= 399) {
-                        dogBreed.setUrl("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getSubName()) + "_" + GUtil.capitalize(dogBreed.getName()));
-                    }
-                    else {
-                        response = HTTPUtil.getResponse("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()) + "_dog");
-                        if(response >= 200 && response <= 399) {
-                            dogBreed.setUrl("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()) + "_dog");
-                        }
-                        else {
-                            response = HTTPUtil.getResponse("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()));
-                            if(response >= 200 && response <= 399) {
-                                dogBreed.setUrl("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()));
-                            }
-                        }
-                    }
-                    dogBreed.setId(dogBreed.getSubName() + "_" + dogBreed.getName());
+            JSONObject details = HTTPUtil.getJSON("https://api.thedogapi.com/v1/breeds/" + dogBreed.getId(), new HashMap<>());
 
-                    if(dogBreed.getUrl() != null) {
-                        dogBreed.setImageUrl(HTTPUtil.getWikipediaThumbnail(dogBreed.getUrl().split("/")[dogBreed.getUrl().split("/").length-1]));
-                    }
-                    System.out.println("Initialized Dog Breed: " + dogBreed.getDisplayName() + " (" + c + "/" + (jsonObject.keySet().size() + 1) + ")");
-
-                    allBreeds.add(dogBreed);
-                }
+            String wikiurl = "https://en.wikipedia.org/wiki/" + dogBreed.getName().replace(" ", "_") + "_dog";
+            if(HTTPUtil.getResponse(wikiurl) >= 200 && HTTPUtil.getResponse(wikiurl) < 300) {
+                dogBreed.setUrl(wikiurl);
+                dogBreed.setDescription(HTTPUtil.getWikipediaDescription(wikiurl.split("/")[4]));
             }
             else {
-                DogBreed dogBreed = new DogBreed();
-                dogBreed.setName(breed);
-                int response = HTTPUtil.getResponse("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()) + "_dog");
-                if(response >= 200 && response <= 399) {
-                    dogBreed.setUrl("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()) + "_dog");
+                wikiurl = "https://en.wikipedia.org/wiki/" + dogBreed.getName().replace(" ", "_");
+                if(HTTPUtil.getResponse(wikiurl) >= 200 && HTTPUtil.getResponse(wikiurl) < 300) {
+                    dogBreed.setUrl(wikiurl);
+                    dogBreed.setDescription(HTTPUtil.getWikipediaDescription(wikiurl.split("/")[4]));
                 }
                 else {
-                    response = HTTPUtil.getResponse("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()));
-                    if(response >= 200 && response <= 399) {
-                        dogBreed.setUrl("https://en.wikipedia.org/wiki/" + GUtil.capitalize(dogBreed.getName()));
+                    if(dogBreed.getName().split(" ").length > 1) {
+                        wikiurl = "https://en.wikipedia.org/wiki/" + dogBreed.getName().split(" ")[1];
+                        if (HTTPUtil.getResponse(wikiurl) >= 200 && HTTPUtil.getResponse(wikiurl) < 300) {
+                            dogBreed.setUrl(wikiurl);
+                            dogBreed.setDescription(HTTPUtil.getWikipediaDescription(wikiurl.split("/")[4]));
+                        }
                     }
                 }
-                dogBreed.setId(dogBreed.getName());
-
-                if(dogBreed.getUrl() != null) {
-                    dogBreed.setImageUrl(HTTPUtil.getWikipediaThumbnail(dogBreed.getUrl().split("/")[dogBreed.getUrl().split("/").length-1].replace("_", " ")));
-                }
-                System.out.println("Initialized Dog Breed: " + dogBreed.getDisplayName() + " (" + c + "/" + (jsonObject.keySet().size() + 1) + ")");
-
-                allBreeds.add(dogBreed);
             }
 
+            System.out.println(details);
+            if(details.has("temperament") && details.get("temperament") instanceof String  && !details.getString("temperament").equalsIgnoreCase("undefined")) {
+                System.out.println(details.getString("temperament"));
+                dogBreed.setTemperament(details.getString("temperament").split(", "));
+            }
+
+            if(details.has("life_span") && details.get("life_span") instanceof String  && !details.getString("life_span").equalsIgnoreCase("undefined")) {
+                int[] lifeSpan;
+                try {
+                    if (details.getString("life_span").replace("years", "").replace(" ", "").split("-").length > 1) {
+                        lifeSpan = new int[]{
+                                Integer.parseInt(details.getString("life_span").replace("years", "").replace(" ", "").split("-")[0]),
+                                Integer.parseInt(details.getString("life_span").replace("years", "").replace(" ", "").split("-")[1])
+                        };
+                    } else {
+                        lifeSpan = new int[]{
+                                Integer.parseInt(details.getString("life_span").replace("years", "").replace(" ", "").split("-")[0]),
+                                Integer.parseInt(details.getString("life_span").replace("years", "").replace(" ", "").split("–")[0]),
+                        };
+                    }
+                    dogBreed.setLifespan(lifeSpan);
+                }
+                catch (Exception ex) {
+                    dogBreed.setStringLifespan(details.getString("life_span"));
+                }
+            }
+
+            if(details.has("weight") && details.get("weight") instanceof String  && !details.getString("weight").equalsIgnoreCase("undefined")) {
+                double[] weight;
+                try {
+                    if(details.getString("weight").replace("kgs", "").replace(" ", "").split("-").length > 1) {
+                        weight = new double[]{
+                                Double.parseDouble(details.getString("weight").replace("kgs", "").replace(" ", "").split("-")[0]),
+                                Double.parseDouble(details.getString("life_span").replace("kgs", "").replace(" ", "").split("-")[1])
+                        };
+                    }
+                    else {
+                        weight = new double[]{
+                                Double.parseDouble(details.getString("weight").replace("kgs", "").replace(" ", "").split("-")[0]),
+                                Double.parseDouble(details.getString("life_span").replace("kgs", "").replace(" ", "").split("-")[01])
+                        };
+                    }
+                    dogBreed.setWeight(weight);
+                }
+                catch (Exception ex) {
+                    dogBreed.setStringLifespan(details.getString("life_span"));
+                }
+            }
+
+            if(details.has("bred_for") && details.get("bred_for") instanceof String && !details.getString("bred_for").equalsIgnoreCase("undefined")) {
+                dogBreed.setBredFor(details.getString("bred_for"));
+            }
+
+            System.out.println("Initialized " + dogBreed.getName() + " (" + i + "/" + jsonArray.length() + ")");
+            allBreeds.add(dogBreed);
         }
 
         return allBreeds;
-    }
-
-    @Override
-    public String toString() {
-        return Arrays.toString(new Object[] {
-                id,
-                name,
-                subName,
-                url,
-                imageUrl
-        });
     }
 }

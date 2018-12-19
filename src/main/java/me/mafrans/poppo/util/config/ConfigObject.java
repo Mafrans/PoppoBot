@@ -14,6 +14,7 @@ public class ConfigObject {
     public String pearson_token;
     public String twitch_token;
     public String cat_api_token;
+    public String dog_api_token;
     public String autoinsult_use;
     public String autoinsult_rate;
     public List<String> debug_users;

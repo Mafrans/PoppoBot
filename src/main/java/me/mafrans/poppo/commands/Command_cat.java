@@ -21,7 +21,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.*;
 
-import static java.util.Map.entry;
 
 public class Command_cat implements ICommand {
     private String[] messages = new String[] {
@@ -36,15 +35,18 @@ public class Command_cat implements ICommand {
             "It's a cat, what did you expect?",
             "I know you wanted ${christmas_present_l} for christmas, but we could only afford a ${breed_l}.",
     };
-    private static final Map<Integer, String> categoryMessages = Map.ofEntries(
-            entry(5, "Cats and boxes, the ultimate combo!"),
-            entry(15, "Why would a cat wear clothes? I don't know either!"),
-            entry(1, "It's a cat in a hat! Just like in the books!"),
-            entry(14, "Sinks? What do they have to do with cats?"),
-            entry(2, "Cats in space. You know, laser kittens. That kind of stuff."),
-            entry(4, "Everything is cooler with sunglasses."),
-            entry(7, "Oh my, how classy!")
-    );
+    private static final Map<Integer, String> categoryMessages;
+
+    static {
+        categoryMessages = new HashMap<>();
+        categoryMessages.put(5, "Cats and boxes, the ultimate combo!");
+        categoryMessages.put(15, "Why would a cat wear clothes? I don't know either!");
+        categoryMessages.put(1, "It's a cat in a hat! Just like in the books!");
+        categoryMessages.put(14, "Sinks? What do they have to do with cats?");
+        categoryMessages.put(2, "Cats in space. You know, laser kittens. That kind of stuff.");
+        categoryMessages.put(4, "Everything is cooler with sunglasses.");
+        categoryMessages.put(7, "Oh my, how classy!");
+    }
 
 
 

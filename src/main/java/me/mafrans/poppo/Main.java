@@ -20,6 +20,7 @@ import me.mafrans.poppo.util.config.ConfigManager;
 import me.mafrans.poppo.util.config.ConfigObject;
 import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.*;
+import me.mafrans.poppo.util.web.HTTPUtil;
 import me.mafrans.poppo.util.web.YoutubeSearcher;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -30,6 +31,9 @@ import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class Main {
     public static JDA jda;
@@ -41,7 +45,8 @@ public class Main {
     public static YoutubeSearcher youtubeSearcher;
     public static MusicManager musicManager;
 
-    public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException {
+    public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException, KeyManagementException, NoSuchAlgorithmException {
+
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
         musicManager = new MusicManager();
@@ -110,6 +115,7 @@ public class Main {
         }
         Main.jda.getPresence().setStatus(OnlineStatus.ONLINE);
 
+        HTTPUtil.disableSecurity();
 
         CatBreed.cacheBreeds();
         CatCategory.cacheCategories();
