@@ -65,12 +65,12 @@ public class Command_identify implements ICommand {
         User user = Main.jda.getUserById(uuid);
         Random random = new Random();
         String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".png?size=2048";
-
+        System.out.println(userData.getNames());
         MessageEmbed embed = new EmbedBuilder()
                 .setColor(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)))
                 .setTitle(user.getName() + "#" + user.getDiscriminator() + ":")
                 .setThumbnail(avatarUrl)
-                .addField("Names", StringUtils.join(userData.getNames().toArray(new String[0]), ", "), false)
+                .addField("Names", StringUtils.join(userData.getNames(), ", "), false)
                 .addField("UUID", userData.getUuid(), false)
                 .addField("Last Online", userData.getLastOnlineTag(), false)
                 .addField("Avatar URL", avatarUrl, false).build();
