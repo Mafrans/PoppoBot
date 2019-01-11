@@ -32,8 +32,8 @@ public class UserListener extends ListenerAdapter {
             names.add(event.getUser().getName());
         }
 
-        System.out.println("New Names: " + names.toString());
         dataUser.setNames(names);
+        System.out.println("New Names: " + dataUser.getNames());
 
         Main.userList.add(new SQLDataUser(dataUser));
     }

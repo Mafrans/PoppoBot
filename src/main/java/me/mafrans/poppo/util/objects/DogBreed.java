@@ -198,10 +198,7 @@ public class DogBreed {
                     }
                 }
             }
-
-            System.out.println(details);
             if(details.has("temperament") && details.get("temperament") instanceof String  && !details.getString("temperament").equalsIgnoreCase("undefined")) {
-                System.out.println(details.getString("temperament"));
                 dogBreed.setTemperament(details.getString("temperament").split(", "));
             }
 

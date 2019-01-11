@@ -114,8 +114,10 @@ public class Command_cat implements ICommand {
         }
         else if (cat.getCategories().size() > 0) {
             CatCategory catCategory = cat.getCategories().get(random.nextInt(cat.getCategories().size()));
-            System.out.println(catCategory.getId() + ": " + catCategory.getName());
-            embedBuilder.setTitle(categoryMessages.get(catCategory.getId()));
+            if(catCategory != null) {
+                System.out.println(catCategory.getId() + ": " + catCategory.getName());
+                embedBuilder.setTitle(categoryMessages.get(catCategory.getId()));
+            }
         }
 
         embedBuilder.setFooter("Provided by The Cat API", null);
