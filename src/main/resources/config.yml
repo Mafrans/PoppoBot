@@ -10,6 +10,8 @@ token: aaaabbbbccccdddd
 twitch_token: mmmmnnnnoooopppp
 cat_api_token: qqqqrrrrssssttttt
 dog_api_token: uuuuvvvvxxxxyyyy
+hirez_dev_id: zzzz
+hirez_auth_key: aaaabbbbccccdddd
 debug_users:
   -
 client_secret: POxCSgSZvMVB7zpYG2Gu8rMAaEREFjfy

@@ -14,9 +14,13 @@ import me.mafrans.poppo.httpd.UserSession;
 import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,12 +48,19 @@ public class Servitor_guilds extends HTMLServitor {
 
         UserSession userSession = loadedSessions.get(thisMachine);
         System.out.println(userSession);
+        System.out.println(userSession.getUser());
         User user = Main.jda.getUserById(userSession.getUser().getId());
+        System.out.println(user);
+
         List<Guild> allowedGuilds = new ArrayList<>();
         for (Guild g : Main.jda.getGuilds()) {
-            Rank rank = Rank.getRank(g.getMember(user));
-            if (rank != null && rank.hasRank(Rank.BOT_COMMANDER)) {
-                allowedGuilds.add(g);
+            if(user == null) break;
+            if(user.getMutualGuilds() == null || user.getMutualGuilds().size() == 1) continue;
+            if(user.getMutualGuilds().contains(g)) {
+                Rank rank = Rank.getRank(g.getMember(user));
+                if (rank != null && rank.hasRank(Rank.BOT_COMMANDER)) {
+                    allowedGuilds.add(g);
+                }
             }
         }
 
@@ -70,30 +81,33 @@ public class Servitor_guilds extends HTMLServitor {
                 }
             }
 
+            JSONObject prefs = null;
+            try {
+                prefs = Main.serverPrefs.getPreferences(guild);
+            } catch (IOException e) {
+                throw new HTTPInternalErrorException();
+            }
+
             VARIABLES.put("httpd_url", Main.config.httpd_url);
             VARIABLES.put("guild_id", guild.getId());
 
             if(event.getSimpleParameters().containsKey("addlink")) {
                 String linkToAdd = event.getSimpleParameters().get("addlink").toLowerCase();
                 if(!linkToAdd.isEmpty()) {
-                    if(ServerPrefs.TWITCH_LINKS.getString(guild) == null) {
-                        try {
-                            ServerPrefs.TWITCH_LINKS.setString(guild, linkToAdd);
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    JSONArray links = new JSONArray();
+                    if(prefs.has("twitch_links")) {
+                        links = prefs.getJSONArray("twitch_links");
                     }
-                    else {
-                        String[] currentLinks = ServerPrefs.TWITCH_LINKS.getString(guild).toLowerCase().split(",");
-                        if (!ArrayUtils.contains(currentLinks, linkToAdd)) {
-                            try {
-                                ServerPrefs.TWITCH_LINKS.setString(guild, StringUtils.join(currentLinks, ",") + "," + linkToAdd);
-                                //event.getSession().execute();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+
+                    if (!ArrayUtils.contains(links.toList().toArray(), linkToAdd)) {
+                        links.put(linkToAdd);
+                    }
+                    prefs.put("twitch_links", links);
+                    try {
+                        Main.serverPrefs.savePreferences(guild, prefs);
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -101,43 +115,53 @@ public class Servitor_guilds extends HTMLServitor {
             if(event.getSimpleParameters().containsKey("deletelink")) {
                 String linkToDelete = event.getSimpleParameters().get("deletelink").toLowerCase();
                 if(!linkToDelete.isEmpty()) {
-                    if(ServerPrefs.TWITCH_LINKS.getString(guild) != null) {
-                        String[] currentLinks = ServerPrefs.TWITCH_LINKS.getString(guild).toLowerCase().split(",");
-                        List<String> currentLinkList = new ArrayList<>();
-                        for(String link : currentLinks) {
-                            currentLinkList.add(link);
+                    JSONArray links = new JSONArray();
+                    if(prefs.has("twitch_links")) {
+                        links = prefs.getJSONArray("twitch_links");
+                    }
+                    if(links.length() > 0) {
+                        for(int i = 0; i < links.length(); i++) {
+                            if(links.getString(i).equalsIgnoreCase(linkToDelete)) {
+                                links.remove(i);
+                            }
                         }
-
-                        if(currentLinkList.contains(linkToDelete)) {
-                            currentLinkList.remove(linkToDelete);
-                        }
-
-                        try {
-                            ServerPrefs.TWITCH_LINKS.setString(guild, StringUtils.join(currentLinkList, ","));
-                            //event.getSession().execute();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    }
+                    prefs.put("twitch_links", links);
+                    try {
+                        Main.serverPrefs.savePreferences(guild, prefs);
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
 
-            String twitchLinkString = ServerPrefs.TWITCH_LINKS.getString(guild);
-            String[] twitchLinkArray = new String[0];
-            if(twitchLinkString != null && !twitchLinkString.isEmpty()) {
-                twitchLinkArray = twitchLinkString.split(",");
+            if(event.getSimpleParameters().containsKey("setchannel")) {
+                String channel = event.getSimpleParameters().get("setchannel").toLowerCase();
+                prefs.put("twitch_message_channel", channel);
+                try {
+                    Main.serverPrefs.savePreferences(guild, prefs);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            System.out.println(twitchLinkString);
-            System.out.println(Arrays.toString(twitchLinkArray));
 
             StringBuilder twitchLinkBuilder = new StringBuilder();
-            for(String twitchLink : twitchLinkArray) {
+            for(int i = 0; i < prefs.getJSONArray("twitch_links").length(); i++) {
+                String twitchLink = prefs.getJSONArray("twitch_links").getString(i);
                 twitchLinkBuilder.append("<div class=\"twitchLinkContainer\">");
                 twitchLinkBuilder.append("  <span class=\"twitchLinkName\">" + twitchLink + "</span>");
                 twitchLinkBuilder.append("  <button type=\"button\" onclick=\"deleteLink(\'" + twitchLink + "\')\" class=\"twitchLinkDeleteButton\">Delete</button>");
                 twitchLinkBuilder.append("</div>");
             }
             VARIABLES.put("twitch_link_list", twitchLinkBuilder.toString());
+
+            StringBuilder messageChannelOptionBuilder = new StringBuilder();
+            for(TextChannel channel : guild.getTextChannels()) {
+                messageChannelOptionBuilder.append("<option value=\"" + channel.getId() + "\">#" + channel.getName() + "</option>");
+            }
+            VARIABLES.put("channel_options", messageChannelOptionBuilder.toString());
 
             try {
                 return FileUtils.readFile(getSingleGuildDocument());

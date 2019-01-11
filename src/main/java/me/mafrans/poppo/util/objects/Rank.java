@@ -12,12 +12,12 @@ import java.awt.*;
 import java.util.HashMap;
 
 public enum Rank {
-    BOT_COMMANDER("Bot Commander", new Color(30, 170, 170), new Object[0][0], true),
+    BOT_COMMANDER("[Poppo] Bot Commander", new Color(30, 170, 170), new Object[0][0], true),
 
-    MEMBER("Member", Color.WHITE, new Object[][]{}, false),
+    MEMBER("[Poppo] Member", Color.WHITE, new Object[][]{}, false),
 
-    MUTED("Muted", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}}, true),
-    TIMED_OUT("Timed Out", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}, true)
+    MUTED("[Poppo] Muted", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}}, true),
+    TIMED_OUT("[Poppo] Timed Out", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}, true)
     ;
 
 
@@ -136,5 +136,9 @@ public enum Rank {
 
     public Role getRole(Guild guild) {
         return roleMap.get(guild);
+    }
+
+    public HashMap<Guild, Role> getRoleMap() {
+        return roleMap;
     }
 }

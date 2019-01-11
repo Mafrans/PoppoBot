@@ -15,6 +15,8 @@ public class ConfigObject {
     public String twitch_token;
     public String cat_api_token;
     public String dog_api_token;
+    public String hirez_dev_id;
+    public String hirez_auth_key;
     public String autoinsult_use;
     public String autoinsult_rate;
     public List<String> debug_users;

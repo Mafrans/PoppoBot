@@ -183,6 +183,26 @@
             <systemPath>${basedir}/lib/MaHTTPD.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>me.mafrans</groupId>
+            <artifactId>javadins</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Javadins.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>me.mafrans</groupId>
+            <artifactId>smiteforge</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/smiteforge.jar</systemPath>
+        </dependency>
+        <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <dependency>
             <groupId>com.neovisionaries</groupId>
             <artifactId>nv-websocket-client</artifactId>
             <version>2.3</version>

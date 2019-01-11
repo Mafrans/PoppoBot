@@ -1,132 +1,47 @@
 package me.mafrans.poppo.util.config;
 
 import me.mafrans.poppo.Main;
+import me.mafrans.poppo.util.FileUtils;
 import net.dv8tion.jda.core.entities.Guild;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
 
-public enum ServerPrefs {
-    TWITCH_LINKS("twitch-links", "Linked Twitch usernames."),
-    TWITCH_MESSAGE_CHANNEL("twitch-message-channel", "Message channel for announcements."),
-    TWITCH_START_MESSAGE("twitch-start-message", "`%name` - channel name, `%url` - channel url, `\\n` - line break"),
-    TWITCH_STOP_MESSAGE("twitch-stop-message", "`%name` - channel name, `%url` - channel url, `\\n` - line break");
-    //USE_AUTOINSULT("use-autoinsult", "Defines usage of autoinsult, nsfw");
+public class ServerPrefs {
+    private File savePath;
 
-    public static HashMap<Guild, Properties> serverPrefList = new HashMap<>();
-    private String key;
-    private String info;
-    ServerPrefs(String key, String info) {
-        this.key = key;
-        this.info = info;
+    public ServerPrefs(File savePath) {
+        this.savePath = savePath;
     }
 
-    public static Properties getPreferences(Guild guild) throws IOException {
-        if(serverPrefList.containsKey(guild)) return serverPrefList.get(guild);
-
-        if(guild == null) return null;
-
-        System.out.println("Guild: " + guild);
-        File pathFile = new File("servers/" + guild.getId(), "preferences.properties");
-        Properties properties = new Properties();
-        if(!pathFile.exists()) {
-            return new Properties();
-        }
-        else {
-            properties.load(new FileReader(pathFile));
-        }
-
-        return properties;
-    }
-
-    public static void initPreferences() throws IOException {
-        File serversPath = new File("servers");
-        if(!serversPath.exists()) serversPath.mkdirs();
-        System.out.println("Exists");
-
-        File[] fList = serversPath.listFiles();
-        System.out.println("Flist: " + Arrays.toString(fList));
-        if(fList.length < 1) return;
-        for(File f : fList) {
-            System.out.println(f);
-            if(f.isDirectory()) {
-                File pref = new File(f.getPath(),"preferences.properties");
-                System.out.println("Pref");
-                if(pref.exists()) {
-                    System.out.println("Pref Exists");
-                    Guild guild = Main.jda.getGuildById(f.getName());
-                    serverPrefList.put(guild, getPreferences(guild));
-                }
-            }
+    public void saveDefaults(Guild guild) throws IOException {
+        File file = new File(savePath, guild.getId() + "/preferences.json");
+        if(!file.exists()) {
+            FileUtils.createResource("preferences.json", file, Main.class);
         }
     }
 
-    public String getString(Guild guild) {
-        if(serverPrefList.containsKey(guild)) {
-            Properties preferences = serverPrefList.get(guild);
-
-            if(preferences.containsKey(key)) {
-                return preferences.getProperty(key);
-            }
-        }
-        return null;
-    }
-
-    public void setString(Guild guild, String value) throws IOException {
-        Properties pref;
-
-        File file = new File("servers/" + guild.getId() + "/preferences.properties");
+    public JSONObject getPreferences(Guild guild) throws IOException {
+        File file = new File(savePath, guild.getId() + "/preferences.json");
         if(file.exists()) {
-            pref = getPreferences(guild);
-            pref.setProperty(key, value);
-            pref.store(new FileOutputStream(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
-            return;
+            return new JSONObject(FileUtils.readFile(file));
         }
-
-        pref = new Properties();
-        file.getParentFile().mkdirs();
-        file.createNewFile();
-        pref.setProperty(key, value);
-        pref.store(new FileOutputStream(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
+        return new JSONObject();
     }
 
-    public boolean exists(Guild guild) {
-        if(serverPrefList.containsKey(guild)) {
-            Properties preferences = serverPrefList.get(guild);
+    public void savePreferences(Guild guild, JSONObject jsonObject) throws IOException {
+        File file = new File(savePath, guild.getId() + "/preferences.json");
+        FileUtils.writeFile(file, jsonObject.toString());
+    }
 
-            if(preferences.containsKey(key)) {
-                return true;
-            }
+    public List<Guild> getGuilds() {
+        List<Guild> guilds = new ArrayList<>();
+        for(File file : savePath.listFiles()) {
+            guilds.add(Main.jda.getGuildById(file.getName()));
         }
-        return false;
-    }
-
-    public void remove(Guild guild) throws IOException {
-        Properties pref;
-
-        File file = new File("servers/" + guild.getId() + "/preferences.properties");
-        if(file.exists()) {
-            pref = getPreferences(guild);
-            pref.remove(key);
-            pref.store(new FileWriter(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
-            return;
-        }
-
-        pref = new Properties();
-        file.getParentFile().mkdirs();
-        file.createNewFile();
-        pref.remove(key);
-        pref.store(new FileWriter(file), "Preferences of server " + guild.getName() + "(" + guild.getId() + ")");
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public String getInfo() {
-        return info;
+        return guilds;
     }
 }

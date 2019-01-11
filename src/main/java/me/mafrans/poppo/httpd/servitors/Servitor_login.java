@@ -5,6 +5,7 @@ import me.mafrans.mahttpd.events.DocumentServeEvent;
 import me.mafrans.mahttpd.exceptions.HTTPForbiddenException;
 import me.mafrans.mahttpd.exceptions.HTTPInternalErrorException;
 import me.mafrans.mahttpd.exceptions.HTTPNotFoundException;
+import me.mafrans.mahttpd.exceptions.ServerNotStartedException;
 import me.mafrans.mahttpd.servitors.HTMLServitor;
 import me.mafrans.mahttpd.util.FileUtils;
 import me.mafrans.poppo.Main;
@@ -25,6 +26,11 @@ public class Servitor_login extends HTMLServitor {
 
         VARIABLES.put("oauth_url", "https://discordapp.com/oauth2/authorize?redirect_uri=" + Main.config.httpd_url + "/redirect&scope=identify%20guilds&response_type=code&client_id=" + Main.config.client_id);
         VARIABLES.put("add_url", "https://discordapp.com/api/oauth2/authorize?client_id=" + Main.config.client_id + "&permissions=8&redirect_uri=" + Main.config.httpd_url+ "/redirect&scope=bot");
+        try {
+            return generateScripts(event.getDocument());
+        } catch (IOException | ServerNotStartedException e) {
+            e.printStackTrace();
+        }
         return event.getDocument();
     }
 
@@ -38,6 +44,18 @@ public class Servitor_login extends HTMLServitor {
 
         }
         catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public File[] getScripts() {
+        File scripts = new File("documents/js/scripts.js");
+        try {
+            FileUtils.createResource("documents/js/scripts.css", scripts);
+            return new File[] {scripts};
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

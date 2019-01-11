@@ -22,16 +22,17 @@ public class TwitchEvents {
         return new TwitchEventRunner();
     }
 
-    public static void onStreamStart(String streamName) {
-        for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
+    public static void onStreamStart(String streamName) throws IOException {
+        for(Guild guild : Main.serverPrefs.getGuilds()) {
             if(guild == null) continue;
-            String msgChannel = ServerPrefs.TWITCH_MESSAGE_CHANNEL.getString(guild); //getString(Guild guild) contains null checking
+            JSONObject prefs = Main.serverPrefs.getPreferences(guild);
+            String msgChannel = prefs.getString("twitch_message_channel"); //getString(Guild guild) contains null checking
             System.out.println("MsgChannel: " + msgChannel);
             if(msgChannel == null) break;
 
             TextChannel textChannel = Main.jda.getTextChannelById(msgChannel);
             System.out.println("TextChannel: " + textChannel.getName());
-            textChannel.sendMessage(ServerPrefs.TWITCH_START_MESSAGE.getString(guild).replace("%name", streamName).replace("%url", "https://twitch.tv/" + streamName).replace("\\n","\n")).complete();
+            textChannel.sendMessage(prefs.getString("twitch_start_message").replace("${name}", streamName).replace("${url}", "https://twitch.tv/" + streamName).replace("\\n","\n")).complete();
 
             JSONObject stream = null;
             try {
@@ -59,16 +60,17 @@ public class TwitchEvents {
         }
     }
 
-    public static void onStreamStop(String streamName) {
-        for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
+    public static void onStreamStop(String streamName) throws IOException {
+        for(Guild guild : Main.serverPrefs.getGuilds()) {
             if(guild == null) continue;
-            String msgChannel = ServerPrefs.TWITCH_MESSAGE_CHANNEL.getString(guild); //getString(Guild guild) contains null checking
+            JSONObject prefs = Main.serverPrefs.getPreferences(guild);
+            String msgChannel = prefs.getString("twitch_message_channel"); //getString(Guild guild) contains null checking
             System.out.println("MsgChannel: " + msgChannel);
             if(msgChannel == null) break;
 
             TextChannel textChannel = Main.jda.getTextChannelById(msgChannel);
             System.out.println("TextChannel: " + msgChannel);
-            textChannel.sendMessage(ServerPrefs.TWITCH_STOP_MESSAGE.getString(guild).replace("%name", streamName).replace("%url", "https://twitch.tv/" + streamName).replace("\\n","\n")).queue();
+            textChannel.sendMessage(prefs.getString("twitch_stop_message").replace("${name}", streamName).replace("${url}", "https://twitch.tv/" + streamName).replace("\\n","\n")).queue();
         }
     }
 }

@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-@Data
 public class SQLDataUser {
     private String names;
     private String uuid;
@@ -24,5 +23,21 @@ public class SQLDataUser {
         this.uuid = uuid;
         this.lastOnlineTag = lastOnlineTag;
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getNames() {
+        return names;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getLastOnlineTag() {
+        return lastOnlineTag;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 }

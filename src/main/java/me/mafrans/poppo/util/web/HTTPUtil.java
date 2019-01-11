@@ -3,14 +3,14 @@ package me.mafrans.poppo.util.web;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
 import javax.net.ssl.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.SocketException;
-import java.net.URL;
+import java.net.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -100,6 +100,13 @@ public class HTTPUtil {
 
         //print result
         return response.toString();
+    }
+
+    public static Image getImage(String sUrl) throws IOException {
+        URLConnection connection = new URL(sUrl).openConnection();
+        connection.setRequestProperty("User-Agent", USER_AGENT);
+
+        return ImageIO.read(connection.getInputStream());
     }
 
     public static String getRawText(String sUrl, Map<String, String> params) throws IOException {
