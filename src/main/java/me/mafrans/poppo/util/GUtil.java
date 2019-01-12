@@ -3,11 +3,14 @@ package me.mafrans.poppo.util;
 import me.mafrans.javadins.RankedTier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -62,160 +65,164 @@ public class GUtil {
 
     public static Map<RankedTier, String> paladinsTierImages = new HashMap<>();
     static {
-        paladinsTierImages.put(RankedTier.QUALIFYING, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/8/8e/RankIcon_Qualifying.png/128px-RankIcon_Qualifying.png");
+        paladinsTierImages.put(RankedTier.QUALIFYING, "");
 
-        paladinsTierImages.put(RankedTier.BRONZE_5, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/d/d0/RankIcon_Bronze_5.png/128px-RankIcon_Bronze_5.png");
-        paladinsTierImages.put(RankedTier.BRONZE_4, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/8/8e/RankIcon_Qualifying.png/128px-RankIcon_Bronze_4.png");
-        paladinsTierImages.put(RankedTier.BRONZE_3, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/5/55/RankIcon_Bronze_3.png/128px-RankIcon_Bronze_3.png");
-        paladinsTierImages.put(RankedTier.BRONZE_2, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/5/5b/RankIcon_Bronze_2.png/128px-RankIcon_Bronze_2.png");
-        paladinsTierImages.put(RankedTier.BRONZE_1, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/6/6e/RankIcon_Bronze_1.png/128px-RankIcon_Bronze_1.png");
+        paladinsTierImages.put(RankedTier.BRONZE_5, "");
+        paladinsTierImages.put(RankedTier.BRONZE_4, "");
+        paladinsTierImages.put(RankedTier.BRONZE_3, "");
+        paladinsTierImages.put(RankedTier.BRONZE_2, "");
+        paladinsTierImages.put(RankedTier.BRONZE_1, "");
 
-        paladinsTierImages.put(RankedTier.SILVER_5, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/1/1c/RankIcon_Silver_5.png/128px-RankIcon_Silver_5.png");
-        paladinsTierImages.put(RankedTier.SILVER_4, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/1/13/RankIcon_Silver_4.png/128px-RankIcon_Silver_4.png");
-        paladinsTierImages.put(RankedTier.SILVER_3, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/9/95/RankIcon_Silver_3.png/128px-RankIcon_Silver_3.png");
-        paladinsTierImages.put(RankedTier.SILVER_2, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/7/77/RankIcon_Silver_2.png/128px-RankIcon_Silver_2.png");
-        paladinsTierImages.put(RankedTier.SILVER_1, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/1/17/RankIcon_Silver_1.png/128px-RankIcon_Silver_1.png");
+        paladinsTierImages.put(RankedTier.SILVER_5, "");
+        paladinsTierImages.put(RankedTier.SILVER_4, "");
+        paladinsTierImages.put(RankedTier.SILVER_3, "");
+        paladinsTierImages.put(RankedTier.SILVER_2, "");
+        paladinsTierImages.put(RankedTier.SILVER_1, "");
 
-        paladinsTierImages.put(RankedTier.GOLD_5, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/4/48/RankIcon_Gold_5.png/128px-RankIcon_Gold_5.png");
-        paladinsTierImages.put(RankedTier.GOLD_4, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/6/6d/RankIcon_Gold_4.png/128px-RankIcon_Gold_4.png");
-        paladinsTierImages.put(RankedTier.GOLD_3, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/1/12/RankIcon_Gold_3.png/128px-RankIcon_Gold_3.png");
-        paladinsTierImages.put(RankedTier.GOLD_2, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/2/21/RankIcon_Gold_2.png/128px-RankIcon_Gold_2.png");
-        paladinsTierImages.put(RankedTier.GOLD_1, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/e/ed/RankIcon_Gold_1.png/128px-RankIcon_Gold_1.png");
+        paladinsTierImages.put(RankedTier.GOLD_5, "");
+        paladinsTierImages.put(RankedTier.GOLD_4, "");
+        paladinsTierImages.put(RankedTier.GOLD_3, "");
+        paladinsTierImages.put(RankedTier.GOLD_2, "");
+        paladinsTierImages.put(RankedTier.GOLD_1, "");
 
-        paladinsTierImages.put(RankedTier.PLATINUM_5, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/0/05/RankIcon_Platinum_5.png/128px-RankIcon_Platinum_5.png");
-        paladinsTierImages.put(RankedTier.PLATINUM_4, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/e/e1/RankIcon_Platinum_4.png/128px-RankIcon_Platinum_4.png");
-        paladinsTierImages.put(RankedTier.PLATINUM_3, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/3/3c/RankIcon_Platinum_3.png/128px-RankIcon_Platinum_3.png");
-        paladinsTierImages.put(RankedTier.PLATINUM_2, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/9/9a/RankIcon_Platinum_2.png/128px-RankIcon_Platinum_2.png");
-        paladinsTierImages.put(RankedTier.PLATINUM_1, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/c/c3/RankIcon_Platinum_1.png/128px-RankIcon_Platinum_1.png");
+        paladinsTierImages.put(RankedTier.PLATINUM_5, "");
+        paladinsTierImages.put(RankedTier.PLATINUM_4, "");
+        paladinsTierImages.put(RankedTier.PLATINUM_3, "");
+        paladinsTierImages.put(RankedTier.PLATINUM_2, "");
+        paladinsTierImages.put(RankedTier.PLATINUM_1, "");
 
-        paladinsTierImages.put(RankedTier.DIAMOND_5, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/0/03/RankIcon_Diamond_5.png/128px-RankIcon_Diamond_5.png");
-        paladinsTierImages.put(RankedTier.DIAMOND_4, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/8/8a/RankIcon_Diamond_4.png/128px-RankIcon_Diamond_4.png");
-        paladinsTierImages.put(RankedTier.DIAMOND_3, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/8/84/RankIcon_Diamond_3.png/128px-RankIcon_Diamond_3.png");
-        paladinsTierImages.put(RankedTier.DIAMOND_2, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/4/4d/RankIcon_Diamond_2.png/128px-RankIcon_Diamond_2.png");
-        paladinsTierImages.put(RankedTier.DIAMOND_1, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/f/f1/RankIcon_Diamond_1.png/128px-RankIcon_Diamond_1.png");
+        paladinsTierImages.put(RankedTier.DIAMOND_5, "");
+        paladinsTierImages.put(RankedTier.DIAMOND_4, "");
+        paladinsTierImages.put(RankedTier.DIAMOND_3, "");
+        paladinsTierImages.put(RankedTier.DIAMOND_2, "");
+        paladinsTierImages.put(RankedTier.DIAMOND_1, "");
 
-        paladinsTierImages.put(RankedTier.MASTER, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/9/9c/RankIcon_Master.png/128px-RankIcon_Master.png");
-        paladinsTierImages.put(RankedTier.GRANDMASTER, "https://d1u5p3l4wpay3k.cloudfront.net/paladins_gamepedia/thumb/8/86/RankIcon_Grandmaster.png/128px-RankIcon_Grandmaster.png");
+        paladinsTierImages.put(RankedTier.MASTER, "");
+        paladinsTierImages.put(RankedTier.GRANDMASTER, "");
     }
 
     public static Map<me.mafrans.smiteforge.RankedTier, String> smiteConquestTierImages = new HashMap<>();
     static {
         smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.QUALIFYING, null);
 
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/33/S3_League_Conquest_Bronze.png/140px-S3_League_Conquest_Bronze.png?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/33/S3_League_Conquest_Bronze.png/140px-S3_League_Conquest_Bronze.png?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/33/S3_League_Conquest_Bronze.png/140px-S3_League_Conquest_Bronze.png?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/33/S3_League_Conquest_Bronze.png/140px-S3_League_Conquest_Bronze.png?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/33/S3_League_Conquest_Bronze.png/140px-S3_League_Conquest_Bronze.png?version=93475b6e48b82ae6514457fd8da9520a");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "?version=93475b6e48b82ae6514457fd8da9520a");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "?version=93475b6e48b82ae6514457fd8da9520a");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "?version=93475b6e48b82ae6514457fd8da9520a");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "?version=93475b6e48b82ae6514457fd8da9520a");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "?version=93475b6e48b82ae6514457fd8da9520a");
 
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/6c/S3_League_Conquest_Silver.png/140px-S3_League_Conquest_Silver.png?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/6c/S3_League_Conquest_Silver.png/140px-S3_League_Conquest_Silver.png?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/6c/S3_League_Conquest_Silver.png/140px-S3_League_Conquest_Silver.png?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/6c/S3_League_Conquest_Silver.png/140px-S3_League_Conquest_Silver.png?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/6c/S3_League_Conquest_Silver.png/140px-S3_League_Conquest_Silver.png?version=00e1edabd5f12160bf94378255dff037");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "?version=00e1edabd5f12160bf94378255dff037");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "?version=00e1edabd5f12160bf94378255dff037");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "?version=00e1edabd5f12160bf94378255dff037");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "?version=00e1edabd5f12160bf94378255dff037");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "?version=00e1edabd5f12160bf94378255dff037");
 
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/3c/S3_League_Conquest_Gold.png/140px-S3_League_Conquest_Gold.png?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/3c/S3_League_Conquest_Gold.png/140px-S3_League_Conquest_Gold.png?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/3c/S3_League_Conquest_Gold.png/140px-S3_League_Conquest_Gold.png?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/3c/S3_League_Conquest_Gold.png/140px-S3_League_Conquest_Gold.png?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/3c/S3_League_Conquest_Gold.png/140px-S3_League_Conquest_Gold.png?version=40c5c39865a259674c37243d4d130adc");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "?version=40c5c39865a259674c37243d4d130adc");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "?version=40c5c39865a259674c37243d4d130adc");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "?version=40c5c39865a259674c37243d4d130adc");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "?version=40c5c39865a259674c37243d4d130adc");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "?version=40c5c39865a259674c37243d4d130adc");
 
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/46/S3_League_Conquest_Platinum.png/140px-S3_League_Conquest_Platinum.png?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/46/S3_League_Conquest_Platinum.png/140px-S3_League_Conquest_Platinum.png?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/46/S3_League_Conquest_Platinum.png/140px-S3_League_Conquest_Platinum.png?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/46/S3_League_Conquest_Platinum.png/140px-S3_League_Conquest_Platinum.png?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/46/S3_League_Conquest_Platinum.png/140px-S3_League_Conquest_Platinum.png?version=cb572660ce849d43519e4d624e01dda3");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "?version=cb572660ce849d43519e4d624e01dda3");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "?version=cb572660ce849d43519e4d624e01dda3");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "?version=cb572660ce849d43519e4d624e01dda3");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "?version=cb572660ce849d43519e4d624e01dda3");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "?version=cb572660ce849d43519e4d624e01dda3");
 
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/4c/S3_League_Conquest_Diamond.png/140px-S3_League_Conquest_Diamond.png?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/4c/S3_League_Conquest_Diamond.png/140px-S3_League_Conquest_Diamond.png?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/4c/S3_League_Conquest_Diamond.png/140px-S3_League_Conquest_Diamond.png?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/4c/S3_League_Conquest_Diamond.png/140px-S3_League_Conquest_Diamond.png?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/4c/S3_League_Conquest_Diamond.png/140px-S3_League_Conquest_Diamond.png?version=a653fcfdae1a0105d5be9be2e1764ab4");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
 
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/3/39/S3_League_Conquest_GrandMaster.png/140px-S3_League_Conquest_GrandMaster.png?version=81dd947a61fe075518bfec22a099f5b0");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/c/c7/S4_League_Conquest_GrandMasters.png/140px-S4_League_Conquest_GrandMasters.png?version=9e2d8597c1f05ce4403ae80a447c20a8");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "?version=81dd947a61fe075518bfec22a099f5b0");
+        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "?version=9e2d8597c1f05ce4403ae80a447c20a8");
     }
 
     public static Map<me.mafrans.smiteforge.RankedTier, String> smiteDuelTierImages = new HashMap<>();
     static {
         smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.QUALIFYING, null);
 
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/f/fb/S5_League_Duel_Bronze.png/140px-S5_League_Duel_Bronze.png?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/f/fb/S5_League_Duel_Bronze.png/140px-S5_League_Duel_Bronze.png?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/f/fb/S5_League_Duel_Bronze.png/140px-S5_League_Duel_Bronze.png?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/f/fb/S5_League_Duel_Bronze.png/140px-S5_League_Duel_Bronze.png?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/f/fb/S5_League_Duel_Bronze.png/140px-S5_League_Duel_Bronze.png?version=5aea9f36c84799840fd95e75180272e1");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "?version=5aea9f36c84799840fd95e75180272e1");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "?version=5aea9f36c84799840fd95e75180272e1");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "?version=5aea9f36c84799840fd95e75180272e1");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "?version=5aea9f36c84799840fd95e75180272e1");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "?version=5aea9f36c84799840fd95e75180272e1");
 
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1f/S5_League_Duel_Silver.png/140px-S5_League_Duel_Silver.png?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1f/S5_League_Duel_Silver.png/140px-S5_League_Duel_Silver.png?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1f/S5_League_Duel_Silver.png/140px-S5_League_Duel_Silver.png?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1f/S5_League_Duel_Silver.png/140px-S5_League_Duel_Silver.png?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1f/S5_League_Duel_Silver.png/140px-S5_League_Duel_Silver.png?version=c566febe744de43eba8b5af7fede624c");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "?version=c566febe744de43eba8b5af7fede624c");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "?version=c566febe744de43eba8b5af7fede624c");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "?version=c566febe744de43eba8b5af7fede624c");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "?version=c566febe744de43eba8b5af7fede624c");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "?version=c566febe744de43eba8b5af7fede624c");
 
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/e/ee/S5_League_Duel_Gold.png/140px-S5_League_Duel_Gold.png?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/e/ee/S5_League_Duel_Gold.png/140px-S5_League_Duel_Gold.png?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/e/ee/S5_League_Duel_Gold.png/140px-S5_League_Duel_Gold.png?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/e/ee/S5_League_Duel_Gold.png/140px-S5_League_Duel_Gold.png?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/e/ee/S5_League_Duel_Gold.png/140px-S5_League_Duel_Gold.png?version=d5ce132114ed8e48e21508eb3836b15e");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "?version=d5ce132114ed8e48e21508eb3836b15e");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "?version=d5ce132114ed8e48e21508eb3836b15e");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "?version=d5ce132114ed8e48e21508eb3836b15e");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "?version=d5ce132114ed8e48e21508eb3836b15e");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "?version=d5ce132114ed8e48e21508eb3836b15e");
 
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/8/8e/S5_League_Duel_Platinum.png/140px-S5_League_Duel_Platinum.png?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/8/8e/S5_League_Duel_Platinum.png/140px-S5_League_Duel_Platinum.png?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/8/8e/S5_League_Duel_Platinum.png/140px-S5_League_Duel_Platinum.png?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/8/8e/S5_League_Duel_Platinum.png/140px-S5_League_Duel_Platinum.png?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/8/8e/S5_League_Duel_Platinum.png/140px-S5_League_Duel_Platinum.png?version=626f0761b856203058c32059bee1d226");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "?version=626f0761b856203058c32059bee1d226");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "?version=626f0761b856203058c32059bee1d226");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "?version=626f0761b856203058c32059bee1d226");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "?version=626f0761b856203058c32059bee1d226");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "?version=626f0761b856203058c32059bee1d226");
 
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/2/23/S5_League_Duel_Diamond.png/140px-S5_League_Duel_Diamond.png?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/2/23/S5_League_Duel_Diamond.png/140px-S5_League_Duel_Diamond.png?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/2/23/S5_League_Duel_Diamond.png/140px-S5_League_Duel_Diamond.png?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/2/23/S5_League_Duel_Diamond.png/140px-S5_League_Duel_Diamond.png?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/2/23/S5_League_Duel_Diamond.png/140px-S5_League_Duel_Diamond.png?version=7a2205da801fb3e02683e3a1d4799ae3");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "?version=7a2205da801fb3e02683e3a1d4799ae3");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "?version=7a2205da801fb3e02683e3a1d4799ae3");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "?version=7a2205da801fb3e02683e3a1d4799ae3");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "?version=7a2205da801fb3e02683e3a1d4799ae3");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "?version=7a2205da801fb3e02683e3a1d4799ae3");
 
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/45/S5_League_Duel_Masters.png/140px-S5_League_Duel_Masters.png?version=e88795ccd25fe35fb96c555e89570a92");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/8/8b/S5_League_Duel_GrandMasters.png/140px-S5_League_Duel_GrandMasters.png?version=1bb27ff55a9aebd78d625143b099f6fa");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "?version=e88795ccd25fe35fb96c555e89570a92");
+        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "?version=1bb27ff55a9aebd78d625143b099f6fa");
     }
 
     public static Map<me.mafrans.smiteforge.RankedTier, String> smiteJoustTierImages = new HashMap<>();
     static {
         smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.QUALIFYING, null);
 
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/49/S3_League_Joust_Bronze.png/140px-S3_League_Joust_Bronze.png?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/49/S3_League_Joust_Bronze.png/140px-S3_League_Joust_Bronze.png?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/49/S3_League_Joust_Bronze.png/140px-S3_League_Joust_Bronze.png?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/49/S3_League_Joust_Bronze.png/140px-S3_League_Joust_Bronze.png?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/49/S3_League_Joust_Bronze.png/140px-S3_League_Joust_Bronze.png?version=34c161d7dd2b25bb9fb204f87237615c");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "?version=34c161d7dd2b25bb9fb204f87237615c");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "?version=34c161d7dd2b25bb9fb204f87237615c");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "?version=34c161d7dd2b25bb9fb204f87237615c");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "?version=34c161d7dd2b25bb9fb204f87237615c");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "?version=34c161d7dd2b25bb9fb204f87237615c");
 
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1a/S3_League_Joust_Silver.png/140px-S3_League_Joust_Silver.png?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1a/S3_League_Joust_Silver.png/140px-S3_League_Joust_Silver.png?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1a/S3_League_Joust_Silver.png/140px-S3_League_Joust_Silver.png?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1a/S3_League_Joust_Silver.png/140px-S3_League_Joust_Silver.png?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1a/S3_League_Joust_Silver.png/140px-S3_League_Joust_Silver.png?version=cd01133edf2c7e69dd4c7c80aedd23d8");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
 
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1e/S3_League_Joust_Gold.png/140px-S3_League_Joust_Gold.png?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1e/S3_League_Joust_Gold.png/140px-S3_League_Joust_Gold.png?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1e/S3_League_Joust_Gold.png/140px-S3_League_Joust_Gold.png?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1e/S3_League_Joust_Gold.png/140px-S3_League_Joust_Gold.png?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/1/1e/S3_League_Joust_Gold.png/140px-S3_League_Joust_Gold.png?version=227e1a5a17b32b01d75aca86f1802cde");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "?version=227e1a5a17b32b01d75aca86f1802cde");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "?version=227e1a5a17b32b01d75aca86f1802cde");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "?version=227e1a5a17b32b01d75aca86f1802cde");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "?version=227e1a5a17b32b01d75aca86f1802cde");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "?version=227e1a5a17b32b01d75aca86f1802cde");
 
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/60/S3_League_Joust_Platinum.png/140px-S3_League_Joust_Platinum.png?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/60/S3_League_Joust_Platinum.png/140px-S3_League_Joust_Platinum.png?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/60/S3_League_Joust_Platinum.png/140px-S3_League_Joust_Platinum.png?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/60/S3_League_Joust_Platinum.png/140px-S3_League_Joust_Platinum.png?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/6/60/S3_League_Joust_Platinum.png/140px-S3_League_Joust_Platinum.png?version=64b52b852cecfeb0d89908d1cb2892c0");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "?version=64b52b852cecfeb0d89908d1cb2892c0");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "?version=64b52b852cecfeb0d89908d1cb2892c0");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "?version=64b52b852cecfeb0d89908d1cb2892c0");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "?version=64b52b852cecfeb0d89908d1cb2892c0");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "?version=64b52b852cecfeb0d89908d1cb2892c0");
 
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/45/S3_League_Joust_Diamond.png/140px-S3_League_Joust_Diamond.png?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/45/S3_League_Joust_Diamond.png/140px-S3_League_Joust_Diamond.png?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/45/S3_League_Joust_Diamond.png/140px-S3_League_Joust_Diamond.png?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/45/S3_League_Joust_Diamond.png/140px-S3_League_Joust_Diamond.png?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/4/45/S3_League_Joust_Diamond.png/140px-S3_League_Joust_Diamond.png?version=bb986f49c3a5f9f9a8545c02bb0054f4");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
 
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/5/57/S3_League_Joust_GrandMaster.png/140px-S3_League_Joust_GrandMaster.png?version=9aa7b5a1d91e6c967ee524a52d5f83e4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "https://d1u5p3l4wpay3k.cloudfront.net/smite_gamepedia/thumb/c/cd/S4_League_Joust_GrandMasters.png/140px-S4_League_Joust_GrandMasters.png?version=86a4e65d8f959f22dd28cd7ae1bdf07d");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "?version=9aa7b5a1d91e6c967ee524a52d5f83e4");
+        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "?version=86a4e65d8f959f22dd28cd7ae1bdf07d");
     }
 
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static String currentParsedDate(ZoneOffset zoneOffset) {
         return DATE_TIME_FORMAT.format(Date.from(ZonedDateTime.now(zoneOffset).toInstant()));
+    }
+
+    public static int[] parseToMinutesSeconds(int seconds) {
+        return new int[] {(int) Math.floor(seconds/60f), seconds % 60};
     }
 
     public static String currentParsedDate() {
@@ -231,7 +238,7 @@ public class GUtil {
         if(string.length() < 2) {
             return "";
         }
-        return string.substring(0, 1).toUpperCase() + string.substring(1);
+        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 
     public static String capitalizeWords(String string) {
@@ -411,24 +418,31 @@ public class GUtil {
         return c.getTime();
     }
 
-    public static String getPaladinsTierImage(RankedTier rankedTier) {
-        return paladinsTierImages.get(rankedTier);
-    }
-    public static String getSmiteConquestTierImage(me.mafrans.smiteforge.RankedTier rankedTier) {
-        return smiteConquestTierImages.get(rankedTier);
-    }
-    public static String getSmiteDuelTierImage(me.mafrans.smiteforge.RankedTier rankedTier) {
-        return smiteDuelTierImages.get(rankedTier);
-    }
-    public static String getSmiteJoustTierImage(me.mafrans.smiteforge.RankedTier rankedTier) {
-        return smiteJoustTierImages.get(rankedTier);
+    public static Font getTrueTypeFont(String path) throws IOException, FontFormatException {
+        return Font.createFont(Font.TRUETYPE_FONT, ClassLoader.getSystemResourceAsStream(path));
     }
 
-    public static String getPaladinsChampionImage(String champion) {
+    public static InputStream getPaladinsTierImage(@NotNull RankedTier rankedTier) {
+        System.out.println("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png -" + ClassLoader.getSystemResourceAsStream("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png"));
+        return ClassLoader.getSystemResourceAsStream("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png");
+    }
+    public static InputStream getSmiteConquestTierImage(@NotNull me.mafrans.smiteforge.RankedTier rankedTier) {
+        return ClassLoader.getSystemResourceAsStream("images/ranks/smite/conquest/" + capitalize(rankedTier.getTier().toString()) + ".png");
+    }
+    public static InputStream getSmiteDuelTierImage(@NotNull me.mafrans.smiteforge.RankedTier rankedTier) {
+        return ClassLoader.getSystemResourceAsStream("images/ranks/smite/duel/" + capitalize(rankedTier.getTier().toString()) + ".png");
+    }
+    public static InputStream getSmiteJoustTierImage(@NotNull me.mafrans.smiteforge.RankedTier rankedTier) {
+        return ClassLoader.getSystemResourceAsStream("images/ranks/smite/joust/" + capitalize(rankedTier.getTier().toString()) + ".png");
+    }
+
+    public static String getPaladinsChampionImage(@NotNull String champion) {
         String imageUrl = null;
         try {
             Document doc = Jsoup.connect(String.format("https://paladins.gamepedia.com/File:Champion_%s_Icon.png", champion.replace(" ", ""))).get();
             imageUrl = doc.getElementById("file").getElementsByTag("a").get(0).attr("href");
+
+            String s = doc.toString(); // For some reason, removing this like breaks the entire code, please don't.
         } catch (IOException e) {
             e.printStackTrace();
         }

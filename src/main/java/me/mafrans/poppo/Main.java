@@ -54,8 +54,6 @@ public class Main {
 
     public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException, KeyManagementException, NoSuchAlgorithmException, ParseException, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
 
-
-
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
         musicManager = new MusicManager();

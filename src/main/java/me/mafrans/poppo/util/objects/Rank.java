@@ -137,8 +137,4 @@ public enum Rank {
     public Role getRole(Guild guild) {
         return roleMap.get(guild);
     }
-
-    public HashMap<Guild, Role> getRoleMap() {
-        return roleMap;
-    }
 }

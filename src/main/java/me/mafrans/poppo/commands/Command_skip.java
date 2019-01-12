@@ -39,11 +39,9 @@ public class Command_skip implements ICommand {
             channel.sendMessage("\uD83C\uDFB5 You cannot skip a song you are not currently listening to.").queue();
         }
 
-        List<Member> skips = new ArrayList<>();
-        if(Main.musicManager.skipMap.containsKey(channel.getGuild())) {
-            skips = Main.musicManager.skipMap.get(channel.getGuild());
-        }
+        List<Member> skips = Main.musicManager.skipMap.getOrDefault(channel.getGuild(), new ArrayList<>());
         skips.add(channel.getGuild().getMember(command.getAuthor()));
+        Main.musicManager.skipMap.put(channel.getGuild(), skips);
 
         if(skips.size() >= (voiceChannel.getMembers().size()/2)) {
             System.out.println("if");

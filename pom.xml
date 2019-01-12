@@ -176,6 +176,13 @@
             <systemPath>${basedir}/lib/lombok-1.16.12.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.jhlabs</groupId>
+            <artifactId>jhlabs-image</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Filters.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>me.mafrans</groupId>
             <artifactId>mahttpd</artifactId>
             <version>1.1</version>
@@ -261,6 +268,12 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
