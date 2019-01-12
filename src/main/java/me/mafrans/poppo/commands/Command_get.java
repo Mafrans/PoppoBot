@@ -112,7 +112,7 @@ public class Command_get implements ICommand {
             channel.sendMessage("Could not find a user with that name or id.").queue();
             return true;
         }
-        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".png?size=2048";
+        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".gif?size=2048";
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(GUtil.randomColor());
