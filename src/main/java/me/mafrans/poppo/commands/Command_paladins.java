@@ -1,9 +1,6 @@
 package me.mafrans.poppo.commands;
 
-import me.mafrans.javadins.GameMode;
-import me.mafrans.javadins.Match;
-import me.mafrans.javadins.MatchPlayer;
-import me.mafrans.javadins.Player;
+import me.mafrans.javadins.*;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
@@ -28,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.*;
 
 public class Command_paladins implements ICommand {
@@ -204,7 +202,7 @@ public class Command_paladins implements ICommand {
                                     loadingMessage2.delete().complete();
                                     channel.sendFile(fis, "image.png").queue();
                                 }
-                                catch (IOException | FontFormatException e) {
+                                catch (IOException | FontFormatException | ParseException e) {
                                     e.printStackTrace();
                                     loadingMessage2.delete().complete();
                                     channel.sendMessage("Something happened while loading your match, please try again.").queue();
@@ -227,7 +225,7 @@ public class Command_paladins implements ICommand {
         return false;
     }
 
-    public static Image generateImage(Match match) throws IOException, FontFormatException {
+    public static Image generateImage(Match match) throws IOException, FontFormatException, ParseException {
 
         final Font lato = GUtil.getTrueTypeFont("fonts/Lato-Regular.ttf");
 
@@ -262,14 +260,14 @@ public class Command_paladins implements ICommand {
 
         // Winning Team
 
-        imageBuilder.setColor(new Color(76, 222, 239)).addText("Team 1", 35, 160, Font.BOLD, 30);
-        imageBuilder.addShape(new Rectangle(145, 124, 46, 48), true);
+        imageBuilder.setColor(new Color(76, 222, 239)).addText("Team 1", 86, 160, Font.BOLD, 30);
+        imageBuilder.addShape(new Rectangle(196, 124, 46, 48), true);
 
         int winningScore = Math.max(match.getScore()[0], match.getScore()[1]);
-        imageBuilder.setColor(Color.WHITE).addText(String.valueOf(winningScore), 159, 160, Font.BOLD, 30);
+        imageBuilder.setColor(Color.WHITE).addText(String.valueOf(winningScore), 210, 160, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
-        imageBuilder.addText("K / D / A", 265, 170, Font.BOLD, 23);
+        imageBuilder.addText("K / D / A", 268, 170, Font.BOLD, 23);
         imageBuilder.addText("Damage", 381, 170, Font.BOLD, 23);
         imageBuilder.addText("Taken", 492, 170, Font.BOLD, 23);
         imageBuilder.addText("Healing", 584, 170, Font.BOLD, 23);
@@ -278,8 +276,11 @@ public class Command_paladins implements ICommand {
 
         int margin = 15 + 50;
         int i = 0;
+        int averageWinTier = 0;
         for(MatchPlayer player : match.getPlayers()) {
             if(player.isWinner()) {
+                averageWinTier += Main.javadins.getPlayer(Main.javadins.getPlayerIds(player.getName())[0]).getRankedTier().toIndex();
+
                 imageBuilder.setTextFont(new Font(lato.getFamily(), 0, 23));
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 
@@ -311,18 +312,20 @@ public class Command_paladins implements ICommand {
                 i++;
             }
         }
+        averageWinTier /= 5;
+        imageBuilder.addImage(ImageIO.read(GUtil.getPaladinsTierImage(RankedTier.fromIndex(averageWinTier))), 28, 126, 55, 55, Image.SCALE_SMOOTH);
 
 
 
         // Losing Team
         int topMargin = 438;
 
-        imageBuilder.setColor(new Color(231, 71, 76)).addText("Team 2", 35, 160 + topMargin, Font.BOLD, 30);
-        imageBuilder.addShape(new Rectangle(145, 124 + topMargin, 46, 48), true);
-        imageBuilder.setColor(Color.WHITE).addText(String.valueOf(4 - winningScore), 159, 160 + topMargin, Font.BOLD, 30);
+        imageBuilder.setColor(new Color(231, 71, 76)).addText("Team 2", 86, 160 + topMargin, Font.BOLD, 30);
+        imageBuilder.addShape(new Rectangle(196, 124 + topMargin, 46, 48), true);
+        imageBuilder.setColor(Color.WHITE).addText(String.valueOf(4 - winningScore), 210, 160 + topMargin, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
-        imageBuilder.addText("K / D / A", 265, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("K / D / A", 268, 170 + topMargin, Font.BOLD, 23);
         imageBuilder.addText("Damage", 381, 170 + topMargin, Font.BOLD, 23);
         imageBuilder.addText("Taken", 492, 170 + topMargin, Font.BOLD, 23);
         imageBuilder.addText("Healing", 584, 170 + topMargin, Font.BOLD, 23);
@@ -330,8 +333,10 @@ public class Command_paladins implements ICommand {
 
 
         i = 0;
+        int averageLoseTier = 0;
         for(MatchPlayer player : match.getPlayers()) {
             if(!player.isWinner()) {
+                averageLoseTier += Main.javadins.getPlayer(Main.javadins.getPlayerIds(player.getName())[0]).getRankedTier().toIndex();
                 imageBuilder.setTextFont(new Font(lato.getFamily(), 0, 23));
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 
@@ -361,7 +366,10 @@ public class Command_paladins implements ICommand {
 
                 i++;
             }
+
         }
+        averageLoseTier /= 5;
+        imageBuilder.addImage(ImageIO.read(GUtil.getPaladinsTierImage(RankedTier.fromIndex(averageLoseTier))), 28, 126 + topMargin, 55, 55, Image.SCALE_SMOOTH);
 
         return imageBuilder.build();
     }
