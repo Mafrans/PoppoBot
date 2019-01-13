@@ -269,7 +269,7 @@ public class Command_paladins implements ICommand {
         imageBuilder.setColor(Color.WHITE).addText(String.valueOf(winningScore), 159, 160, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
-        imageBuilder.addText("K / D / A", 272, 170, Font.BOLD, 23);
+        imageBuilder.addText("K / D / A", 265, 170, Font.BOLD, 23);
         imageBuilder.addText("Damage", 381, 170, Font.BOLD, 23);
         imageBuilder.addText("Taken", 492, 170, Font.BOLD, 23);
         imageBuilder.addText("Healing", 584, 170, Font.BOLD, 23);
@@ -322,7 +322,7 @@ public class Command_paladins implements ICommand {
         imageBuilder.setColor(Color.WHITE).addText(String.valueOf(4 - winningScore), 159, 160 + topMargin, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
-        imageBuilder.addText("K / D / A", 268, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("K / D / A", 265, 170 + topMargin, Font.BOLD, 23);
         imageBuilder.addText("Damage", 381, 170 + topMargin, Font.BOLD, 23);
         imageBuilder.addText("Taken", 492, 170 + topMargin, Font.BOLD, 23);
         imageBuilder.addText("Healing", 584, 170 + topMargin, Font.BOLD, 23);
