@@ -267,11 +267,11 @@ public class Command_paladins implements ICommand {
         imageBuilder.setColor(Color.WHITE).addText(String.valueOf(winningScore), 210, 160, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
-        imageBuilder.addText("K / D / A", 268, 170, Font.BOLD, 23);
-        imageBuilder.addText("Damage", 381, 170, Font.BOLD, 23);
-        imageBuilder.addText("Taken", 492, 170, Font.BOLD, 23);
-        imageBuilder.addText("Healing", 584, 170, Font.BOLD, 23);
-        imageBuilder.addText("Shielding", 675, 170, Font.BOLD, 23);
+        imageBuilder.addText("K / D / A", 276, 170, Font.BOLD, 23);
+        imageBuilder.addText("Damage", 391, 170, Font.BOLD, 23);
+        imageBuilder.addText("Taken", 502, 170, Font.BOLD, 23);
+        imageBuilder.addText("Healing", 594, 170, Font.BOLD, 23);
+        imageBuilder.addText("Shielding", 685, 170, Font.BOLD, 23);
 
 
         int margin = 15 + 50;
@@ -285,20 +285,20 @@ public class Command_paladins implements ICommand {
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 
                 int textWidth = fontMetrics.stringWidth(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()));
-                imageBuilder.setColor(Color.WHITE).addText(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()), 312 - textWidth/2, 235 + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()), 322 - textWidth/2, 235 + margin*i, 0, 23);
 
                 NumberFormat nf = NumberFormat.getInstance(Locale.US);
                 textWidth = fontMetrics.stringWidth(nf.format(player.getDamage()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getDamage()), 422 - textWidth/2, 235 + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getDamage()), 432 - textWidth/2, 235 + margin*i, 0, 23);
 
                 textWidth = fontMetrics.stringWidth(nf.format(player.getTaken()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getTaken()), 522 - textWidth/2, 235 + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getTaken()), 532 - textWidth/2, 235 + margin*i, 0, 23);
 
                 textWidth = fontMetrics.stringWidth(nf.format(player.getHealing()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getHealing()), 622 - textWidth/2, 235 + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getHealing()), 632 - textWidth/2, 235 + margin*i, 0, 23);
 
                 textWidth = fontMetrics.stringWidth(nf.format(player.getShielding()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getShielding()), 722 - textWidth/2, 235 + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getShielding()), 732 - textWidth/2, 235 + margin*i, 0, 23);
 
 
                 // Name and picture
@@ -313,6 +313,7 @@ public class Command_paladins implements ICommand {
             }
         }
         averageWinTier /= 5;
+        System.out.println(RankedTier.fromIndex(averageWinTier));
         imageBuilder.addImage(ImageIO.read(GUtil.getPaladinsTierImage(RankedTier.fromIndex(averageWinTier))), 28, 126, 55, 55, Image.SCALE_SMOOTH);
 
 
@@ -325,11 +326,11 @@ public class Command_paladins implements ICommand {
         imageBuilder.setColor(Color.WHITE).addText(String.valueOf(4 - winningScore), 210, 160 + topMargin, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
-        imageBuilder.addText("K / D / A", 268, 170 + topMargin, Font.BOLD, 23);
-        imageBuilder.addText("Damage", 381, 170 + topMargin, Font.BOLD, 23);
-        imageBuilder.addText("Taken", 492, 170 + topMargin, Font.BOLD, 23);
-        imageBuilder.addText("Healing", 584, 170 + topMargin, Font.BOLD, 23);
-        imageBuilder.addText("Shielding", 675, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("K / D / A", 276, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("Damage", 391, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("Taken", 502, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("Healing", 594, 170 + topMargin, Font.BOLD, 23);
+        imageBuilder.addText("Shielding", 685, 170 + topMargin, Font.BOLD, 23);
 
 
         i = 0;
@@ -341,20 +342,20 @@ public class Command_paladins implements ICommand {
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 
                 int textWidth = fontMetrics.stringWidth(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()));
-                imageBuilder.setColor(Color.WHITE).addText(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()), 312 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()), 322 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
 
                 NumberFormat nf = NumberFormat.getInstance(Locale.US);
                 textWidth = fontMetrics.stringWidth(nf.format(player.getDamage()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getDamage()), 422 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getDamage()), 432 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
 
                 textWidth = fontMetrics.stringWidth(nf.format(player.getTaken()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getTaken()), 522 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getTaken()), 532 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
 
                 textWidth = fontMetrics.stringWidth(nf.format(player.getHealing()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getHealing()), 622 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getHealing()), 632 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
 
                 textWidth = fontMetrics.stringWidth(nf.format(player.getShielding()));
-                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getShielding()), 722 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
+                imageBuilder.setColor(Color.WHITE).addText(nf.format(player.getShielding()), 732 - textWidth/2, 235 + topMargin + margin*i, 0, 23);
 
 
                 // Name and picture
@@ -369,6 +370,7 @@ public class Command_paladins implements ICommand {
 
         }
         averageLoseTier /= 5;
+        System.out.println(RankedTier.fromIndex(averageLoseTier));
         imageBuilder.addImage(ImageIO.read(GUtil.getPaladinsTierImage(RankedTier.fromIndex(averageLoseTier))), 28, 126 + topMargin, 55, 55, Image.SCALE_SMOOTH);
 
         return imageBuilder.build();
