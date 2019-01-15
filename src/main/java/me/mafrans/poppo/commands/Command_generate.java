@@ -29,7 +29,7 @@ public class Command_generate implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Generates things.", "generate number|string|password|name [args...]", Collections.singletonList("make"), false, false);
+        return new CommandMeta(CommandCategory.UTILITY, "Generates things.", "generate number|string|password|name [args...]", new String[] {"make"}, false);
     }
 
     @Override

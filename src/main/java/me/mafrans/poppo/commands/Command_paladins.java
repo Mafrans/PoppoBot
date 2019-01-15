@@ -1,6 +1,6 @@
 package me.mafrans.poppo.commands;
 
-import me.mafrans.javadins.*;
+//import me.mafrans.javadins.*;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
@@ -28,7 +28,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
 
-public class Command_paladins implements ICommand {
+public class Command_paladins {} /* implements ICommand {
     @Override
     public String getName() {
         return "paladins";
@@ -36,7 +36,7 @@ public class Command_paladins implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.WEB, "Gets information from the Paladins API", "paladins player|match|latest <name|id>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.WEB, "Gets information from the Paladins API", "paladins player|match|latest <name|id>", null, false);
     }
 
     @Override
@@ -377,4 +377,4 @@ public class Command_paladins implements ICommand {
     }
 
 
-}
+}*/

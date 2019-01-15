@@ -24,7 +24,7 @@ public class Command_get implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Gets information from discord.", "get avatar|server [args...]", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Gets information from discord.", "get avatar|server [args...]", null, false);
     }
 
     @Override

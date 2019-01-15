@@ -30,7 +30,7 @@ public class Command_timeout implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Times a user out for a set amount of time, effectively banning them.", "timeout <user> [time]", Arrays.asList("tempban"), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Times a user out for a set amount of time, effectively banning them.", "timeout <user> [time]", new String[] {"tempban"}, false);
     }
 
     @Override

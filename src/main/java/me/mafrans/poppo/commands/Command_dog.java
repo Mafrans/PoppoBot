@@ -41,7 +41,7 @@ public class Command_dog implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Sends a random dog picture.", "dog [breed]", Arrays.asList("puppy", "doggo", "woof"), false);
+        return new CommandMeta(CommandCategory.FUN, "Sends a random dog picture.", "dog [breed]", new String[] {"puppy", "doggo", "woof"}, false);
     }
 
     @Override

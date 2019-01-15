@@ -22,7 +22,7 @@ public class Command_unmute implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Unmutes a user.", "unmute <user>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Unmutes a user.", "unmute <user>", null, false);
     }
 
     @Override

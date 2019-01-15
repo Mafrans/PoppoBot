@@ -1,7 +1,8 @@
 package me.mafrans.poppo.commands;
 
-import me.mafrans.smiteforge.GameMode;
-import me.mafrans.smiteforge.Player;
+//import me.mafrans.smiteforge.GameMode;
+//import me.mafrans.smiteforge.Player;
+//import me.mafrans.smiteforge.RankedTier;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
@@ -9,7 +10,6 @@ import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.SelectionList;
-import me.mafrans.smiteforge.RankedTier;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Command_smite implements ICommand {
+public class Command_smite {} /*implements ICommand {
     @Override
     public String getName() {
         return "smite";
@@ -35,7 +35,7 @@ public class Command_smite implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.WEB, "Gets information from the Smite API", "smite <name>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.WEB, "Gets information from the Smite API", "smite <name>", null, false);
     }
 
     @Override
@@ -192,3 +192,4 @@ public class Command_smite implements ICommand {
         return true;
     }
 }
+*/

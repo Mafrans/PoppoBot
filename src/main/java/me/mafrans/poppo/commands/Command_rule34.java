@@ -23,7 +23,7 @@ public class Command_rule34 implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.NSFW, "Gets a random image from the Genbooru rule34 database.", "rule34 <query>", Arrays.asList("r34", "genbooru"), false);
+        return new CommandMeta(CommandCategory.NSFW, "Gets a random image from the Genbooru rule34 database.", "rule34 <query>", new String[] {"r34", "genbooru"}, false);
     }
 
     @Override

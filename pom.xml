@@ -122,6 +122,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/gson-2.8.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>java-prettify</groupId>
+            <artifactId>prettify</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/java-prettify.jar</systemPath>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
         <dependency>
             <groupId>commons-validator</groupId>

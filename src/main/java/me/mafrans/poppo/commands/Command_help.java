@@ -21,7 +21,7 @@ public class Command_help implements ICommand {
                 CommandCategory.UTILITY,
                 "Shows a list of all commands and their usages.",
                 "help [command]",
-                Arrays.asList("commands"),
+                new String[] {"commands"},
                 false);
     }
 
@@ -63,7 +63,7 @@ public class Command_help implements ICommand {
                         .addField("Usage", cmd.getMeta().getUsage(), false)
                         .setAuthor("Help for command: " + GUtil.capitalize(cmd.getName()), "http://poppobot.ga/help?command=" + cmd.getName(), Main.jda.getSelfUser().getAvatarUrl());
 
-                if(cmd.getMeta().getAliases() != null && cmd.getMeta().getAliases().size() > 0) {
+                if(cmd.getMeta().getAliases() != null && cmd.getMeta().getAliases().length > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (String alias : cmd.getMeta().getAliases()) {
                         stringBuilder.append("- " + alias + "\n");

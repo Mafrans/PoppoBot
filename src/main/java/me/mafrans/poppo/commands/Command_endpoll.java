@@ -26,7 +26,7 @@ public class Command_endpoll implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Ends a poll.", "endpoll <title>", Arrays.asList("endvote", "endvoteoff", "stoppoll", "stopvote", "stopvoteoff"), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Ends a poll.", "endpoll <title>", new String[] {"endvote", "endvoteoff", "stoppoll", "stopvote", "stopvoteoff"}, false);
     }
 
     @Override

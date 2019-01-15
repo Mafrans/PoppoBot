@@ -1,5 +1,5 @@
 package me.mafrans.poppo.util.images;
-
+/*
 import me.mafrans.javadins.Javadins;
 import me.mafrans.javadins.SessionInvalidException;
 import me.mafrans.poppo.Main;
@@ -28,3 +28,4 @@ public class ImageTester {
         imageTester.imageLabel.setIcon(new ImageIcon(image));
     }
 }
+*/

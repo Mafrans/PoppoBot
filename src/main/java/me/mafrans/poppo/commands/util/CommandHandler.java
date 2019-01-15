@@ -39,7 +39,7 @@ public class CommandHandler {
             String name = cmd.getName().toLowerCase();
             CommandMeta meta = cmd.getMeta();
 
-            if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && meta.getAliases().contains(words[0].toLowerCase()))) {
+            if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && ArrayUtils.contains(meta.getAliases(), words[0].toLowerCase()))) {
                 outCommand.setLabel(words[0]);
                 outCommand.setCmd(name);
                 outCommand.setExecutor(cmd);

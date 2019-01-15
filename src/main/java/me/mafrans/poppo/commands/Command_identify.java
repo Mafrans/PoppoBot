@@ -31,7 +31,7 @@ public class Command_identify implements ICommand {
                 CommandCategory.UTILITY,
                 "Identifies a user.",
                 "identify <user>",
-                Arrays.asList("whos", "who's"),
+                new String[] {"whos", "who's"},
                 false);
     }
 

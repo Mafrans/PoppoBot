@@ -27,7 +27,7 @@ public class Command_poll implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Starts a poll and DMs you the result. The 'end-date' argument is a UTC timestamp formatted as [" + Poll.DATE_FORMAT.toPattern() + "], ex. " + Poll.DATE_FORMAT.format(new Date()), "poll [end-date]", Arrays.asList("vote", "voteoff"), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Starts a poll and DMs you the result. The 'end-date' argument is a UTC timestamp formatted as [" + Poll.DATE_FORMAT.toPattern() + "], ex. " + Poll.DATE_FORMAT.format(new Date()), "poll [end-date]", new String[] {"vote", "voteoff"}, false);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package me.mafrans.poppo.util.images;
 
-import com.jhlabs.image.GaussianFilter;
+//import com.jhlabs.image.GaussianFilter;
 import lombok.Getter;
 import me.mafrans.poppo.util.GUtil;
 
@@ -66,6 +66,13 @@ public class ImageBuilder {
         return this;
     }
 
+    /*public BufferedImage applyFilter() {
+        GaussianFilter gaussianFilter = new GaussianFilter(blurAmount);
+        BufferedImage bufferedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
+        gaussianFilter.filter(toBufferedImage(background), bufferedImage);
+        return bufferedImage;
+    }*/
+
     public ImageBuilder addBackground(Image background, FitType fitType, boolean stretchX, boolean stretchY, float blurAmount) {
         int imgX = 0;
         int imgY = 0;
@@ -106,10 +113,7 @@ public class ImageBuilder {
             imgHeight = height;
         }
 
-        GaussianFilter gaussianFilter = new GaussianFilter(blurAmount);
-        BufferedImage bufferedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
-        gaussianFilter.filter(toBufferedImage(background), bufferedImage);
-        graphics.drawImage(bufferedImage, imgX, imgY, imgWidth, imgHeight, getObserver());
+        graphics.drawImage(background, imgX, imgY, imgWidth, imgHeight, getObserver());
         return this;
     }
 

@@ -1,6 +1,6 @@
 package me.mafrans.poppo.util.timedtasks;
 
-import me.mafrans.javadins.Javadins;
+/*import me.mafrans.javadins.Javadins;
 import me.mafrans.javadins.SessionInvalidException;
 import me.mafrans.poppo.Main;
 
@@ -19,3 +19,4 @@ public class HirezRefreshRunner implements Runnable {
         }
     }
 }
+*/

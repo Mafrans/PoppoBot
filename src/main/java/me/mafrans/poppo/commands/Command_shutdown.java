@@ -20,7 +20,7 @@ public class Command_shutdown implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Shuts down the bot.", "shutdown", Arrays.asList("kys"), false, true);
+        return new CommandMeta(CommandCategory.UTILITY, "Shuts down the bot.", "shutdown", new String[] {"kys"}, false, true);
     }
 
     @Override

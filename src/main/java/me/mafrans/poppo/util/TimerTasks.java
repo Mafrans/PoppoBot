@@ -20,7 +20,7 @@ public class TimerTasks {
                 queueTask(new AutoInsult(), 120); // 3h
                 queueTask(new GameChangeRunner(), 60);
                 queueTask(new PollEndDateRunner(), 1);
-                queueTask(new HirezRefreshRunner(), 15);
+                //queueTask(new HirezRefreshRunner(), 15);
 
                 try {
                     Thread.sleep(1 * 60 * 1000);

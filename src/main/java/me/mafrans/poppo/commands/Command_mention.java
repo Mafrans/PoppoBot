@@ -27,7 +27,7 @@ public class Command_mention implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Mentions users with arguments.", "mention <arguments...>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Mentions users with arguments.", "mention <arguments...>", null, false);
     }
 
     @Override

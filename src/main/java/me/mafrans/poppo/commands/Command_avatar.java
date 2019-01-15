@@ -23,7 +23,7 @@ public class Command_avatar implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Gets the avatar of a user.", "avatar <user>", Arrays.asList("profilepic", "profilepicture", "picture", "image", "pfp"), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Gets the avatar of a user.", "avatar <user>", new String[] {"profilepic", "profilepicture", "picture", "image", "pfp"}, false);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Command_mute implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Mutes a user for a set amount of time.", "mute <user> [time]", Arrays.asList("stfu"), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Mutes a user for a set amount of time.", "mute <user> [time]", new String[] {"stfu"}, false);
     }
 
     @Override

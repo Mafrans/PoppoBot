@@ -27,7 +27,7 @@ public class Command_getinfo implements ICommand {
                 CommandCategory.WEB,
                 "Gets information from Google.",
                 "getinfo <query>",
-                Arrays.asList("whats", "what's"),
+                new String[] {"whats", "what's"},
                 false);
     }
 

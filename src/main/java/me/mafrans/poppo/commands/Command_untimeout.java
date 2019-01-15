@@ -21,7 +21,7 @@ public class Command_untimeout implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Removes a timeout from a user.", "untimeout <user>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Removes a timeout from a user.", "untimeout <user>", new String[] {"untempban"}, false);
     }
 
     @Override

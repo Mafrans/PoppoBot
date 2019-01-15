@@ -25,7 +25,7 @@ public class Command_move implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Moves a message to the correct channel", "move <message-id[,message-id-2...]> <channel>", Arrays.asList(),false, false);
+        return new CommandMeta(CommandCategory.MODERATION, "Moves a message to the correct channel", "move <message-id[,message-id-2...]> <channel>", null,false, false);
     }
 
     @Override

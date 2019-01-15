@@ -21,7 +21,7 @@ public class Command_flip implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Flips a coin!", "flip", Collections.singletonList("coin"), false);
+        return new CommandMeta(CommandCategory.FUN, "Flips a coin!", "flip", new String[] {"coin"}, false);
     }
 
     @Override

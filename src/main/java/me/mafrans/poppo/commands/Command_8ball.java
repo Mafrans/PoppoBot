@@ -44,7 +44,7 @@ public class Command_8ball implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Ask a question, get an answer!", "8ball <question>", Arrays.asList("can", "is", "does", "do", "a", "are", "has", "have", "why", "was", "are"), false);
+        return new CommandMeta(CommandCategory.FUN, "Ask a question, get an answer!", "8ball <question>", new String[] {"can", "is", "does", "do", "a", "are", "has", "have", "why", "was", "are"}, false);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class Command_play implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Searches and plays music from youtube.", "play <query|url>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.FUN, "Searches and plays music from youtube.", "play <query|url>", null, false);
     }
 
     @Override
