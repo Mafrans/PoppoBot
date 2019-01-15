@@ -1,16 +1,16 @@
 package me.mafrans.poppo.util;
 
 import me.mafrans.javadins.RankedTier;
+import me.mafrans.poppo.util.images.ImageBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -63,159 +63,31 @@ public class GUtil {
             "a cup",                    "video games",          "a window",                 "a mirror",             "a hanger",
     };
 
-    public static Map<RankedTier, String> paladinsTierImages = new HashMap<>();
-    static {
-        paladinsTierImages.put(RankedTier.QUALIFYING, "");
-
-        paladinsTierImages.put(RankedTier.BRONZE_5, "");
-        paladinsTierImages.put(RankedTier.BRONZE_4, "");
-        paladinsTierImages.put(RankedTier.BRONZE_3, "");
-        paladinsTierImages.put(RankedTier.BRONZE_2, "");
-        paladinsTierImages.put(RankedTier.BRONZE_1, "");
-
-        paladinsTierImages.put(RankedTier.SILVER_5, "");
-        paladinsTierImages.put(RankedTier.SILVER_4, "");
-        paladinsTierImages.put(RankedTier.SILVER_3, "");
-        paladinsTierImages.put(RankedTier.SILVER_2, "");
-        paladinsTierImages.put(RankedTier.SILVER_1, "");
-
-        paladinsTierImages.put(RankedTier.GOLD_5, "");
-        paladinsTierImages.put(RankedTier.GOLD_4, "");
-        paladinsTierImages.put(RankedTier.GOLD_3, "");
-        paladinsTierImages.put(RankedTier.GOLD_2, "");
-        paladinsTierImages.put(RankedTier.GOLD_1, "");
-
-        paladinsTierImages.put(RankedTier.PLATINUM_5, "");
-        paladinsTierImages.put(RankedTier.PLATINUM_4, "");
-        paladinsTierImages.put(RankedTier.PLATINUM_3, "");
-        paladinsTierImages.put(RankedTier.PLATINUM_2, "");
-        paladinsTierImages.put(RankedTier.PLATINUM_1, "");
-
-        paladinsTierImages.put(RankedTier.DIAMOND_5, "");
-        paladinsTierImages.put(RankedTier.DIAMOND_4, "");
-        paladinsTierImages.put(RankedTier.DIAMOND_3, "");
-        paladinsTierImages.put(RankedTier.DIAMOND_2, "");
-        paladinsTierImages.put(RankedTier.DIAMOND_1, "");
-
-        paladinsTierImages.put(RankedTier.MASTER, "");
-        paladinsTierImages.put(RankedTier.GRANDMASTER, "");
-    }
-
-    public static Map<me.mafrans.smiteforge.RankedTier, String> smiteConquestTierImages = new HashMap<>();
-    static {
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.QUALIFYING, null);
-
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "?version=93475b6e48b82ae6514457fd8da9520a");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "?version=93475b6e48b82ae6514457fd8da9520a");
-
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "?version=00e1edabd5f12160bf94378255dff037");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "?version=00e1edabd5f12160bf94378255dff037");
-
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "?version=40c5c39865a259674c37243d4d130adc");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "?version=40c5c39865a259674c37243d4d130adc");
-
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "?version=cb572660ce849d43519e4d624e01dda3");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "?version=cb572660ce849d43519e4d624e01dda3");
-
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "?version=a653fcfdae1a0105d5be9be2e1764ab4");
-
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "?version=81dd947a61fe075518bfec22a099f5b0");
-        smiteConquestTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "?version=9e2d8597c1f05ce4403ae80a447c20a8");
-    }
-
-    public static Map<me.mafrans.smiteforge.RankedTier, String> smiteDuelTierImages = new HashMap<>();
-    static {
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.QUALIFYING, null);
-
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "?version=5aea9f36c84799840fd95e75180272e1");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "?version=5aea9f36c84799840fd95e75180272e1");
-
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "?version=c566febe744de43eba8b5af7fede624c");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "?version=c566febe744de43eba8b5af7fede624c");
-
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "?version=d5ce132114ed8e48e21508eb3836b15e");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "?version=d5ce132114ed8e48e21508eb3836b15e");
-
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "?version=626f0761b856203058c32059bee1d226");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "?version=626f0761b856203058c32059bee1d226");
-
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "?version=7a2205da801fb3e02683e3a1d4799ae3");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "?version=7a2205da801fb3e02683e3a1d4799ae3");
-
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "?version=e88795ccd25fe35fb96c555e89570a92");
-        smiteDuelTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "?version=1bb27ff55a9aebd78d625143b099f6fa");
-    }
-
-    public static Map<me.mafrans.smiteforge.RankedTier, String> smiteJoustTierImages = new HashMap<>();
-    static {
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.QUALIFYING, null);
-
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_5, "?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_4, "?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_3, "?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_2, "?version=34c161d7dd2b25bb9fb204f87237615c");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.BRONZE_1, "?version=34c161d7dd2b25bb9fb204f87237615c");
-
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_5, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_4, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_3, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_2, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.SILVER_1, "?version=cd01133edf2c7e69dd4c7c80aedd23d8");
-
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_5, "?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_4, "?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_3, "?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_2, "?version=227e1a5a17b32b01d75aca86f1802cde");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GOLD_1, "?version=227e1a5a17b32b01d75aca86f1802cde");
-
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_5, "?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_4, "?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_3, "?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_2, "?version=64b52b852cecfeb0d89908d1cb2892c0");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.PLATINUM_1, "?version=64b52b852cecfeb0d89908d1cb2892c0");
-
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_5, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_4, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_3, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_2, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.DIAMOND_1, "?version=bb986f49c3a5f9f9a8545c02bb0054f4");
-
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.MASTER, "?version=9aa7b5a1d91e6c967ee524a52d5f83e4");
-        smiteJoustTierImages.put(me.mafrans.smiteforge.RankedTier.GRANDMASTER, "?version=86a4e65d8f959f22dd28cd7ae1bdf07d");
-    }
-
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static InputStream toInputStream(Image image, String formatName) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(ImageBuilder.toBufferedImage(image),formatName, os);
+        return new ByteArrayInputStream(os.toByteArray());
+    }
+
+    public static String addLeadingUntil(String in, int length, String toAdd) {
+        if(in.length() > length) {
+            return in.substring(in.length()-2, in.length());
+        }
+
+        StringBuilder out = new StringBuilder();
+        for(int i = 0; i < length; i++) {
+            if(in.length() > i) {
+                out.append(in.charAt(i));
+            }
+            else {
+                out.append(toAdd);
+            }
+        }
+
+        return out.toString();
+    }
 
     public static String currentParsedDate(ZoneOffset zoneOffset) {
         return DATE_TIME_FORMAT.format(Date.from(ZonedDateTime.now(zoneOffset).toInstant()));

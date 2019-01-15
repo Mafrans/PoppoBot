@@ -46,6 +46,8 @@ public class Command_paladins implements ICommand {
             return false;
         }
 
+        Main.javadins.updateConnection(); // Update connection to API, costs an API call but w/e
+
         if (args[0].equalsIgnoreCase("player")) {
             if(args.length != 2) return false;
 
@@ -146,11 +148,7 @@ public class Command_paladins implements ICommand {
 
             Message loadingMessage2 = channel.sendMessage(":arrows_counterclockwise: Loading Match Info...").complete();
             try {
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                ImageIO.write(ImageBuilder.toBufferedImage(generateImage(match)),"png", os);
-                InputStream fis = new ByteArrayInputStream(os.toByteArray());
-                loadingMessage2.delete().complete();
-                channel.sendFile(fis, "image.png").queue();
+                channel.sendFile(GUtil.toInputStream(generateImage(match), "png"), "image.png").queue();
             }
             catch (IOException | FontFormatException e) {
                 e.printStackTrace();
@@ -196,11 +194,8 @@ public class Command_paladins implements ICommand {
                                 Message loadingMessage2 = channel.sendMessage(":arrows_counterclockwise: Loading Match Info...").complete();
                                 matchSelectionList.getMessage().delete().queue();
                                 try {
-                                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                                    ImageIO.write(ImageBuilder.toBufferedImage(generateImage(match)),"png", os);
-                                    InputStream fis = new ByteArrayInputStream(os.toByteArray());
                                     loadingMessage2.delete().complete();
-                                    channel.sendFile(fis, "image.png").queue();
+                                    channel.sendFile(GUtil.toInputStream(generateImage(match), "png"), "image.png").queue();
                                 }
                                 catch (IOException | FontFormatException | ParseException e) {
                                     e.printStackTrace();
@@ -264,6 +259,7 @@ public class Command_paladins implements ICommand {
         imageBuilder.addShape(new Rectangle(196, 124, 46, 48), true);
 
         int winningScore = Math.max(match.getScore()[0], match.getScore()[1]);
+        int losingScore = Math.min(match.getScore()[0], match.getScore()[1]);
         imageBuilder.setColor(Color.WHITE).addText(String.valueOf(winningScore), 210, 160, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
@@ -279,7 +275,7 @@ public class Command_paladins implements ICommand {
         int averageWinTier = 0;
         for(MatchPlayer player : match.getPlayers()) {
             if(player.isWinner()) {
-                averageWinTier += Main.javadins.getPlayer(Main.javadins.getPlayerIds(player.getName())[0]).getRankedTier().toIndex();
+                averageWinTier += Main.javadins.getPlayer(player.getId()).getRankedTier().toIndex();
 
                 imageBuilder.setTextFont(new Font(lato.getFamily(), 0, 23));
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
@@ -323,7 +319,7 @@ public class Command_paladins implements ICommand {
 
         imageBuilder.setColor(new Color(231, 71, 76)).addText("Team 2", 86, 160 + topMargin, Font.BOLD, 30);
         imageBuilder.addShape(new Rectangle(196, 124 + topMargin, 46, 48), true);
-        imageBuilder.setColor(Color.WHITE).addText(String.valueOf(4 - winningScore), 210, 160 + topMargin, Font.BOLD, 30);
+        imageBuilder.setColor(Color.WHITE).addText(String.valueOf(losingScore), 210, 160 + topMargin, Font.BOLD, 30);
 
         imageBuilder.setColor(Color.WHITE);
         imageBuilder.addText("K / D / A", 276, 170 + topMargin, Font.BOLD, 23);
@@ -337,7 +333,7 @@ public class Command_paladins implements ICommand {
         int averageLoseTier = 0;
         for(MatchPlayer player : match.getPlayers()) {
             if(!player.isWinner()) {
-                averageLoseTier += Main.javadins.getPlayer(Main.javadins.getPlayerIds(player.getName())[0]).getRankedTier().toIndex();
+                averageLoseTier += Main.javadins.getPlayer(player.getId()).getRankedTier().toIndex();
                 imageBuilder.setTextFont(new Font(lato.getFamily(), 0, 23));
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 

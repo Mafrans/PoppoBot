@@ -77,8 +77,10 @@ public class Main {
 
         TimerTasks.start();
 
+        CommandHandler.addCommand(new Command_8ball());
         CommandHandler.addCommand(new Command_avatar());
         CommandHandler.addCommand(new Command_cat());
+        CommandHandler.addCommand(new Command_color());
         CommandHandler.addCommand(new Command_config());
         CommandHandler.addCommand(new Command_debug());
         CommandHandler.addCommand(new Command_define());
@@ -90,6 +92,7 @@ public class Main {
         CommandHandler.addCommand(new Command_getinfo());
         CommandHandler.addCommand(new Command_help());
         CommandHandler.addCommand(new Command_identify());
+        CommandHandler.addCommand(new Command_leave());
         CommandHandler.addCommand(new Command_mal());
         CommandHandler.addCommand(new Command_mention());
         CommandHandler.addCommand(new Command_move());
@@ -106,7 +109,6 @@ public class Main {
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
-        CommandHandler.addCommand(new Command_8ball());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();

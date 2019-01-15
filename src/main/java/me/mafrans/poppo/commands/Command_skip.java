@@ -37,6 +37,7 @@ public class Command_skip implements ICommand {
         AudioManager manager = voiceChannel.getGuild().getAudioManager();
         if(manager.getConnectedChannel() != voiceChannel) {
             channel.sendMessage("\uD83C\uDFB5 You cannot skip a song you are not currently listening to.").queue();
+            return true;
         }
 
         List<Member> skips = Main.musicManager.skipMap.getOrDefault(channel.getGuild(), new ArrayList<>());
