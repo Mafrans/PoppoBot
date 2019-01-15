@@ -1,5 +1,6 @@
 package me.mafrans.poppo.commands;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
@@ -8,6 +9,7 @@ import me.mafrans.poppo.util.config.ServerPrefs;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 public class Command_config implements ICommand {
     @Override
@@ -28,27 +30,26 @@ public class Command_config implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
         String[] args = command.getArgs();
+        if(!Main.serverPrefs.getGuilds().contains(channel.getGuild())) {
+            channel.sendMessage("This Server does not seem to have a config file, please contact @Mafrans1234!").queue();
+        }
+        JSONObject prefs = Main.serverPrefs.getPreferences(channel.getGuild());
 
         if(args[0].equalsIgnoreCase("set")) {
             if(args.length < 3) return false;
-
-            ServerPrefs.valueOf(args[1].toUpperCase());
-            ServerPrefs entry = ServerPrefs.valueOf(args[1].toUpperCase());
             String value = StringUtils.join(ArrayUtils.subarray(args, 2, args.length), " ");
-
-            entry.setString(channel.getGuild(), value);
-            channel.sendMessage("Set config entry " + entry.toString() + " to: \"" + value + "\"").queue();
+            prefs.put(args[1].toLowerCase(), value);
+            Main.serverPrefs.savePreferences(channel.getGuild(), prefs);
+            channel.sendMessage("Set config entry " + args[1].toLowerCase() + " to: \"" + value + "\"").queue();
             return true;
         }
 
         if(args[0].equalsIgnoreCase("remove")) {
             if(args.length != 2) return false;
 
-            ServerPrefs.valueOf(args[1].toUpperCase());
-            ServerPrefs entry = ServerPrefs.valueOf(args[1].toUpperCase());
-
-            entry.remove(channel.getGuild());
-            channel.sendMessage("Removed config entry " + entry.toString()).queue();
+            prefs.put(args[1].toLowerCase(), "");
+            Main.serverPrefs.savePreferences(channel.getGuild(), prefs);
+            channel.sendMessage("Removed config entry " + args[1].toLowerCase()).queue();
             return true;
         }
 
@@ -57,10 +58,8 @@ public class Command_config implements ICommand {
             StringBuilder builder = new StringBuilder();
             builder.append("**List of config entries:**\n");
 
-            for(ServerPrefs entry : ServerPrefs.values()) {
-                builder.append("\n`")
-                        .append(entry.toString().replace(" ", "_"))
-                        .append("` - ").append(entry.getInfo());
+            for(String entry : prefs.keySet()) {
+                builder.append("\n`").append(entry).append("`");
             }
 
             channel.sendMessage(builder.toString()).queue();

@@ -13,7 +13,9 @@ import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Command_move implements ICommand {
     @Override
@@ -23,7 +25,7 @@ public class Command_move implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Moves a message to the correct channel", "move <message-id> <channel>", Arrays.asList(),false, false);
+        return new CommandMeta(CommandCategory.MODERATION, "Moves a message to the correct channel", "move <message-id[,message-id-2...]> <channel>", Arrays.asList(),false, false);
     }
 
     @Override
@@ -39,9 +41,15 @@ public class Command_move implements ICommand {
         }
 
         String[] args = command.getArgs();
-        Message message = channel.getMessageById(args[0]).complete();
+        List<Message> messageList = new ArrayList<>();
+        for(String id : args[0].split(",")) {
+            Message message = channel.getMessageById(id).complete();
+            if(message != null) {
+                messageList.add(message);
+            }
+        }
 
-        if(message == null) {
+        if(messageList.size() == 0) {
             return false;
         }
 
@@ -49,18 +57,20 @@ public class Command_move implements ICommand {
             return false;
         }
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setColor(GUtil.randomColor());
-        embedBuilder.setAuthor(message.getMember().getEffectiveName() + " said:", Main.config.httpd_url, message.getAuthor().getAvatarUrl());
-        embedBuilder.setTimestamp(message.getCreationTime());
-        embedBuilder.setDescription(message.getContentRaw());
-        MessageEmbed embed = embedBuilder.build();
+        for(Message message : messageList) {
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setColor(GUtil.randomColor());
+            embedBuilder.setAuthor(message.getMember().getEffectiveName() + " said:", Main.config.httpd_url, message.getAuthor().getAvatarUrl());
+            embedBuilder.setTimestamp(message.getCreationTime());
+            embedBuilder.setDescription(message.getContentRaw());
+            MessageEmbed embed = embedBuilder.build();
 
-        for(TextChannel textChannel : command.getMessage().getMentionedChannels()) {
-            textChannel.sendMessage(embed).queue();
+            for (TextChannel textChannel : command.getMessage().getMentionedChannels()) {
+                textChannel.sendMessage(embed).queue();
+            }
+
+            message.delete().queue();
         }
-
-        message.delete().queue();
 
         return true;
     }

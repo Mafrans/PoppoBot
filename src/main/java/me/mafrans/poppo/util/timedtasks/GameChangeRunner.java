@@ -1,11 +1,14 @@
 package me.mafrans.poppo.util.timedtasks;
 
 import me.mafrans.poppo.Main;
+import me.mafrans.poppo.util.web.HTTPUtil;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.entities.RichPresence;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 public class GameChangeRunner implements Runnable {
@@ -29,12 +32,24 @@ public class GameChangeRunner implements Runnable {
 
         switch (rint) {
             case 0:
-                game = Game.playing("100% Orange Juice");
+                game = Game.listening("'" + Main.config.command_prefix + "'");
                 break;
             case 1:
-                game = Game.playing("with " + characters[random.nextInt(characters.length)] + "!");
+                game = Game.streaming("http://poppobot.ga/", "http://poppobot.ga/");
                 break;
         }
+
+        try {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("client_id", Main.config.twitch_token);
+            boolean streamRunning = HTTPUtil.getJSON("https://api.twitch.tv/kraken/streams/mafrans", params).get("stream") instanceof JSONObject;
+            if(streamRunning) {
+                JSONObject jsonObject = HTTPUtil.getJSON("https://api.twitch.tv/kraken/streams/mafrans", params).getJSONObject("stream");
+
+                game = Game.streaming(jsonObject.getString("game"), jsonObject.getJSONObject("channel").getString("url"));
+            }
+        }
+        catch (IOException ignored) { }
 
         if(game != null) {
             Main.jda.getPresence().setGame(game);

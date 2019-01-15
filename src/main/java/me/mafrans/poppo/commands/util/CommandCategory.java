@@ -5,6 +5,7 @@ public enum CommandCategory {
     WEB("Web", ":satellite:", "https://twemoji.maxcdn.com/svg/1f4e1.svg"),
     MODERATION("Moderation", ":raised_hand:", "https://twemoji.maxcdn.com/svg/1f64b.svg"),
     FUN("Fun", ":game_die:", "https://twemoji.maxcdn.com/svg/1f3b2.svg"),
+    NSFW("NSFW", ":eggplant:", "https://twemoji.maxcdn.com/svg/1f346.svg"),
     ;
 
     private String name;

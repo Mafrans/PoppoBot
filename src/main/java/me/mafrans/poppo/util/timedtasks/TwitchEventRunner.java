@@ -15,15 +15,26 @@ import java.util.List;
 public class TwitchEventRunner implements Runnable {
     @Override
     public void run() {
-        System.out.println(ServerPrefs.serverPrefList.keySet());
-        for(Guild guild : ServerPrefs.serverPrefList.keySet()) {
+        for(Guild guild : Main.serverPrefs.getGuilds()) {
             if(guild == null) continue;
 
-            if(ServerPrefs.TWITCH_LINKS.getString(guild) == null) continue;
-            String[] twitchLinks = ServerPrefs.TWITCH_LINKS.getString(guild).toLowerCase().split(",");
+            JSONObject prefs = null;
+            try {
+                prefs = Main.serverPrefs.getPreferences(guild);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(prefs == null) continue;
+            if(prefs.getJSONArray("twitch_links") == null || prefs.getJSONArray("twitch_links").length() == 0) continue;
+            Object[] twitchLinks = prefs.getJSONArray("twitch_links").toList().toArray();
             if(twitchLinks.length == 0) break;
 
-            for(String twitchLink : twitchLinks) {
+            for(Object obj : twitchLinks) {
+                if(!(obj instanceof String)) continue;
+
+                String twitchLink = (String) obj;
                 boolean streamRunning = false;
                 try {
                     HashMap<String, String> params = new HashMap<>();
@@ -41,7 +52,11 @@ public class TwitchEventRunner implements Runnable {
                         List<String> streams = TwitchEvents.runningStreams.get(guild);
                         streams.remove(twitchLink);
                         TwitchEvents.runningStreams.put(guild, streams);
-                        TwitchEvents.onStreamStop(twitchLink);
+                        try {
+                            TwitchEvents.onStreamStop(twitchLink);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     else {
                         System.out.println("Already not running");
@@ -56,7 +71,11 @@ public class TwitchEventRunner implements Runnable {
                         }
                         streams.add(twitchLink);
                         TwitchEvents.runningStreams.put(guild, streams);
-                        TwitchEvents.onStreamStart(twitchLink);
+                        try {
+                            TwitchEvents.onStreamStart(twitchLink);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     else {
                         System.out.println("Already running");
