@@ -28,7 +28,7 @@ public class HTTPUtil {
         // Default is GET
         connection.setRequestMethod("GET");
 
-        //add request header
+        //put request header
         connection.setRequestProperty("User-Agent", USER_AGENT);
         for(String key : header.keySet()) {
             connection.setRequestProperty(key, header.get(key));
@@ -59,7 +59,7 @@ public class HTTPUtil {
         URL obj = new URL(url);
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-        //add reuqest header
+        //put reuqest header
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", USER_AGENT);
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");

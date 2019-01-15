@@ -120,6 +120,11 @@ public class Command_dog implements ICommand {
         while(dog == null) {
             String stringJson = HTTPUtil.GET("https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1", header);
             System.out.println(stringJson);
+
+            if(!stringJson.equalsIgnoreCase("200")) {
+                channel.sendMessage("Could not connect to the API, please try again").queue();
+            }
+
             JSONObject jsonObject = new JSONArray(stringJson).getJSONObject(0);
             dog = Dog.parseDog(jsonObject);
 

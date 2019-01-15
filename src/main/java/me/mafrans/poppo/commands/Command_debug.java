@@ -53,7 +53,7 @@ public class Command_debug implements ICommand {
             case "help": {
                 channel.sendMessage("debug updateusers\n" +
                         "debug run <runnable class>\n" +
-                        "debuguser <add|remove> <userid>").queue();
+                        "debuguser <put|remove> <userid>").queue();
                 return true;
             }
             case "updateroles":
@@ -84,7 +84,7 @@ public class Command_debug implements ICommand {
 
                     if(Main.userList.getUsersFrom("uuid", user.getId()).size() == 0) {
                         System.out.println(String.format("[UpdateUsers] Creating new entry: %s", user.getName() + user.getDiscriminator()));
-                        Main.userList.add(new SQLDataUser(new DataUser(
+                        Main.userList.put(new SQLDataUser(new DataUser(
                                 Collections.singletonList(user.getName()),
                                 user.getId(),
                                 onlineStatus == OnlineStatus.ONLINE || onlineStatus == OnlineStatus.DO_NOT_DISTURB || onlineStatus == OnlineStatus.IDLE  ? "Currently Online" : GUtil.currentParsedDate(ZoneOffset.UTC),
@@ -102,7 +102,7 @@ public class Command_debug implements ICommand {
                                 dataUser.setLastOnlineTag(GUtil.currentParsedDate(ZoneOffset.UTC));
                             }
                         }
-                        Main.userList.add(new SQLDataUser(dataUser));
+                        Main.userList.put(new SQLDataUser(dataUser));
                     }
                 }
                 break;
@@ -153,7 +153,7 @@ public class Command_debug implements ICommand {
                     break;
                 }
 
-                if(args[1].equalsIgnoreCase("add")) {
+                if(args[1].equalsIgnoreCase("put")) {
                     config.debug_users.add(args[2]);
 
                     debugSendMessageAsync(channel, "Added " + args[2] + " as a debug user.");
@@ -175,7 +175,7 @@ public class Command_debug implements ICommand {
                     debugSendMessageAsync(channel, StringFormatter.parseLines(new String[] {"```lua", Arrays.toString(debugUsers), "```"}));
                 }
                 else {
-                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug add|remove|list [userid]`");
+                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug put|remove|list [userid]`");
                 }
                 break;
 

@@ -48,6 +48,7 @@ public class Command_roll implements ICommand {
             if(!NumberUtils.isParsable(args[0])) {
                 return false;
             }
+
             amount = (int) Math.round(Double.parseDouble(args[0]));
             if(amount > maxAmount) {
                 channel.sendMessage("I'm sorry, but I only have " + maxAmount + " dice in my backpack.").queue();
@@ -79,7 +80,8 @@ public class Command_roll implements ICommand {
             Random random = new Random();
             embedBuilder.setDescription(diceBuilder.toString());
             embedBuilder.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-            embedBuilder.addField("Result", "The sum of all your dice rolls is **" + total + "**", false);
+            embedBuilder.addField("Result",     "The sum of all your dice rolls is **" + total + "**\n" +
+                                                            "The average of all your dice rolls is **" + total/(float)amount + "**", false);
 
             channel.sendMessage(embedBuilder.build()).queue();
             return true;
