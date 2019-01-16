@@ -14,12 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Command_generate implements ICommand {
     @Override
@@ -29,7 +25,7 @@ public class Command_generate implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Generates things.", "generate number|string|password|name [args...]", Collections.singletonList("make"), false, false);
+        return new CommandMeta(CommandCategory.UTILITY, "Generates things.", "generate number|string|password|name [args...]", new String[] {"make"}, false);
     }
 
     @Override
@@ -57,7 +53,7 @@ public class Command_generate implements ICommand {
         return false;
     }
 
-    boolean generateNumber(Command command, TextChannel channel) {
+    private boolean generateNumber(Command command, TextChannel channel) {
         String[] args = command.getArgs();
         if(args.length < 3) {
             channel.sendMessage("Correct usage for command " + command.getCmd() + " is: `generate number <min> <max>`").queue();
@@ -96,7 +92,7 @@ public class Command_generate implements ICommand {
 
 
 
-    boolean generateString(Command command, TextChannel channel) {
+    private boolean generateString(Command command, TextChannel channel) {
         String[] args = command.getArgs();
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz123456789";
         if(args.length < 2) {
@@ -138,7 +134,7 @@ public class Command_generate implements ICommand {
 
 
 
-    boolean generatePassword(Command command, TextChannel channel) throws IOException {
+    private boolean generatePassword(Command command, TextChannel channel) throws IOException {
         String[] args = command.getArgs();
 
         if(args.length < 2) {
@@ -181,7 +177,7 @@ public class Command_generate implements ICommand {
 
 
 
-    boolean generateName(Command command, TextChannel channel) throws IOException {
+    private boolean generateName(Command command, TextChannel channel) throws IOException {
         String[] args = command.getArgs();
 
         if(args.length < 1) {

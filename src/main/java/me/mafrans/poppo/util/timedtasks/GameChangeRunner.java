@@ -3,11 +3,9 @@ package me.mafrans.poppo.util.timedtasks;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.web.HTTPUtil;
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.RichPresence;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 

@@ -10,6 +10,7 @@ import me.mafrans.poppo.commands.*;
 import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.servitors.Servitor_guilds;
+import me.mafrans.poppo.httpd.servitors.Servitor_help;
 import me.mafrans.poppo.httpd.servitors.Servitor_login;
 import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
 import me.mafrans.poppo.listeners.CommandListener;
@@ -22,7 +23,6 @@ import me.mafrans.poppo.util.config.ConfigManager;
 import me.mafrans.poppo.util.config.ConfigObject;
 import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.*;
-import me.mafrans.poppo.util.web.HTTPUtil;
 import me.mafrans.poppo.util.web.YoutubeSearcher;
 import me.mafrans.smiteforge.SmiteForge;
 import net.dv8tion.jda.core.AccountType;
@@ -52,7 +52,7 @@ public class Main {
     public static SmiteForge smiteForge;
     public static ServerPrefs serverPrefs;
 
-    public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException, KeyManagementException, NoSuchAlgorithmException, ParseException, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
+    public static void main(String args[]) throws LoginException, InterruptedException, IOException, ClassNotFoundException, ParseException, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
 
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
@@ -79,6 +79,7 @@ public class Main {
 
         CommandHandler.addCommand(new Command_8ball());
         CommandHandler.addCommand(new Command_avatar());
+        CommandHandler.addCommand(new Command_beautify());
         CommandHandler.addCommand(new Command_cat());
         CommandHandler.addCommand(new Command_color());
         CommandHandler.addCommand(new Command_config());
@@ -117,6 +118,7 @@ public class Main {
         httpdServer.registerServitor(new Servitor_login(maHTTPD));
         httpdServer.registerServitor(new Servitor_loginprocess(maHTTPD));
         httpdServer.registerServitor(new Servitor_guilds(maHTTPD));
+        httpdServer.registerServitor(new Servitor_help(maHTTPD));
         httpdServer.setHomePage(new Servitor_login(maHTTPD));
 
         // Create Header and stylesheet file

@@ -1,5 +1,6 @@
 package me.mafrans.poppo.commands.util;
 
+import lombok.Getter;
 import me.mafrans.poppo.Main;
 import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
@@ -11,7 +12,7 @@ import java.util.List;
 import static me.mafrans.poppo.Main.config;
 
 public class CommandHandler {
-    private static List<ICommand> commandList = new ArrayList();
+    @Getter private static List<ICommand> commandList = new ArrayList<>();
 
     public static Command parseCommand(Message message) {
         String content = message.getContentRaw();
@@ -35,11 +36,11 @@ public class CommandHandler {
             outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length));
         }
 
-        for(ICommand cmd : getCommands()) {
+        for(ICommand cmd : commandList) {
             String name = cmd.getName().toLowerCase();
             CommandMeta meta = cmd.getMeta();
 
-            if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && meta.getAliases().contains(words[0].toLowerCase()))) {
+            if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && ArrayUtils.contains(meta.getAliases(), words[0].toLowerCase()))) {
                 outCommand.setLabel(words[0]);
                 outCommand.setCmd(name);
                 outCommand.setExecutor(cmd);
@@ -52,8 +53,13 @@ public class CommandHandler {
         return outCommand;
     }
 
-    public static List<ICommand> getCommands() {
-        return commandList;
+    public static ICommand getCommand(String name) {
+        for(ICommand command : commandList) {
+            if(command.getName().equalsIgnoreCase(name)) {
+                return command;
+            }
+        }
+        return null;
     }
 
     public static void addCommand(ICommand command) {

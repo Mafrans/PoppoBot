@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Date;
 
 public class Command_timeout implements ICommand {
@@ -30,13 +29,13 @@ public class Command_timeout implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Times a user out for a set amount of time, effectively banning them.", "timeout <user> [time]", Arrays.asList("tempban"), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Times a user out for a set amount of time, effectively banning them.", "timeout <user> [time]", new String[] {"tempban"}, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.BAN_MEMBERS)) {
+        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.BAN_MEMBERS)) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
             embedBuilder.setDescription("You need the BAN_MEMBERS permission to use this command!");

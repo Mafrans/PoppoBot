@@ -61,13 +61,9 @@ public class UserList {
         }
     }
 
-    public boolean removeByUuid(String uuid) {
-        return remove(new SQLDataUser(getUsersFrom("uuid", uuid).get(0)));
-    }
-
-    public boolean add(SQLDataUser dataUser) {
+    public boolean put(SQLDataUser dataUser) {
         if(getUsersFrom("uuid", dataUser.getUuid()).size() != 0) {
-            if(!removeByUuid(dataUser.getUuid())) return false;
+            removeByUuid(dataUser.getUuid());
         }
 
         String keys = "";
@@ -102,17 +98,38 @@ public class UserList {
         }
     }
 
+    public void remove(List<SQLDataUser> dataUsers) {
+        for(SQLDataUser dataUser : dataUsers) {
+            remove(dataUser);
+        }
+    }
+
+    public void removeByUuid(String uuid) {
+        String query = "DELETE FROM " + table + " WHERE uuid = :uuid";
+        try (Connection con = sql2o.open()) {
+            Query query1 = con.createQuery(query);
+            query1.addParameter("uuid", uuid);
+
+            query1.executeUpdate();
+
+            updateCache();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean remove(SQLDataUser dataUser) {
-        String where = "";
+        StringBuilder where = new StringBuilder();
 
         boolean b = true;
         for(String key : getFieldMap(dataUser).keySet()) {
             if(b) {
                 b = false;
-                where += key + " = :" + key;
+                where.append(key).append(" = :").append(key);
             }
             else {
-                where += " AND " + key + " = :" + key;
+                where.append(" AND ").append(key).append(" = :").append(key);
             }
         }
 

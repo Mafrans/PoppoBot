@@ -14,8 +14,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
-
 public class Command_get implements ICommand {
     @Override
     public String getName() {
@@ -24,7 +22,7 @@ public class Command_get implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Gets information from discord.", "get avatar|server [args...]", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Gets information from discord.", "get avatar|server [args...]", null, false);
     }
 
     @Override
@@ -47,7 +45,7 @@ public class Command_get implements ICommand {
     }
 
 
-    boolean getServer(Command command, TextChannel channel) {
+    private boolean getServer(Command command, TextChannel channel) {
         String[] args = command.getArgs();
         if(args.length < 2) {
             Guild guild = channel.getGuild();
@@ -88,7 +86,7 @@ public class Command_get implements ICommand {
     }
 
 
-    boolean getAvatar(Command command, TextChannel channel) {
+    private boolean getAvatar(Command command, TextChannel channel) {
         String[] args = command.getArgs();
         String uuid;
         if(args.length < 2) {

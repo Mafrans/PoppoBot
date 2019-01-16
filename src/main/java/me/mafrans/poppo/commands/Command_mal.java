@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class Command_mal implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.WEB, "Searches MyAnimeList for shows or mangas", "mal [anime|manga] <name>", Arrays.asList("myanimelist"), false);
+        return new CommandMeta(CommandCategory.WEB, "Searches MyAnimeList for shows or mangas", "mal [anime|manga] <name>", new String[] {"myanimelist"}, false);
     }
 
     @Override

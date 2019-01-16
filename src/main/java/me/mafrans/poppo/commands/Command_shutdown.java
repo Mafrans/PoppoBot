@@ -10,7 +10,6 @@ import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class Command_shutdown implements ICommand {
     @Override
@@ -20,12 +19,12 @@ public class Command_shutdown implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Shuts down the bot.", "shutdown", Arrays.asList("kys"), false, true);
+        return new CommandMeta(CommandCategory.UTILITY, "Shuts down the bot.", "shutdown", new String[] {"kys"}, false, true);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
-        if(!command.doOverride() && !Main.config.overlord_users.contains(command.getAuthor().getId())) {
+        if(!command.isOverride() && !Main.config.overlord_users.contains(command.getAuthor().getId())) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
             embedBuilder.setDescription("You need the OVERLORD permission to use this command!");

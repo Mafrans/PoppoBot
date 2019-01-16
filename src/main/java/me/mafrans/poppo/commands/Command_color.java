@@ -13,9 +13,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Command_color implements ICommand {
     @Override
@@ -25,20 +22,20 @@ public class Command_color implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Gets the RGB, HEX or HSB variants of a specified color.", "color rgb|hsv|hex <color>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Gets the RGB, HEX or HSB variants of a specified color.", "color rgb|hsv|hex <color>", null, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
         String[] args = command.getArgs();
 
-        String hex = "";
-        int red = -1;
-        int green = -1;
-        int blue = -1;
-        float hue = -1;
-        float saturation = -1;
-        float brightness = -1;
+        String hex;
+        int red;
+        int green;
+        int blue;
+        float hue;
+        float saturation;
+        float brightness;
 
         if(args.length == 0) {
             return false;

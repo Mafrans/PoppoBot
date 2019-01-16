@@ -2,7 +2,6 @@ package me.mafrans.poppo.httpd.servitors;
 
 import me.mafrans.mahttpd.MaHTTPD;
 import me.mafrans.mahttpd.events.DocumentServeEvent;
-import me.mafrans.mahttpd.exceptions.HTTPForbiddenException;
 import me.mafrans.mahttpd.exceptions.HTTPInternalErrorException;
 import me.mafrans.mahttpd.exceptions.HTTPNotFoundException;
 import me.mafrans.mahttpd.servitors.HTMLServitor;
@@ -11,14 +10,11 @@ import me.mafrans.poppo.Main;
 import me.mafrans.poppo.httpd.Machine;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.UserSession;
-import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,7 +28,7 @@ public class Servitor_guilds extends HTMLServitor {
     }
 
     @Override
-    public String serve(DocumentServeEvent event) throws HTTPNotFoundException, HTTPInternalErrorException, HTTPForbiddenException {
+    public String serve(DocumentServeEvent event) throws HTTPInternalErrorException, HTTPNotFoundException {
         SessionHandler handler = Main.sessionHandler;
         Map<Machine, UserSession> loadedSessions = handler.getLoadedSessions();
         Machine thisMachine = handler.getMachine(event.getSession());
@@ -81,7 +77,7 @@ public class Servitor_guilds extends HTMLServitor {
                 }
             }
 
-            JSONObject prefs = null;
+            JSONObject prefs;
             try {
                 prefs = Main.serverPrefs.getPreferences(guild);
             } catch (IOException e) {
@@ -151,31 +147,34 @@ public class Servitor_guilds extends HTMLServitor {
             for(int i = 0; i < prefs.getJSONArray("twitch_links").length(); i++) {
                 String twitchLink = prefs.getJSONArray("twitch_links").getString(i);
                 twitchLinkBuilder.append("<div class=\"twitchLinkContainer\">");
-                twitchLinkBuilder.append("  <span class=\"twitchLinkName\">" + twitchLink + "</span>");
-                twitchLinkBuilder.append("  <button type=\"button\" onclick=\"deleteLink(\'" + twitchLink + "\')\" class=\"twitchLinkDeleteButton\">Delete</button>");
+                twitchLinkBuilder.append("  <span class=\"twitchLinkName\">").append(twitchLink).append("</span>");
+                twitchLinkBuilder.append("  <button type=\"button\" onclick=\"deleteLink(\'").append(twitchLink).append("\')\" class=\"twitchLinkDeleteButton\">Delete</button>");
                 twitchLinkBuilder.append("</div>");
             }
             VARIABLES.put("twitch_link_list", twitchLinkBuilder.toString());
 
             StringBuilder messageChannelOptionBuilder = new StringBuilder();
             for(TextChannel channel : guild.getTextChannels()) {
-                messageChannelOptionBuilder.append("<option value=\"" + channel.getId() + "\">#" + channel.getName() + "</option>");
+                messageChannelOptionBuilder.append("<option value=\"").append(channel.getId()).append("\">#").append(channel.getName()).append("</option>");
             }
             VARIABLES.put("channel_options", messageChannelOptionBuilder.toString());
 
-            try {
-                return FileUtils.readFile(getSingleGuildDocument());
-            }
-            catch (IOException e) {
-                throw new HTTPInternalErrorException();
+            File singleGuildDoc = getSingleGuildDocument();
+            if(singleGuildDoc != null) {
+                try {
+
+                    return FileUtils.readFile(singleGuildDoc);
+
+                }
+                catch (IOException e) { throw new HTTPInternalErrorException(); }
             }
         }
         else { // Display Guild List
             StringBuilder guildHTMLBuilder = new StringBuilder();
             for (Guild guild : allowedGuilds) {
-                guildHTMLBuilder.append("<a href=\"?guild=" + guild.getId() + "\">");
+                guildHTMLBuilder.append("<a href=\"?guild=").append(guild.getId()).append("\">");
                 guildHTMLBuilder.append("  <div class=\"guildContainer\">");
-                guildHTMLBuilder.append("    <img class=\"guildImage\" src=\"" + guild.getIconUrl() + "\"></img>");
+                guildHTMLBuilder.append("    <img class=\"guildImage\" src=\"").append(guild.getIconUrl()).append("\"></img>");
                 guildHTMLBuilder.append("  </div>");
                 guildHTMLBuilder.append("</a>");
             }
@@ -190,16 +189,17 @@ public class Servitor_guilds extends HTMLServitor {
             StringBuilder listBuilder = new StringBuilder();
             listBuilder.append("<ul>");
             for (com.adamratzman.oauth.models.Guild guild : userSession.getGuilds()) {
-                listBuilder.append("<li>" + guild.getName() + (guild.getOwner() ? " (Owner)" : "") + "</li>");
+                listBuilder.append("<li>").append(guild.getName()).append(guild.getOwner() ? " (Owner)" : "").append("</li>");
             }
             listBuilder.append("</ul>");
             VARIABLES.put("guilds", listBuilder.toString());
 
             return event.getDocument();
         }
+        throw new HTTPNotFoundException();
     }
 
-    public static String notAuthenticated() throws IOException {
+    private static String notAuthenticated() throws IOException {
         File outFile = new File("documents/html/not_authenticated.html");
         FileUtils.createResource("documents/html/not_authenticated.html", outFile);
         return FileUtils.readFile(outFile);
@@ -220,7 +220,7 @@ public class Servitor_guilds extends HTMLServitor {
         return outFile;
     }
 
-    public File getSingleGuildDocument() {
+    private File getSingleGuildDocument() {
         File outFile = new File("documents/html/single_guild.html");
 
         try {

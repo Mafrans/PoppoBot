@@ -5,17 +5,14 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
-import me.mafrans.poppo.util.objects.YoutubeVideo;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.managers.AudioManager;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Command_leave implements ICommand {
     @Override
@@ -25,7 +22,7 @@ public class Command_leave implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Forces Poppo to stop playing and leave the voice channel.", "leave", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.FUN, "Forces Poppo to stop playing and leave the voice channel.", "leave", null, false);
     }
 
     @Override
@@ -42,7 +39,7 @@ public class Command_leave implements ICommand {
             return true;
         }
 
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.VOICE_MOVE_OTHERS) || voiceChannel.getMembers().size() == 1) {
+        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.VOICE_MOVE_OTHERS) || voiceChannel.getMembers().size() == 1) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
             embedBuilder.setDescription("You need the VOICE_MOVE_OTHERS permission to use this command!");

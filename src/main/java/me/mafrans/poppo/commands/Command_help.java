@@ -3,11 +3,8 @@ package me.mafrans.poppo.commands;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.*;
 import me.mafrans.poppo.util.GUtil;
-import me.mafrans.poppo.util.StringFormatter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
-
-import java.util.Arrays;
 
 public class Command_help implements ICommand {
     @Override
@@ -21,7 +18,7 @@ public class Command_help implements ICommand {
                 CommandCategory.UTILITY,
                 "Shows a list of all commands and their usages.",
                 "help [command]",
-                Arrays.asList("commands"),
+                new String[] {"commands"},
                 false);
     }
 
@@ -29,17 +26,9 @@ public class Command_help implements ICommand {
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
         if(command.getArgs().length == 0) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
-
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("**Command List:**\n");
-            //embedBuilder.setTitle("Command List");
-            embedBuilder.setAuthor("Command List", "http://poppobot.ga/help", Main.jda.getSelfUser().getAvatarUrl());
-            embedBuilder.setColor(GUtil.randomColor());
-            embedBuilder.addField("Command Prefix:", Main.config.command_prefix + "\n\u00AD", false);
-            stringBuilder.append("```");
             for(CommandCategory commandCategory : CommandCategory.values()) {
                 StringBuilder content = new StringBuilder();
-                for (ICommand cmd : CommandHandler.getCommands()) {
+                for (ICommand cmd : CommandHandler.getCommandList()) {
                     if(cmd.getMeta().isHidden()) continue;
                     if(cmd.getMeta().getCategory() == commandCategory) {
                         content.append("**").append(GUtil.capitalize(cmd.getName())).append(":** ").append(cmd.getMeta().getDescription()).append("\n");
@@ -48,13 +37,12 @@ public class Command_help implements ICommand {
 
                 embedBuilder.addField(commandCategory.getEmote() + commandCategory.getName(), content + "\n\u00AD", false);
             }
-            stringBuilder.append("```");
 
             channel.sendMessage(embedBuilder.build()).queue();
             return true;
         }
 
-        for(ICommand cmd : CommandHandler.getCommands()) {
+        for(ICommand cmd : CommandHandler.getCommandList()) {
             if(command.getArgs()[0].equalsIgnoreCase(cmd.getName())) {
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         //.setTitle("Help for command " + cmd.getName())
@@ -63,10 +51,10 @@ public class Command_help implements ICommand {
                         .addField("Usage", cmd.getMeta().getUsage(), false)
                         .setAuthor("Help for command: " + GUtil.capitalize(cmd.getName()), "http://poppobot.ga/help?command=" + cmd.getName(), Main.jda.getSelfUser().getAvatarUrl());
 
-                if(cmd.getMeta().getAliases() != null && cmd.getMeta().getAliases().size() > 0) {
+                if(cmd.getMeta().getAliases() != null && cmd.getMeta().getAliases().length > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (String alias : cmd.getMeta().getAliases()) {
-                        stringBuilder.append("- " + alias + "\n");
+                        stringBuilder.append("- ").append(alias).append("\n");
                     }
 
                     embedBuilder.addField("Aliases", stringBuilder.toString(), false);

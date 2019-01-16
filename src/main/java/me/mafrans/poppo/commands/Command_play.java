@@ -14,8 +14,6 @@ import net.dv8tion.jda.core.managers.AudioManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 
-import java.util.ArrayList;
-
 public class Command_play implements ICommand {
     @Override
     public String getName() {
@@ -24,7 +22,7 @@ public class Command_play implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Searches and plays music from youtube.", "play <query|url>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.FUN, "Searches and plays music from youtube.", "play <query|url>", null, false);
     }
 
     @Override

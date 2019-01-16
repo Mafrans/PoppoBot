@@ -8,11 +8,9 @@ import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
 
 public class Command_unmute implements ICommand {
     @Override
@@ -22,7 +20,7 @@ public class Command_unmute implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Unmutes a user.", "unmute <user>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Unmutes a user.", "unmute <user>", null, false);
     }
 
     @Override

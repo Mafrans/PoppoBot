@@ -16,12 +16,9 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -36,7 +33,7 @@ public class Command_paladins implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.WEB, "Gets information from the Paladins API", "paladins player|match|latest <name|id>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.WEB, "Gets information from the Paladins API", "paladins player|match|latest <name|id>", null, false);
     }
 
     @Override
@@ -220,7 +217,7 @@ public class Command_paladins implements ICommand {
         return false;
     }
 
-    public static Image generateImage(Match match) throws IOException, FontFormatException, ParseException {
+    private static Image generateImage(Match match) throws IOException, FontFormatException, ParseException {
 
         final Font lato = GUtil.getTrueTypeFont("fonts/Lato-Regular.ttf");
 
@@ -228,11 +225,15 @@ public class Command_paladins implements ICommand {
         System.out.println(mapName);
 
         ImageBuilder imageBuilder = new ImageBuilder(817, 1000);
-        if(ClassLoader.getSystemResourceAsStream("images/maps/" + mapName + ".jpg") != null) {
-            imageBuilder.addBackground(ImageIO.read(ClassLoader.getSystemResourceAsStream("images/maps/" + mapName + ".jpg")), ImageBuilder.FitType.CENTER, false, false, 20);
+
+
+        InputStream mapImage = ClassLoader.getSystemResourceAsStream("images/maps/" + mapName + ".jpg");
+        InputStream defaultImage = ClassLoader.getSystemResourceAsStream("images/maps/Timber Mill.jpg");
+        if(mapImage != null) {
+            imageBuilder.addBackground(ImageIO.read(mapImage), ImageBuilder.FitType.CENTER, false, false, 20);
         }
-        else {
-            imageBuilder.addBackground(ImageIO.read(ClassLoader.getSystemResourceAsStream("images/maps/Timber Mill.jpg")), ImageBuilder.FitType.CENTER, false, false, 20);
+        else if(defaultImage != null) {
+            imageBuilder.addBackground(ImageIO.read(defaultImage), ImageBuilder.FitType.CENTER, false, false, 20);
         }
         imageBuilder.setColor(new Color(0, 0, 0, 110)).addShape(new Rectangle(0, 0, 817, 1000), true);
 
@@ -249,7 +250,10 @@ public class Command_paladins implements ICommand {
         imageBuilder.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         imageBuilder.setColor(Color.WHITE).setTextFont(lato).addText(match.getGameMode().getName() + " • " + mapName + " • " + minutes + ":" + seconds, 30, 50, 0, 25);
 
-        imageBuilder.addImage(ImageIO.read(ClassLoader.getSystemResourceAsStream("images/Paladins_Icon.png")), 687, 20, 100, 44, Image.SCALE_SMOOTH);
+        InputStream paladinsIcon = ClassLoader.getSystemResourceAsStream("images/Paladins_Icon.png");
+        if(paladinsIcon != null) {
+            imageBuilder.addImage(ImageIO.read(paladinsIcon), 687, 20, 100, 44, Image.SCALE_SMOOTH);
+        }
 
 
 
@@ -277,7 +281,7 @@ public class Command_paladins implements ICommand {
             if(player.isWinner()) {
                 averageWinTier += Main.javadins.getPlayer(player.getId()).getRankedTier().toIndex();
 
-                imageBuilder.setTextFont(new Font(lato.getFamily(), 0, 23));
+                imageBuilder.setTextFont(new Font(lato.getFamily(), Font.PLAIN, 23));
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 
                 int textWidth = fontMetrics.stringWidth(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()));
@@ -334,7 +338,7 @@ public class Command_paladins implements ICommand {
         for(MatchPlayer player : match.getPlayers()) {
             if(!player.isWinner()) {
                 averageLoseTier += Main.javadins.getPlayer(player.getId()).getRankedTier().toIndex();
-                imageBuilder.setTextFont(new Font(lato.getFamily(), 0, 23));
+                imageBuilder.setTextFont(new Font(lato.getFamily(), Font.PLAIN, 23));
                 FontMetrics fontMetrics = imageBuilder.getGraphics().getFontMetrics();
 
                 int textWidth = fontMetrics.stringWidth(String.format("%s / %s / %s", player.getKills(), player.getDeaths(), player.getAssists()));

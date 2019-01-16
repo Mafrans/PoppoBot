@@ -151,3 +151,7 @@ p {
 .cf {
   *zoom: 1;
 }
+
+.command-category-image {
+    width: 50px;
+}
