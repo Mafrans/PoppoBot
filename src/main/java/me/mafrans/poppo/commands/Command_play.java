@@ -67,6 +67,19 @@ public class Command_play implements ICommand {
 
             return true;
         }
+        else {
+            YoutubeVideo video = Main.youtubeSearcher.getVideo(url);
+
+            if(video == null) {
+                channel.sendMessage("I can't seem to find that video, no matter how hard I look. Sorry.").queue();
+                return true;
+            }
+
+            if(!manager.isConnected()) {
+                Main.musicManager.joinChannel(channel, voiceChannel);
+            }
+            Main.musicManager.queue(channel, voiceChannel, video);
+        }
 
         if(!manager.isConnected()) {
             Main.musicManager.joinChannel(channel, voiceChannel);
