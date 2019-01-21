@@ -2,17 +2,15 @@ package me.mafrans.poppo.httpd.servitors;
 
 import me.mafrans.mahttpd.MaHTTPD;
 import me.mafrans.mahttpd.events.DocumentServeEvent;
-import me.mafrans.mahttpd.exceptions.HTTPForbiddenException;
 import me.mafrans.mahttpd.exceptions.HTTPInternalErrorException;
-import me.mafrans.mahttpd.exceptions.HTTPNotFoundException;
 import me.mafrans.mahttpd.servitors.HTMLServitor;
 import me.mafrans.mahttpd.util.FileUtils;
-import me.mafrans.poppo.commands.util.CommandCategory;
-import me.mafrans.poppo.commands.util.CommandHandler;
-import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.Main;
+import me.mafrans.poppo.commands.util.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Servitor_help extends HTMLServitor {
     public Servitor_help(MaHTTPD maHTTPD) {
@@ -20,23 +18,77 @@ public class Servitor_help extends HTMLServitor {
     }
 
     @Override
-    public String serve(DocumentServeEvent event) throws HTTPNotFoundException, HTTPInternalErrorException, HTTPForbiddenException {
-        StringBuilder stringBuilder = new StringBuilder();
+    public String serve(DocumentServeEvent event) throws HTTPInternalErrorException {
 
+        File script = new File("documents/js/single_help.js");
+        try {
+            FileUtils.createResource("documents/js/single_help.js", script);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        if(event.getSimpleParameters().containsKey("command")) {
+            String commandString = event.getSimpleParameters().get("command");
+            ICommand command = CommandHandler.getCommand(commandString);
+
+            if(command == null) {
+                VARIABLES.put("command_list", generateCommandList());
+                return event.getDocument();
+            }
+
+            VARIABLES.put("command_name", command.getName());
+
+            CommandMeta meta = command.getMeta();
+            VARIABLES.put("command_usage", meta.getUsage());
+            VARIABLES.put("command_description", meta.getDescription());
+            VARIABLES.put("command_category_name", meta.getCategory().getName());
+            VARIABLES.put("command_category_icon", meta.getCategory().getIconUrl());
+            VARIABLES.put("command_aliases", generateAliasList(meta.getAliases()));
+
+            try {
+                return FileUtils.readFile(Objects.requireNonNull(getSingleCommandDocument()));
+            } catch (IOException e) {
+                throw new HTTPInternalErrorException();
+            }
+        }
+        else {
+            VARIABLES.put("command_list", generateCommandList());
+        }
+
+        return event.getDocument();
+    }
+
+    @Override
+    public File[] getScripts() {
+        return new File[] {new File("documents/js/single_help.js")};
+    }
+
+    private String generateAliasList(String[] aliases) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String alias : aliases) {
+            stringBuilder.append("<div class='command-alias'>").append(alias).append("</div>");
+        }
+        return stringBuilder.toString();
+    }
+
+    private String generateCommandList() {
+        StringBuilder stringBuilder = new StringBuilder();
         for(CommandCategory category : CommandCategory.values()) {
-            stringBuilder.append("<h2><img src=\"" + category.getIconUrl() + "\"/>" + category.getName() + "</h2>" + "\n");
-            stringBuilder.append("<ul class=\"command-list\">");
-            for(ICommand cmd : CommandHandler.getCommands()) {
+            System.out.println(stringBuilder.toString());
+            stringBuilder.append("<div class='command-category-container>");
+            stringBuilder.append("<h2 class='command-category-name'><img class='command-category-image' src='").append(category.getIconUrl()).append("'/>").append(category.getName()).append("</h2>").append("\n");
+            stringBuilder.append("<ul class='command-list'>");
+            for(ICommand cmd : CommandHandler.getCommandList()) {
                 if(cmd.getMeta().getCategory() == category) {
-                    stringBuilder.append("<li class=\"command-list-entry\"><p class=\"command-name\">" + cmd.getName() + "<span class=\"command-usage\"> | " + cmd.getMeta().getUsage() + "</span></p></li>");
+                    stringBuilder.append("<li class='command-list-entry' href='").append(Main.config.httpd_url).append("/help?command=").append(cmd.getName()).append("'><p class='command-name'>").append(cmd.getName()).append("<span class='command-usage'> | ").append(cmd.getMeta().getUsage()).append("</span></p></li>");
                 }
             }
             stringBuilder.append("</ul>");
+            stringBuilder.append("</div>");
         }
-
-        VARIABLES.put("command_list", stringBuilder.toString());
-
-        return event.getDocument();
+        return stringBuilder.toString();
     }
 
     @Override
@@ -54,7 +106,7 @@ public class Servitor_help extends HTMLServitor {
         return outFile;
     }
 
-    public File getSingleCommandDocument() {
+    private File getSingleCommandDocument() {
         File outFile = new File("documents/html/single_command.html");
 
         try {

@@ -1,8 +1,8 @@
 package me.mafrans.poppo;
 
 
-//import me.mafrans.javadins.Javadins;
-//import me.mafrans.javadins.SessionInvalidException;
+import me.mafrans.javadins.Javadins;
+import me.mafrans.javadins.SessionInvalidException;
 import me.mafrans.mahttpd.HTTPDServer;
 import me.mafrans.mahttpd.MaHTTPD;
 import me.mafrans.mahttpd.util.FileUtils;
@@ -10,6 +10,7 @@ import me.mafrans.poppo.commands.*;
 import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.servitors.Servitor_guilds;
+import me.mafrans.poppo.httpd.servitors.Servitor_help;
 import me.mafrans.poppo.httpd.servitors.Servitor_login;
 import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
 import me.mafrans.poppo.listeners.CommandListener;
@@ -23,7 +24,7 @@ import me.mafrans.poppo.util.config.ConfigObject;
 import me.mafrans.poppo.util.config.ServerPrefs;
 import me.mafrans.poppo.util.objects.*;
 import me.mafrans.poppo.util.web.YoutubeSearcher;
-//import me.mafrans.smiteforge.SmiteForge;
+import me.mafrans.smiteforge.SmiteForge;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -47,17 +48,17 @@ public class Main {
     public static ConfigObject config;
     public static YoutubeSearcher youtubeSearcher;
     public static MusicManager musicManager;
-    //public static Javadins javadins;
-    //public static SmiteForge smiteForge;
+    public static Javadins javadins;
+    public static SmiteForge smiteForge;
     public static ServerPrefs serverPrefs;
 
-    public static void main(String args[]) throws LoginException, InterruptedException, RateLimitedException, IOException, ClassNotFoundException, KeyManagementException, NoSuchAlgorithmException, ParseException {//, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
+    public static void main(String args[]) throws LoginException, InterruptedException, IOException, ClassNotFoundException, ParseException, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
 
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
         musicManager = new MusicManager();
-        //javadins = new Javadins(config.hirez_dev_id, config.hirez_auth_key);
-        //smiteForge = new SmiteForge(config.hirez_dev_id, config.hirez_auth_key);
+        javadins = new Javadins(config.hirez_dev_id, config.hirez_auth_key);
+        smiteForge = new SmiteForge(config.hirez_dev_id, config.hirez_auth_key);
 
         File databaseFile = new File("userdata/users.db");
         if(!databaseFile.getParentFile().exists()) {
@@ -76,9 +77,11 @@ public class Main {
 
         TimerTasks.start();
 
+        CommandHandler.addCommand(new Command_8ball());
         CommandHandler.addCommand(new Command_avatar());
         CommandHandler.addCommand(new Command_beautify());
         CommandHandler.addCommand(new Command_cat());
+        CommandHandler.addCommand(new Command_color());
         CommandHandler.addCommand(new Command_config());
         CommandHandler.addCommand(new Command_debug());
         CommandHandler.addCommand(new Command_define());
@@ -90,11 +93,12 @@ public class Main {
         CommandHandler.addCommand(new Command_getinfo());
         CommandHandler.addCommand(new Command_help());
         CommandHandler.addCommand(new Command_identify());
+        CommandHandler.addCommand(new Command_leave());
         CommandHandler.addCommand(new Command_mal());
         CommandHandler.addCommand(new Command_mention());
         CommandHandler.addCommand(new Command_move());
         CommandHandler.addCommand(new Command_mute());
-        //CommandHandler.addCommand(new Command_paladins());
+        CommandHandler.addCommand(new Command_paladins());
         CommandHandler.addCommand(new Command_ping());
         CommandHandler.addCommand(new Command_play());
         CommandHandler.addCommand(new Command_poll());
@@ -102,11 +106,10 @@ public class Main {
         CommandHandler.addCommand(new Command_rule34());
         CommandHandler.addCommand(new Command_shutdown());
         CommandHandler.addCommand(new Command_skip());
-        //CommandHandler.addCommand(new Command_smite());
+        CommandHandler.addCommand(new Command_smite());
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
-        CommandHandler.addCommand(new Command_8ball());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
@@ -115,6 +118,7 @@ public class Main {
         httpdServer.registerServitor(new Servitor_login(maHTTPD));
         httpdServer.registerServitor(new Servitor_loginprocess(maHTTPD));
         httpdServer.registerServitor(new Servitor_guilds(maHTTPD));
+        httpdServer.registerServitor(new Servitor_help(maHTTPD));
         httpdServer.setHomePage(new Servitor_login(maHTTPD));
 
         // Create Header and stylesheet file

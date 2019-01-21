@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Date;
 
 public class Command_timeout implements ICommand {
@@ -36,7 +35,7 @@ public class Command_timeout implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.BAN_MEMBERS)) {
+        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.BAN_MEMBERS)) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
             embedBuilder.setDescription("You need the BAN_MEMBERS permission to use this command!");

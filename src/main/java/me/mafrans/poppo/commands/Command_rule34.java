@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Command_rule34 implements ICommand {

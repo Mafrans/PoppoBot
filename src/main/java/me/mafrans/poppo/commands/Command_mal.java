@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

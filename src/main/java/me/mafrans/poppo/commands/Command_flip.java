@@ -8,8 +8,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class Command_flip implements ICommand {

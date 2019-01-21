@@ -11,7 +11,6 @@ import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
 
 public class Command_untimeout implements ICommand {
     @Override

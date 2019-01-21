@@ -13,7 +13,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.Arrays;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.net.URL;
 
 public class Command_avatar implements ICommand {
     @Override
@@ -52,6 +54,10 @@ public class Command_avatar implements ICommand {
             return true;
         }
         String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".gif?size=2048";
+        Image image = ImageIO.read(new URL(avatarUrl));
+        if(image == null) {
+            avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".png?size=2048";
+        }
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(GUtil.randomColor());

@@ -18,7 +18,7 @@ public class CommandListener extends ListenerAdapter {
             command = CommandHandler.parseCommand(event.getMessage());
             if (command == null) return;
 
-            if(!command.doOverride() && Main.config.overlord_users.contains(command.getAuthor().getId())) {
+            if(!command.isOverride() && Main.config.overlord_users.contains(command.getAuthor().getId())) {
                 if (command.getExecutor().getMeta().isBotCommanderOnly() && !Rank.getRank(event.getMember()).hasRank(Rank.BOT_COMMANDER)) {
                     return;
                 }

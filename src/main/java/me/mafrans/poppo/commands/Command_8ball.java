@@ -9,7 +9,6 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Command_8ball implements ICommand {

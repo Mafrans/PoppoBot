@@ -17,7 +17,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Command_mention implements ICommand {
     @Override
@@ -37,12 +36,13 @@ public class Command_mention implements ICommand {
             return false;
         }
 
-        for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-            r.delete().complete();
+        String roleName = "[Poppo] Mentioned";
+        for(Role role : channel.getGuild().getRolesByName(roleName, false)) {
+            role.delete().complete();
         }
 
         if(args[0].equalsIgnoreCase("everyone")) {
-            if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
+            if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
                 embedBuilder.setDescription("You need the MESSAGE_MENTION_EVERYONE permission to use this command!");
@@ -57,52 +57,27 @@ public class Command_mention implements ICommand {
             for(String argument : ArrayUtils.subarray(args, 1, args.length)) {
                 if(argument.startsWith("!")) {
                     String mention = argument.substring(1);
-                    Member member = null;
-                    Role role = null;
-                    if(mention.startsWith("name:")) {
-                        role = channel.getGuild().getRolesByName(mention.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(mention.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                        member = channel.getGuild().getMembersByName(mention.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getMembersByName(mention.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                    }
-                    else {
-                        member = channel.getGuild().getMemberById(mention);
-                        role = channel.getGuild().getRoleById(mention);
-                    }
-                    if(member != null) {
-                        excludedMembers.add(member);
-                    }
-                    if(role != null) {
-                        excludedRoles.add(role);
-                    }
+
+                    Member member = getMember(mention, channel.getGuild());
+                    Role role = getRole(mention, channel.getGuild());
+
+                    if(member != null) excludedMembers.add(member);
+                    if(role != null) excludedRoles.add(role);
                 }
                 else {
-                    Member member = null;
-                    Role role = null;
-                    if(argument.startsWith("name:")) {
-                        role = channel.getGuild().getRolesByName(argument.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(argument.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                        member = channel.getGuild().getMembersByName(argument.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getMembersByName(argument.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                    }
-                    else {
-                        member = channel.getGuild().getMemberById(argument);
-                        role = channel.getGuild().getRoleById(argument);
-                    }
-                    if(member != null) {
-                        everyone.add(member);
-                    }
-                    if(role != null) {
-                        everyone.addAll(channel.getGuild().getMembersWithRoles(role));
-                    }
+                    Member member = getMember(argument, channel.getGuild());
+                    Role role = getRole(argument, channel.getGuild());
+
+                    if(member != null) everyone.add(member);
+                    if(role != null) everyone.addAll(channel.getGuild().getMembersWithRoles(role));
                 }
 
                 RoleAction roleAction = channel.getGuild().getController().createRole();
-                roleAction.setName("[Poppo] Mentioned").complete();
+                roleAction.setName(roleName).complete();
                 roleAction.setMentionable(true).complete();
                 Role role = roleAction.complete();
                 command.getMessage().delete().queue();
-                for(Member member : everyone) {
-                    for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-                        channel.getGuild().getController().removeRolesFromMember(member, r).complete();
-                    }
-                }
+
                 outer: for(Member member : everyone) {
                     if(excludedMembers.contains(member)) continue;
                     for(Role r : excludedRoles) {
@@ -113,15 +88,10 @@ public class Command_mention implements ICommand {
                     channel.getGuild().getController().addRolesToMember(member, role).complete();
                 }
                 channel.sendMessage(role.getAsMention()).complete();
-                for(Member member : everyone) {
-                    for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-                        channel.getGuild().getController().removeRolesFromMember(member, r).complete();
-                    }
-                }
             }
         }
         else if(args[0].equalsIgnoreCase("here")) {
-            if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
+            if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
                 embedBuilder.setDescription("You need the MESSAGE_MENTION_EVERYONE permission to use this command!");
@@ -137,40 +107,19 @@ public class Command_mention implements ICommand {
             for(String argument : ArrayUtils.subarray(args, 1, args.length)) {
                 if(argument.startsWith("!")) {
                     String mention = argument.substring(1);
-                    Member member = null;
-                    Role role = null;
-                    if(mention.startsWith("name:")) {
-                        role = channel.getGuild().getRolesByName(mention.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(mention.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                        member = channel.getGuild().getMembersByName(mention.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getMembersByName(mention.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                    }
-                    else {
-                        member = channel.getGuild().getMemberById(mention);
-                        role = channel.getGuild().getRoleById(mention);
-                    }
-                    if(member != null) {
-                        excludedMembers.add(member);
-                    }
-                    if(role != null) {
-                        excludedRoles.add(role);
-                    }
+
+                    Member member = getMember(mention, channel.getGuild());
+                    Role role = getRole(mention, channel.getGuild());
+
+                    if(member != null) excludedMembers.add(member);
+                    if(role != null) excludedRoles.add(role);
                 }
                 else {
-                    Member member = null;
-                    Role role = null;
-                    if(argument.startsWith("name:")) {
-                        role = channel.getGuild().getRolesByName(argument.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(argument.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                        member = channel.getGuild().getMembersByName(argument.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getMembersByName(argument.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                    }
-                    else {
-                        member = channel.getGuild().getMemberById(argument);
-                        role = channel.getGuild().getRoleById(argument);
-                    }
-                    if(member != null) {
-                        everyone.add(member);
-                    }
-                    if(role != null) {
-                        everyone.addAll(channel.getGuild().getMembersWithRoles(role));
-                    }
+                    Member member = getMember(argument, channel.getGuild());
+                    Role role = getRole(argument, channel.getGuild());
+
+                    if(member != null) everyone.add(member);
+                    if(role != null) everyone.addAll(channel.getGuild().getMembersWithRoles(role));
                 }
 
                 RoleAction roleAction = channel.getGuild().getController().createRole();
@@ -178,11 +127,7 @@ public class Command_mention implements ICommand {
                 roleAction.setMentionable(true).complete();
                 Role role = roleAction.complete();
                 command.getMessage().delete().queue();
-                for(Member member : everyone) {
-                    for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-                        channel.getGuild().getController().removeRolesFromMember(member, r).complete();
-                    }
-                }
+
                 outer: for(Member member : everyone) {
                     if(excludedMembers.contains(member)) continue;
                     for(Role r : excludedRoles) {
@@ -193,11 +138,6 @@ public class Command_mention implements ICommand {
                     channel.getGuild().getController().addRolesToMember(member, role).complete();
                 }
                 channel.sendMessage(role.getAsMention()).complete();
-                for(Member member : everyone) {
-                    for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-                        channel.getGuild().getController().removeRolesFromMember(member, r).complete();
-                    }
-                }
             }
         }
         else {
@@ -206,7 +146,7 @@ public class Command_mention implements ICommand {
                 mentionRole = channel.getGuild().getRolesByName(args[0].replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(args[0].replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
             }
 
-            if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
+            if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
                 embedBuilder.setDescription("You need the MESSAGE_MENTION_EVERYONE permission to use this command!");
@@ -227,52 +167,27 @@ public class Command_mention implements ICommand {
             for(String argument : ArrayUtils.subarray(args, 1, args.length)) {
                 if(argument.startsWith("!")) {
                     String mention = argument.substring(1);
-                    Member member = null;
-                    Role role = null;
-                    if(mention.startsWith("name:")) {
-                        role = channel.getGuild().getRolesByName(mention.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(mention.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                        member = channel.getGuild().getMembersByName(mention.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getMembersByName(mention.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                    }
-                    else {
-                        member = channel.getGuild().getMemberById(mention);
-                        role = channel.getGuild().getRoleById(mention);
-                    }
-                    if(member != null) {
-                        excludedMembers.add(member);
-                    }
-                    if(role != null) {
-                        excludedRoles.add(role);
-                    }
+
+                    Member member = getMember(mention, channel.getGuild());
+                    Role role = getRole(mention, channel.getGuild());
+
+                    if(member != null) excludedMembers.add(member);
+                    if(role != null) excludedRoles.add(role);
                 }
                 else {
-                    Member member = null;
-                    Role role = null;
-                    if(argument.startsWith("name:")) {
-                        role = channel.getGuild().getRolesByName(argument.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getRolesByName(argument.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                        member = channel.getGuild().getMembersByName(argument.replaceFirst("name:", "").replace("_", " "), true).size() > 0 ? channel.getGuild().getMembersByName(argument.replaceFirst("name:", "").replace("_", " "), true).get(0) : null;
-                    }
-                    else {
-                        member = channel.getGuild().getMemberById(argument);
-                        role = channel.getGuild().getRoleById(argument);
-                    }
-                    if(member != null) {
-                        everyone.add(member);
-                    }
-                    if(role != null) {
-                        everyone.addAll(channel.getGuild().getMembersWithRoles(role));
-                    }
+                    Member member = getMember(argument, channel.getGuild());
+                    Role role = getRole(argument, channel.getGuild());
+
+                    if(member != null) everyone.add(member);
+                    if(role != null) everyone.addAll(channel.getGuild().getMembersWithRoles(role));
                 }
 
                 RoleAction roleAction = channel.getGuild().getController().createRole();
-                roleAction.setName("[Poppo] Mentioned").complete();
+                roleAction.setName(roleName).complete();
                 roleAction.setMentionable(true).complete();
                 Role role = roleAction.complete();
                 command.getMessage().delete().queue();
-                for(Member member : everyone) {
-                    for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-                        channel.getGuild().getController().removeRolesFromMember(member, r).complete();
-                    }
-                }
+
                 outer: for(Member member : everyone) {
                     if(excludedMembers.contains(member)) continue;
                     for(Role r : excludedRoles) {
@@ -282,15 +197,34 @@ public class Command_mention implements ICommand {
                     }
                     channel.getGuild().getController().addRolesToMember(member, role).complete();
                 }
-                channel.sendMessage(role.getAsMention()).complete();
-                for(Member member : everyone) {
-                    for(Role r : channel.getGuild().getRolesByName("[Poppo] Mentioned", true)) {
-                        channel.getGuild().getController().removeRolesFromMember(member, r).complete();
-                    }
-                }
+                channel.sendMessage(role.getAsMention()).queue();
             }
         }
         return true;
     }
 
+    private Member getMember(String input, Guild guild) {
+        Member member;
+        List<Member> members = guild.getMembersByName(input.replaceFirst("name:", "").replace("_", " "), true);
+
+        if(input.startsWith("name:")) {
+            member = members.size() > 0 ? members.get(0) : null;
+        }
+        else {
+            member = guild.getMemberById(input);
+        }
+        return member;
+    }
+
+    private Role getRole(String input, Guild guild) {
+        Role role;
+        List<Role> roles = guild.getRolesByName(input.replaceFirst("name:", "").replace("_", " "), true);
+        if(input.startsWith("name:")) {
+            role = roles.size() > 0 ? roles.get(0) : null;
+        }
+        else {
+            role = guild.getRoleById(input);
+        }
+        return role;
+    }
 }

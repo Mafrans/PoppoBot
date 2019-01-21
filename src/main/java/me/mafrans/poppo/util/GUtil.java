@@ -1,5 +1,7 @@
 package me.mafrans.poppo.util;
 
+import me.mafrans.javadins.RankedTier;
+import me.mafrans.poppo.util.images.ImageBuilder;
 //import me.mafrans.javadins.RankedTier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -7,10 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -64,6 +65,30 @@ public class GUtil {
     };
 
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static InputStream toInputStream(Image image, String formatName) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(ImageBuilder.toBufferedImage(image),formatName, os);
+        return new ByteArrayInputStream(os.toByteArray());
+    }
+
+    public static String addLeadingUntil(String in, int length, String toAdd) {
+        if(in.length() > length) {
+            return in.substring(in.length()-2, in.length());
+        }
+
+        StringBuilder out = new StringBuilder();
+        for(int i = 0; i < length; i++) {
+            if(in.length() > i) {
+                out.append(in.charAt(i));
+            }
+            else {
+                out.append(toAdd);
+            }
+        }
+
+        return out.toString();
+    }
 
     public static String currentParsedDate(ZoneOffset zoneOffset) {
         return DATE_TIME_FORMAT.format(Date.from(ZonedDateTime.now(zoneOffset).toInstant()));
@@ -270,7 +295,6 @@ public class GUtil {
         return Font.createFont(Font.TRUETYPE_FONT, ClassLoader.getSystemResourceAsStream(path));
     }
 
-    /*
     public static InputStream getPaladinsTierImage(@NotNull RankedTier rankedTier) {
         System.out.println("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png -" + ClassLoader.getSystemResourceAsStream("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png"));
         return ClassLoader.getSystemResourceAsStream("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png");
@@ -283,7 +307,7 @@ public class GUtil {
     }
     public static InputStream getSmiteJoustTierImage(@NotNull me.mafrans.smiteforge.RankedTier rankedTier) {
         return ClassLoader.getSystemResourceAsStream("images/ranks/smite/joust/" + capitalize(rankedTier.getTier().toString()) + ".png");
-    }*/
+    }
 
     public static String getPaladinsChampionImage(@NotNull String champion) {
         String imageUrl = null;

@@ -14,7 +14,6 @@ import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Command_move implements ICommand {
@@ -31,7 +30,7 @@ public class Command_move implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
             embedBuilder.setDescription("You need the MESSAGE_MANAGE permission to use this command!");

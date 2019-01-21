@@ -5,9 +5,7 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
-import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.objects.YoutubeVideo;
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -37,6 +35,7 @@ public class Command_skip implements ICommand {
         AudioManager manager = voiceChannel.getGuild().getAudioManager();
         if(manager.getConnectedChannel() != voiceChannel) {
             channel.sendMessage("\uD83C\uDFB5 You cannot skip a song you are not currently listening to.").queue();
+            return true;
         }
 
         List<Member> skips = Main.musicManager.skipMap.getOrDefault(channel.getGuild(), new ArrayList<>());

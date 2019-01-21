@@ -1,8 +1,8 @@
 package me.mafrans.poppo.commands;
 
-//import me.mafrans.smiteforge.GameMode;
-//import me.mafrans.smiteforge.Player;
-//import me.mafrans.smiteforge.RankedTier;
+import me.mafrans.smiteforge.GameMode;
+import me.mafrans.smiteforge.Player;
+import me.mafrans.smiteforge.RankedTier;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
@@ -14,7 +14,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.requests.RestAction;
 import net.dv8tion.jda.core.requests.restaction.MessageAction;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,11 +22,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Command_smite {} /*implements ICommand {
+public class Command_smite implements ICommand {
     @Override
     public String getName() {
         return "smite";
@@ -40,6 +38,8 @@ public class Command_smite {} /*implements ICommand {
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
+        Main.smiteForge.updateConnection();
+
         String[] args = command.getArgs();
         if(args.length != 1) {
             return false;
@@ -176,10 +176,7 @@ public class Command_smite {} /*implements ICommand {
 
                 loadMessage.delete().complete();
                 if (file != null) {
-                    MessageAction action = channel.sendFile(file, "avatar.png", messageBuilder.build());
-                    if(rankedImage != null) {
-                        action.addFile(rankedImage, "rank.png");
-                    }
+                    MessageAction action = channel.sendFile(file, "avatar.png", messageBuilder.build()).addFile(rankedImage, "rank.png");
                     action.queue();
                 }
                 else {
@@ -192,4 +189,3 @@ public class Command_smite {} /*implements ICommand {
         return true;
     }
 }
-*/
