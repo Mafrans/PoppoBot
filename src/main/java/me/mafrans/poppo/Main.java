@@ -13,10 +13,7 @@ import me.mafrans.poppo.httpd.servitors.Servitor_guilds;
 import me.mafrans.poppo.httpd.servitors.Servitor_help;
 import me.mafrans.poppo.httpd.servitors.Servitor_login;
 import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
-import me.mafrans.poppo.listeners.CommandListener;
-import me.mafrans.poppo.listeners.PollListener;
-import me.mafrans.poppo.listeners.SelectionListener;
-import me.mafrans.poppo.listeners.UserListener;
+import me.mafrans.poppo.listeners.*;
 import me.mafrans.poppo.util.MusicManager;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigManager;
@@ -74,6 +71,7 @@ public class Main {
         jda.addEventListener(new SelectionListener());
         jda.addEventListener(new UserListener());
         jda.addEventListener(new PollListener());
+        jda.addEventListener(new ServerListener());
 
         TimerTasks.start();
 
