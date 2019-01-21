@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -42,11 +43,8 @@ public class Command_mention implements ICommand {
         }
 
         if(args[0].equalsIgnoreCase("everyone")) {
-            if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-                embedBuilder.setDescription("You need the MESSAGE_MENTION_EVERYONE permission to use this command!");
-                channel.sendMessage(embedBuilder.build()).queue();
+
+            if(Rank.requirePermission(command, Permission.MESSAGE_MENTION_EVERYONE)) {
                 return true;
             }
 
@@ -91,12 +89,8 @@ public class Command_mention implements ICommand {
             }
         }
         else if(args[0].equalsIgnoreCase("here")) {
-            if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MENTION_EVERYONE)) {
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-                embedBuilder.setDescription("You need the MESSAGE_MENTION_EVERYONE permission to use this command!");
-                embedBuilder.setColor(new Color(175, 0, 0));
-                channel.sendMessage(embedBuilder.build()).queue();
+
+            if(Rank.requirePermission(command, Permission.MESSAGE_MENTION_EVERYONE)) {
                 return true;
             }
 

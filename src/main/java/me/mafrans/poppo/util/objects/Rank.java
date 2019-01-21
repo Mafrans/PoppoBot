@@ -2,6 +2,8 @@ package me.mafrans.poppo.util.objects;
 
 import lombok.Getter;
 import me.mafrans.poppo.Main;
+import me.mafrans.poppo.commands.util.Command;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.exceptions.ErrorResponseException;
@@ -43,6 +45,18 @@ public enum Rank {
         }
         this.roleMap = new HashMap<>();
         this.initialize = initialize;
+    }
+
+    public static boolean requirePermission(Command command, Permission permission) {
+        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(permission)) {
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
+            embedBuilder.setDescription("You need the " + permission.toString() + " permission to use this command!");
+            embedBuilder.setColor(new Color(175, 0, 0));
+            command.getMessage().getChannel().sendMessage(embedBuilder.build()).queue();
+            return true;
+        }
+        return false;
     }
 
     public void initialize() {
