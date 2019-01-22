@@ -26,9 +26,9 @@ public class TwitchEvents {
         for(Guild guild : Main.serverPrefs.getGuilds()) {
             if(guild == null) continue;
             JSONObject prefs = Main.serverPrefs.getPreferences(guild);
-            String msgChannel = prefs.getString("twitch_message_channel"); //getString(Guild guild) contains null checking
-            System.out.println("MsgChannel: " + msgChannel);
-            if(msgChannel == null) break;
+            String msgChannel = prefs.getString("twitch_message_channel");
+            System.out.println("MsgChannel: " + prefs.get("twitch_message_channel"));
+            if(msgChannel == null || msgChannel.isEmpty()) continue;
 
             TextChannel textChannel = Main.jda.getTextChannelById(msgChannel);
             System.out.println("TextChannel: " + textChannel.getName());

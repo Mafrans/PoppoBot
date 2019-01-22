@@ -35,14 +35,10 @@ public class Command_timeout implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.BAN_MEMBERS)) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-            embedBuilder.setDescription("You need the BAN_MEMBERS permission to use this command!");
-            embedBuilder.setColor(new Color(175, 0, 0));
-            channel.sendMessage(embedBuilder.build()).queue();
+        if(Rank.requirePermission(command, Permission.BAN_MEMBERS)) {
             return true;
         }
+
         String[] args = command.getArgs();
         if(args.length < 1) {
             return false;

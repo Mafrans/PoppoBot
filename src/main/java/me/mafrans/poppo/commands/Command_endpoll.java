@@ -7,6 +7,7 @@ import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.objects.Poll;
+import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -30,12 +31,7 @@ public class Command_endpoll implements ICommand {
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
-        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-            embedBuilder.setDescription("You need the MESSAGE_MANAGE permission to use this command!");
-            embedBuilder.setColor(new Color(175, 0, 0));
-            channel.sendMessage(embedBuilder.build()).queue();
+        if(Rank.requirePermission(command, Permission.MESSAGE_MANAGE)) {
             return true;
         }
 

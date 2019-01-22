@@ -35,14 +35,11 @@ public class Command_mute implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(Permission.VOICE_MUTE_OTHERS)) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-            embedBuilder.setDescription("You need the VOICE_MUTE_OTHERS permission to use this command!");
-            embedBuilder.setColor(new Color(175, 0, 0));
-            channel.sendMessage(embedBuilder.build()).queue();
+
+        if(Rank.requirePermission(command, Permission.VOICE_MUTE_OTHERS)) {
             return true;
         }
+
         String[] args = command.getArgs();
         if(args.length < 1) {
             return false;

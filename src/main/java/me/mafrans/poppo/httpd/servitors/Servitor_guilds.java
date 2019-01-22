@@ -155,7 +155,12 @@ public class Servitor_guilds extends HTMLServitor {
 
             StringBuilder messageChannelOptionBuilder = new StringBuilder();
             for(TextChannel channel : guild.getTextChannels()) {
-                messageChannelOptionBuilder.append("<option value=\"").append(channel.getId()).append("\">#").append(channel.getName()).append("</option>");
+                if(channel.getId().equals(prefs.getString("twitch_message_channel"))) {
+                    messageChannelOptionBuilder.append("<option value=\"").append(channel.getId()).append("\" selected>#").append(channel.getName()).append("</option>");
+                }
+                else {
+                    messageChannelOptionBuilder.append("<option value=\"").append(channel.getId()).append("\">#").append(channel.getName()).append("</option>");
+                }
             }
             VARIABLES.put("channel_options", messageChannelOptionBuilder.toString());
 

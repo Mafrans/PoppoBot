@@ -46,6 +46,12 @@ public class Command_beautify implements ICommand {
                 type = "js";
                 break;
 
+            case "xml":
+                Beautifier.XML xmlBeautifier = new Beautifier.XML();
+                pretty = xmlBeautifier.beautify(code);
+                title = "Beautified XML";
+                type = "xml";
+                break;
 
             case "java":
                 Beautifier.Javascript javaBeautifier = new Beautifier.Javascript();

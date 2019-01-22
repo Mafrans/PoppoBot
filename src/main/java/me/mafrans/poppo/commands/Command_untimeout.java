@@ -26,6 +26,7 @@ public class Command_untimeout implements ICommand {
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
         String[] args = command.getArgs();
+
         if(args.length != 1) return false;
 
         String uuid;

@@ -22,7 +22,7 @@ public class Command_skip implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Votes to skip the current song.", "skip", null, false);
+        return new CommandMeta(CommandCategory.FUN, "Votes to skip the current song.", "skip", new String[] {"voteskip"}, false);
     }
 
     @Override
