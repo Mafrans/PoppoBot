@@ -85,7 +85,7 @@ public class Command_debug implements ICommand {
                                 Collections.singletonList(user.getName()),
                                 user.getId(),
                                 onlineStatus == OnlineStatus.ONLINE || onlineStatus == OnlineStatus.DO_NOT_DISTURB || onlineStatus == OnlineStatus.IDLE  ? "Currently Online" : GUtil.currentParsedDate(ZoneOffset.UTC),
-                                user.getAvatarUrl())));
+                                user.getAvatarUrl(), 0)));
                     }
                     else {
                         System.out.println(String.format("[UpdateUsers] Updating old entry: %s", user.getName() + user.getDiscriminator()));

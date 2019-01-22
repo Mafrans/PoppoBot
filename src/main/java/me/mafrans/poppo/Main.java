@@ -106,6 +106,7 @@ public class Main {
         CommandHandler.addCommand(new Command_shutdown());
         CommandHandler.addCommand(new Command_skip());
         CommandHandler.addCommand(new Command_smite());
+        CommandHandler.addCommand(new Command_stars());
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());

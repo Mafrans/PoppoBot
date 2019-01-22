@@ -296,7 +296,6 @@ public class GUtil {
     }
 
     public static InputStream getPaladinsTierImage(@NotNull RankedTier rankedTier) {
-        System.out.println("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png -" + ClassLoader.getSystemResourceAsStream("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png"));
         return ClassLoader.getSystemResourceAsStream("images/ranks/paladins/" + capitalize(rankedTier.toString()) + ".png");
     }
     public static InputStream getSmiteConquestTierImage(@NotNull me.mafrans.smiteforge.RankedTier rankedTier) {

@@ -1,6 +1,7 @@
 package me.mafrans.poppo.util.images;
 
 //import com.jhlabs.image.GaussianFilter;
+import com.jhlabs.image.GaussianFilter;
 import lombok.Getter;
 import me.mafrans.poppo.util.GUtil;
 
@@ -8,7 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
-import java.security.Key;
 
 public class ImageBuilder {
     private int width;
@@ -66,12 +66,12 @@ public class ImageBuilder {
         return this;
     }
 
-    /*public BufferedImage applyFilter() {
+    public static BufferedImage applyBlur(Image image, float blurAmount) {
         GaussianFilter gaussianFilter = new GaussianFilter(blurAmount);
-        BufferedImage bufferedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
-        gaussianFilter.filter(toBufferedImage(background), bufferedImage);
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        gaussianFilter.filter(toBufferedImage(image), bufferedImage);
         return bufferedImage;
-    }*/
+    }
 
     public ImageBuilder addBackground(Image background, FitType fitType, boolean stretchX, boolean stretchY, float blurAmount) {
         int imgX = 0;
@@ -113,7 +113,7 @@ public class ImageBuilder {
             imgHeight = height;
         }
 
-        graphics.drawImage(background, imgX, imgY, imgWidth, imgHeight, getObserver());
+        graphics.drawImage(applyBlur(background, blurAmount), imgX, imgY, imgWidth, imgHeight, getObserver());
         return this;
     }
 

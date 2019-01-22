@@ -49,7 +49,7 @@ public class UserList {
                         "names varchar," +
                         "uuid varchar(127)," +
                         "lastOnlineTag varchar(127)," +
-                        "avatarUrl varchar(255)" +
+                        "avatarUrl varchar(255)," +
                         "stars int" +
                         ")";
 
@@ -84,7 +84,7 @@ public class UserList {
             Query query1 = con.createQuery(query);
 
             for(String key : getFieldMap(dataUser).keySet()) {
-                String value = getFieldMap(dataUser).get(key);
+                Object value = getFieldMap(dataUser).get(key);
                 query1.addParameter(key, value);
             }
 
@@ -140,7 +140,7 @@ public class UserList {
             Query query1 = con.createQuery(query);
 
             for(String key : getFieldMap(dataUser).keySet()) {
-                String value = getFieldMap(dataUser).get(key);
+                Object value = getFieldMap(dataUser).get(key);
                 query1.addParameter(key, value);
             }
 
@@ -221,22 +221,24 @@ public class UserList {
         }
     }
 
-    private Map<String, String> getFieldMap(DataUser dataUser) {
-        HashMap<String, String> hashMap = new HashMap<>();
+    private Map<String, Object> getFieldMap(DataUser dataUser) {
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("names", StringFormatter.arrayToString(dataUser.getNames().toArray(new String[0])));
         hashMap.put("uuid", dataUser.getUuid());
         hashMap.put("lastOnlineTag", dataUser.getLastOnlineTag());
         hashMap.put("avatarUrl", dataUser.getAvatarUrl());
+        hashMap.put("stars", dataUser.getStars());
 
         return hashMap;
     }
 
-    Map<String, String> getFieldMap(SQLDataUser dataUser) {
-        HashMap<String, String> hashMap = new HashMap<>();
+    private Map<String, Object> getFieldMap(SQLDataUser dataUser) {
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("names", dataUser.getNames());
         hashMap.put("uuid", dataUser.getUuid());
         hashMap.put("lastOnlineTag", dataUser.getLastOnlineTag());
         hashMap.put("avatarUrl", dataUser.getAvatarUrl());
+        hashMap.put("stars", dataUser.getStars());
 
         return hashMap;
     }
