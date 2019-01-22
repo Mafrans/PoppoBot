@@ -16,7 +16,7 @@ public class UserListener extends ListenerAdapter {
     @Override
     public void onUserUpdateName(UserUpdateNameEvent event) {
         if(Main.userList.getUsersFrom("uuid", event.getUser().getId()).size() == 0) {
-            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl());
+            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl(), 0);
             Main.userList.put(new SQLDataUser(dataUser));
             return;
         }
@@ -37,7 +37,7 @@ public class UserListener extends ListenerAdapter {
     @Override
     public void onUserUpdateOnlineStatus(UserUpdateOnlineStatusEvent event) {
         if(Main.userList.getUsersFrom("uuid", event.getUser().getId()).size() == 0) {
-            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl());
+            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl(), 0);
             Main.userList.put(new SQLDataUser(dataUser));
         }
 

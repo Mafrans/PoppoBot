@@ -72,6 +72,7 @@ public class Main {
         jda.addEventListener(new UserListener());
         jda.addEventListener(new PollListener());
         jda.addEventListener(new ServerListener());
+        jda.addEventListener(new StarListener());
 
         TimerTasks.start();
 

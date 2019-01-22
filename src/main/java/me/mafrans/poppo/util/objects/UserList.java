@@ -50,6 +50,7 @@ public class UserList {
                         "uuid varchar(127)," +
                         "lastOnlineTag varchar(127)," +
                         "avatarUrl varchar(255)" +
+                        "stars int" +
                         ")";
 
                 con.createQuery(query).executeUpdate();
@@ -66,15 +67,15 @@ public class UserList {
             removeByUuid(dataUser.getUuid());
         }
 
-        String keys = "";
-        String values = "";
+        StringBuilder keys = new StringBuilder();
+        StringBuilder values = new StringBuilder();
 
         for(String key : getFieldMap(dataUser).keySet()) {
-            if(keys.isEmpty()) keys = key;
-            else keys += ", " + key;
+            if(keys.length() == 0) keys = new StringBuilder(key);
+            else keys.append(", ").append(key);
 
-            if(values.isEmpty()) values = ":" + key;
-            else values += ", :" + key;
+            if(values.length() == 0) values = new StringBuilder(":" + key);
+            else values.append(", :").append(key);
         }
 
         String query = "INSERT INTO " + table + "(" + keys + ") values(" + values + ")";
