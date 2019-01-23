@@ -14,6 +14,7 @@ import me.mafrans.poppo.httpd.servitors.Servitor_help;
 import me.mafrans.poppo.httpd.servitors.Servitor_login;
 import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
 import me.mafrans.poppo.listeners.*;
+import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.MusicManager;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigManager;
@@ -49,7 +50,7 @@ public class Main {
     public static SmiteForge smiteForge;
     public static ServerPrefs serverPrefs;
 
-    public static void main(String args[]) throws LoginException, InterruptedException, IOException, ClassNotFoundException, ParseException, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
+    public static void main(String[] args) throws LoginException, InterruptedException, IOException, ClassNotFoundException, ParseException, SessionInvalidException, me.mafrans.smiteforge.SessionInvalidException {
 
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
@@ -87,6 +88,7 @@ public class Main {
         CommandHandler.addCommand(new Command_dog());
         CommandHandler.addCommand(new Command_endpoll());
         CommandHandler.addCommand(new Command_flip());
+        CommandHandler.addCommand(new Command_gamble());
         CommandHandler.addCommand(new Command_generate());
         CommandHandler.addCommand(new Command_get());
         CommandHandler.addCommand(new Command_getinfo());

@@ -314,11 +314,19 @@ public class GUtil {
             Document doc = Jsoup.connect(String.format("https://paladins.gamepedia.com/File:Champion_%s_Icon.png", champion.replace(" ", ""))).get();
             imageUrl = doc.getElementById("file").getElementsByTag("a").get(0).attr("href");
 
-            String s = doc.toString(); // For some reason, removing this like breaks the entire code, please don't.
+            doc.toString(); // For some reason, removing this like breaks the entire code, please don't.
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println(imageUrl);
         return imageUrl;
+    }
+
+    public static int getDuplicatesOf(List<String> in, String o) {
+        int i = 0;
+        for(String obj : in) {
+            if(obj.equals(o)) i++;
+        }
+        return i;
     }
 }

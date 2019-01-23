@@ -14,6 +14,8 @@ public class CommandListener extends ListenerAdapter {
     private Command command;
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
+        if(event.getAuthor().isBot()) return;
+
         if(event.getChannel().getType() == ChannelType.TEXT) {
             command = CommandHandler.parseCommand(event.getMessage());
             if (command == null) return;
