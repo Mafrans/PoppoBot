@@ -30,22 +30,15 @@ public class Command_gamble implements ICommand {
     }
 
     private String[] emojis = new String[] {
-            "apple",
-            "apple",
-            "apple",
-
-            "peach",
-            "peach",
-            "peach",
+            "grapes",
+            "grapes",
+            "grapes",
 
             "lemon",
             "lemon",
 
             "eggplant",
             "eggplant",
-
-            "thinking",
-            "thinking",
 
             "cherries",
             "cherries",
@@ -55,11 +48,10 @@ public class Command_gamble implements ICommand {
 
     private static Map<String, Object[]> results = new HashMap<>();
     static {
-        results.put("apple", new Object[] {1.2f, "It's a win! You won %d stars."});
-        results.put("peach", new Object[] {1.5f, "It's a win! You won %d stars."});
-        results.put("lemon", new Object[] {2f, "It's a win! You won %d stars."});
-        results.put("eggplant", new Object[] {2.5f, "Big win!\n You won 2.5 times as many stars for a total of %d!"});
-        results.put("cherries", new Object[] {5f, "Big win!\n You won 5 times your bet for a total of %d!"});
+        results.put("grapes", new Object[] {2f, "It's a win! You won %d stars."});
+        results.put("lemon", new Object[] {3f, "It's a win! You won %d stars."});
+        results.put("eggplant", new Object[] {5f, "Big win!\n You won 5 times as many stars for a total of %d!"});
+        results.put("cherries", new Object[] {10f, "Big win!\n You won 10 times your bet for a total of %d!"});
         results.put("thinking", new Object[] {20f, "Huge win!\n You won 20 times as many stars for a total of %d!"});
         results.put("seven", new Object[] {100f, ":tada: **JACKPOT!** :tada:\nYou won 100 times as many stars for %d stars!"});
     }
@@ -100,7 +92,7 @@ public class Command_gamble implements ICommand {
         }
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor("Betting " + bettedStars + " stars.", null, Main.jda.getSelfUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor("Betting " + bettedStars + " stars.", null, command.getAuthor().getEffectiveAvatarUrl());
         embedBuilder.setDescription(
                 "╔══════════╗\n" +
                 "║ :question: | :question: | :question:    ║\n" +
@@ -155,7 +147,7 @@ public class Command_gamble implements ICommand {
                         "╚══════════╝");
                 msg.editMessage(eb.build()).complete();
 
-                Thread.sleep(random.nextInt(6000) + 1000);
+                Thread.sleep(1000);
                 System.out.println("3");
                 eb.setDescription(
                         "╔══════════╗\n" +
@@ -172,20 +164,19 @@ public class Command_gamble implements ICommand {
                     result = (String) results.get(emote1)[1];
                 }
 
-                if(wonStars > 0) {
-                    eb.addField("Result", String.format(result, wonStars), false);
-                }
-                else {
-                    eb.addField("Result", "Aww, better luck next time!", false);
-                }
-                msg.editMessage(eb.build()).complete();
-
                 DataUser dataUser = Main.userList.getUsersFrom("uuid", command.getAuthor().getId()).get(0);
                 int oldStars = dataUser.getStars();
                 int newStars = oldStars - finalBettedStars + wonStars;
                 dataUser.setStars(newStars);
                 Main.userList.put(new SQLDataUser(dataUser));
-                System.out.println(eb.toString());
+
+                if(wonStars > 0) {
+                    eb.addField("Result", String.format(result + "\nYou now have " + newStars + " stars.", wonStars), false);
+                }
+                else {
+                    eb.addField("Result", "Aww, better luck next time!\nYou now have " + newStars + " stars.", false);
+                }
+                msg.editMessage(eb.build()).complete();
                 gambleMessages.remove(command.getAuthor().getId());
             }
             catch (InterruptedException e) {

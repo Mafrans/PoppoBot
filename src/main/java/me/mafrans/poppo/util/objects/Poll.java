@@ -13,8 +13,8 @@ public class Poll {
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
     public static List<Poll> openPolls = new ArrayList<>();
 
-    public static String UP_VOTE = "\u274E";
-    public static String DOWN_VOTE = "\u2705";
+    public static String DOWN_VOTE = "\u274E";
+    public static String UP_VOTE = "\u2705";
 
     private Message message;
     private String imageUrl;
