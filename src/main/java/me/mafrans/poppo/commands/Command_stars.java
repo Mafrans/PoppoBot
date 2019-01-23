@@ -83,7 +83,7 @@ public class Command_stars implements ICommand {
         imageBuilder.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         imageBuilder.setTextFont(lato);
         imageBuilder.setColor(new Color(255, 255, 255)).addShape(new Rectangle(0, 0, 128, 128), true).setColor(Color.BLACK);
-        imageBuilder.addImage(ImageIO.read(ClassLoader.getSystemResourceAsStream("images/star.png")), (128-90)/2, 5, 90, 90,  0);
+        imageBuilder.addImage(ImageIO.read(ClassLoader.getSystemResourceAsStream("images/Star.png")), (128-90)/2, 5, 90, 90,  0);
 
         int textWidth = 9999;
         int i = 0;
