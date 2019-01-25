@@ -15,8 +15,8 @@ import java.text.ParseException;
 import java.util.*;
 
 public class UserList {
-    Sql2o sql2o;
-    List<DataUser> cache;
+    private Sql2o sql2o;
+    private List<DataUser> cache;
 
     private String table = Main.config.database_table;
 
@@ -60,6 +60,16 @@ public class UserList {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int length() {
+        try {
+            updateCache();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return cache.size();
     }
 
     public boolean put(SQLDataUser dataUser) {
@@ -106,10 +116,14 @@ public class UserList {
     }
 
     public void removeByUuid(String uuid) {
-        String query = "DELETE FROM " + table + " WHERE uuid = :uuid";
+        removeBy("uuid", uuid);
+    }
+
+    public void removeBy(String key, Object value) {
+        String query = "DELETE FROM " + table + " WHERE " + key + " = :value";
         try (Connection con = sql2o.open()) {
             Query query1 = con.createQuery(query);
-            query1.addParameter("uuid", uuid);
+            query1.addParameter("value", value);
 
             query1.executeUpdate();
 
@@ -174,7 +188,7 @@ public class UserList {
         cache = parseUsers(sqlUsers);
     }
 
-    public List<DataUser> getAllReports() {
+    public List<DataUser> getAllUsers() {
         return cache;
     }
 

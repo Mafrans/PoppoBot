@@ -94,6 +94,7 @@ public class Main {
         CommandHandler.addCommand(new Command_getinfo());
         CommandHandler.addCommand(new Command_help());
         CommandHandler.addCommand(new Command_identify());
+        CommandHandler.addCommand(new Command_leaderboard());
         CommandHandler.addCommand(new Command_leave());
         CommandHandler.addCommand(new Command_mal());
         CommandHandler.addCommand(new Command_mention());

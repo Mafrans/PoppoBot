@@ -91,10 +91,10 @@ public class PollListener extends ListenerAdapter {
         for(Poll poll : Poll.openPolls) {
             if(poll.getMessage().getId().equals(event.getMessageId())) {
                 if(event.getReactionEmote().getName().equals(Poll.UP_VOTE)) {
-                    poll.changeUpVotes(1);
+                    poll.setUpVotes(poll.getUpVotes() + 1);
                 }
                 else if(event.getReactionEmote().getName().equals(Poll.DOWN_VOTE)) {
-                    poll.changeDownVotes(1);
+                    poll.setDownVotes(poll.getDownVotes() + 1);
                 }
                 else {
                     event.getReaction().removeReaction().queue();
@@ -112,10 +112,10 @@ public class PollListener extends ListenerAdapter {
         for(Poll poll : Poll.openPolls) {
             if(poll.getMessage().getId().equals(event.getMessageId())) {
                 if(event.getReactionEmote().getName().equals(Poll.UP_VOTE)) {
-                    poll.changeUpVotes(-1);
+                    poll.setUpVotes(poll.getUpVotes() - 1);
                 }
                 else if(event.getReactionEmote().getName().equals(Poll.DOWN_VOTE)) {
-                    poll.changeDownVotes(-1);
+                    poll.setDownVotes(poll.getDownVotes() - 1);
                 }
             }
         }

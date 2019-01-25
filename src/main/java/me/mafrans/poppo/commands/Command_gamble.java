@@ -31,19 +31,22 @@ public class Command_gamble implements ICommand {
 
     private String[] emojis = new String[] {
             "grapes",
-            "grapes",
+            "grapes", // 0.057
             "grapes",
 
             "lemon",
+            "lemon", // 0.057
             "lemon",
 
-            "eggplant",
+            "eggplant", // 0.021
             "eggplant",
 
-            "cherries",
+            "cherries", // 0.021
             "cherries",
 
-            "seven",
+            "thinking", // 0.002
+
+            "seven", // 0.002
     };
 
     private static Map<String, Object[]> results = new HashMap<>();

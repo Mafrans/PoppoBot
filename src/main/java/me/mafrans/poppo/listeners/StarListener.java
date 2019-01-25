@@ -3,18 +3,27 @@ package me.mafrans.poppo.listeners;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class StarListener extends ListenerAdapter {
+    private List<String> timers = new ArrayList<>();
+    private Map<String, Message> messages = new HashMap<>();
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if(event.getAuthor().isBot()) return;
 
+        if(timers.contains(event.getAuthor().getId())) return;
+
+        if(!event.getMessage().getContentDisplay().contains(" ")) return;
+        if(event.getMessage().getContentDisplay().length() < 10) return;
+        if(event.getMessage().getContentDisplay().toLowerCase().startsWith(Main.config.command_prefix)) return;
+
         if(Main.userList.getUsersFrom("uuid", event.getAuthor().getId()).isEmpty()) {
-            DataUser dataUser = new DataUser(Arrays.asList(event.getAuthor().getName()), event.getAuthor().getId(), "Currently Online", event.getAuthor().getAvatarUrl(), 1);
+            DataUser dataUser = new DataUser(Collections.singletonList(event.getAuthor().getName()), event.getAuthor().getId(), "Currently Online", event.getAuthor().getAvatarUrl(), 1);
             System.out.println(dataUser.getStars());
             Main.userList.put(new SQLDataUser(dataUser));
             return;
@@ -31,5 +40,19 @@ public class StarListener extends ListenerAdapter {
         sqlDataUser.setStars(dataUser.getStars() + 1);
         Main.userList.put(sqlDataUser);
         System.out.println(Main.userList.getUsersFrom("uuid", event.getAuthor().getId()).get(0));
+
+        timers.add(event.getAuthor().getId());
+
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            timers.remove(event.getAuthor().getId());
+        });
+        thread.start();
     }
 }

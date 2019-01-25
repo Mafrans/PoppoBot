@@ -19,6 +19,7 @@ public class TimerTasks {
                 queueTask(TwitchEvents.getRunner(), 10);
                 queueTask(new AutoInsult(), 120); // 3h
                 queueTask(new GameChangeRunner(), 60);
+                queueTask(new CleanRunner(), 60);
                 queueTask(new PollEndDateRunner(), 1);
 
                 try {

@@ -13,6 +13,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -35,13 +36,9 @@ public class Command_stars implements ICommand {
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
-        int stars = 0;
-        if(!Main.userList.getUsersFrom("uuid", command.getAuthor().getId()).isEmpty()) {
-            stars = Main.userList.getUsersFrom("uuid", command.getAuthor().getId()).get(0).getStars();
-        }
 
-        if(command.getArgs().length > 1) {
-            String[] args = command.getArgs();
+        String[] args = command.getArgs();
+        if(args.length > 1) {
             if (config.debug_users.contains(command.getAuthor().getId()) && args[0].equalsIgnoreCase("set")){
 
                 String uuid = command.getAuthor().getId();
@@ -71,12 +68,37 @@ public class Command_stars implements ICommand {
             }
         }
 
+        User user = command.getAuthor();
+
+        if(args.length > 0) {
+            String uuid = command.getAuthor().getId();
+            if (args[0].length() == 18 && NumberUtils.isDigits(args[2])) {
+                uuid = args[0];
+            }
+            else if (command.getMessage().getMentionedUsers().size() > 0) {
+                uuid = command.getMessage().getMentionedUsers().get(0).getId();
+            }
+            else if (Main.jda.getUsersByName(StringUtils.join(ArrayUtils.subarray(args, 0, args.length), " "), true).size() > 0) {
+                uuid = Main.jda.getUsersByName(StringUtils.join(ArrayUtils.subarray(args, 0, args.length), " "), true).get(0).getId();
+            }
+            else {
+                channel.sendMessage("Could not find a user with that name or id.").queue();
+                return true;
+            }
+            user = Main.jda.getUserById(uuid);
+        }
+
+        int stars = 0;
+        if(!Main.userList.getUsersFrom("uuid", command.getAuthor().getId()).isEmpty()) {
+            stars = Main.userList.getUsersFrom("uuid", command.getAuthor().getId()).get(0).getStars();
+        }
+
         final Font lato = GUtil.getTrueTypeFont("fonts/Lato-Regular.ttf");
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(new Color(255, 255,  0));
         embedBuilder.setImage("attachment://star.png");
-        embedBuilder.setAuthor(command.getAuthor().getName()+ "'s Stars", null, command.getAuthor().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(user.getName()+ "'s Stars", null, user.getEffectiveAvatarUrl());
         //embedBuilder.setDescription("You have " + stars + " stars.");
 
         ImageBuilder imageBuilder = new ImageBuilder(128, 128).setColor(Color.BLACK);

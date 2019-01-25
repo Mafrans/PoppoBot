@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util.objects;
 
+import lombok.Data;
 import me.mafrans.poppo.util.GUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class Poll {
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
     public static List<Poll> openPolls = new ArrayList<>();
@@ -66,119 +68,9 @@ public class Poll {
         this.imageUrl = imageUrl;
     }
 
-    public TextChannel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(TextChannel channel) {
-        this.channel = channel;
-    }
-
     public boolean hasEnded() {
         Date current = new Date();
         return current.getTime() > endDate.getTime();
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Message getMessage() {
-        return message;
-    }
-
-    public void setMessage(Message message) {
-        this.message = message;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getUpVotes() {
-        /*
-        int c = 0;
-        for(MessageReaction reaction : message.getReactions()) {
-            if(reaction.getReactionEmote().toString().equals(DOWN_VOTE)) {
-                for (User user : reaction.getUsers()) {
-                    if(!user.isBot()) {
-                        c++;
-                    }
-                }
-            }
-        }
-        return c;
-        */
-        return upVotes;
-    }
-
-    public void setUpVotes(int upVotes) {
-        this.upVotes = upVotes;
-    }
-
-    public void changeUpVotes(int amount) {
-        this.upVotes += amount;
-    }
-
-    public int getDownVotes() {
-        /*
-        int c = 0;
-        for(MessageReaction reaction : message.getReactions()) {
-            if(reaction.getReactionEmote().toString().equals(DOWN_VOTE)) {
-                for (User user : reaction.getUsers()) {
-                    if(!user.isBot()) {
-                        c++;
-                    }
-                }
-            }
-        }
-        return c;
-        */
-        return downVotes;
-    }
-
-    public void setDownVotes(int downVotes) {
-        this.downVotes = downVotes;
-    }
-
-    public void changeDownVotes(int amount) {
-        this.downVotes += amount;
-    }
-
-    public int getTotalVotes() {
-        return upVotes - downVotes;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public void showPoll(TextChannel channel) {
