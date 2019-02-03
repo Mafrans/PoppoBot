@@ -98,6 +98,7 @@ public class Main {
         CommandHandler.addCommand(new Command_leave());
         CommandHandler.addCommand(new Command_mal());
         CommandHandler.addCommand(new Command_mention());
+        CommandHandler.addCommand(new Command_minesweeper());
         CommandHandler.addCommand(new Command_move());
         CommandHandler.addCommand(new Command_mute());
         CommandHandler.addCommand(new Command_paladins());
