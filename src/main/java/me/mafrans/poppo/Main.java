@@ -87,6 +87,7 @@ public class Main {
         CommandHandler.addCommand(new Command_define());
         CommandHandler.addCommand(new Command_dog());
         CommandHandler.addCommand(new Command_endpoll());
+        CommandHandler.addCommand(new Command_execute());
         CommandHandler.addCommand(new Command_flip());
         CommandHandler.addCommand(new Command_gamble());
         CommandHandler.addCommand(new Command_generate());

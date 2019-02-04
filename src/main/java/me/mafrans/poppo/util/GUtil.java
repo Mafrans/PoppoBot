@@ -10,6 +10,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import javax.imageio.ImageIO;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.awt.*;
 import java.io.*;
 import java.math.BigDecimal;
@@ -320,6 +322,14 @@ public class GUtil {
         }
         System.out.println(imageUrl);
         return imageUrl;
+    }
+
+    private static Map<String, ScriptEngine> engineMap = new HashMap<>();
+    public static ScriptEngine getScriptEngine(String name) {
+        if(!engineMap.containsKey(name)) {
+            engineMap.put(name, new ScriptEngineManager().getEngineByName(name));
+        }
+        return engineMap.get(name);
     }
 
     public static int getDuplicatesOf(List<String> in, String o) {
