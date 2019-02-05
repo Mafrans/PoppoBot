@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PoppoBot - The inferior Bot</title>
+    <title>PoppoBot - The Inferior Bot</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     {document.header}
+	<script>{document.script.scripts}</script>
+	<div class="background"></div>
 
     <div class="container">
         <div class="description-container">
@@ -23,11 +27,62 @@
                     <p>Add me</p>
                 </a>
             </div>
+			<a href="#about">
+				<div class="scroller-container">
+					<i class="material-icons scroller" id="scroller-1">keyboard_arrow_down</i>
+				</div>
+				<div class="scroller-container">
+					<i class="material-icons scroller" id="scroller-2">keyboard_arrow_down</i>
+				</div>
+			</a>
+			<div id="about"></div>
 			<div class="about-container">
-				<h1>PoppoBot - The inferior Bot</h1>
-				<p>PoppoBot is the lovechild of Mafrans's programming skills and spare time, and while she is not the best of bots she is regularly updated and just straight up cute. <br/><br/>PoppoBot was created for the purpose of being both an utility bot and an entertainment bot. While not being the first of her kind, neither from the side of her creators accomplishments, she is currently his most refined work with interesting features. Both her adorable name and overall cute aesthetic prove to be extremely pleasing to those who decide to use the bot. <br/><br/><i>"Basically, I am monkey." - Cecilia</i><br\>
+				<h1>PoppoBot - The Inferior Bot</h1>
+				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br/><br/><i>"Basically, I am monkey." - Cecilia</i><br\>
 			</div>
+			<a href="#features">
+				<div class="scroller-container">
+					<i class="material-icons scroller" id="scroller-1">keyboard_arrow_down</i>
+				</div>
+				<div class="scroller-container">
+					<i class="material-icons scroller" id="scroller-2">keyboard_arrow_down</i>
+				</div>
+			</a>
+			<div id="features" class="features-container">
+				<div class="feature">
+					<h2>Google Search</h2>
+					<p>Search Google without ever leaving discord by using the Google Knowledge graph API built into the bot.</p>
+				</div>
+				<div class="feature">
+					<h2>Music</h2>
+					<p>Share your favorite music with all your friends using the built in music player.</p>
+				</div>
+				<div class="feature">
+					<h2>Definitions</h2>
+					<p>Arguing about the definition of a word? Use Poppo's built in support for both Urbandictionary and Pearson dictionaries to settle the debate.</p>
+				</div>
+				<div class="feature">
+					<h2>Cats and Dogs</h2>
+					<p>Rain cats and dogs upon your enemy using Poppo's integration with <a href="https://thecatapi.com/" target="_blank">The Cat API</a> and <a href="https://thedogapi.com/" target="_blank">The Dog API</a>!</p>
+				</div>
+				<div class="feature">
+					<h2>MyAnimeList Integration</h2>
+					<p>Want a better way to share your favorite anime and manga? Poppo uses the <a href="https://jikan.moe/" target="_blank">Jikan API</a> to search and inform your friends about them!</p>
+				</div>
+				<div class="feature">
+					<h2>Paladins API</h2>
+					<p>Want to boast to your teammates about your rank? Poppo can display your Paladins profile and all the statistics!</p>
+				</div>
+			</div>
+			
+			<!--div class="keep-scrolling scrolltop-1000">
+				<div class="keep-scrolling-blur"></div>
+				<h2>Keep Scrolling for more Features</h2>
+			</div-->
         </div>
+		<footer>
+		<i id="attribution">Bot and Website made by Mafrans</i>
+		</footer>
     </div>
 </body>
 </html>

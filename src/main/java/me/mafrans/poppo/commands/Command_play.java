@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.YoutubeVideo;
 import me.mafrans.poppo.util.timedtasks.PoppoRunnable;
@@ -14,6 +15,7 @@ import net.dv8tion.jda.core.managers.AudioManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 
+@Id("commands::play")
 public class Command_play implements ICommand {
     @Override
     public String getName() {

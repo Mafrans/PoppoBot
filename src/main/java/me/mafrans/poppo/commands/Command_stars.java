@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import me.mafrans.poppo.util.images.ImageBuilder;
@@ -23,6 +24,7 @@ import java.awt.*;
 
 import static me.mafrans.poppo.Main.config;
 
+@Id("commands::stars")
 public class Command_stars implements ICommand {
     @Override
     public String getName() {
@@ -71,7 +73,7 @@ public class Command_stars implements ICommand {
         User user = command.getAuthor();
 
         if(args.length > 0) {
-            String uuid = command.getAuthor().getId();
+            String uuid;
             if (args[0].length() == 18 && NumberUtils.isDigits(args[2])) {
                 uuid = args[0];
             }
@@ -85,7 +87,9 @@ public class Command_stars implements ICommand {
                 channel.sendMessage("Could not find a user with that name or id.").queue();
                 return true;
             }
-            user = Main.jda.getUserById(uuid);
+            if(uuid != null) {
+                user = Main.jda.getUserById(uuid);
+            }
         }
 
         int stars = 0;

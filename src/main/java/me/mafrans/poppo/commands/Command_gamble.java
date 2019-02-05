@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.*;
 
+@Id("commands::gamble")
 public class Command_gamble implements ICommand {
     private Map<String, Message> gambleMessages = new HashMap<>();
     @Override

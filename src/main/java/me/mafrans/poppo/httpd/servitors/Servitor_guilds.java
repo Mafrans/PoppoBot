@@ -10,6 +10,7 @@ import me.mafrans.poppo.Main;
 import me.mafrans.poppo.httpd.Machine;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.UserSession;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -29,6 +30,9 @@ public class Servitor_guilds extends HTMLServitor {
 
     @Override
     public String serve(DocumentServeEvent event) throws HTTPInternalErrorException, HTTPNotFoundException {
+        VARIABLES.put("oauth_url", "https://discordapp.com/oauth2/authorize?redirect_uri=" + Main.config.httpd_url + "/redirect&scope=identify%20guilds&response_type=code&client_id=" + Main.config.client_id);
+        VARIABLES.put("add_url", "https://discordapp.com/api/oauth2/authorize?client_id=" + Main.config.client_id + "&permissions=8&redirect_uri=" + Main.config.httpd_url+ "/redirect&scope=bot");
+
         SessionHandler handler = Main.sessionHandler;
         Map<Machine, UserSession> loadedSessions = handler.getLoadedSessions();
         Machine thisMachine = handler.getMachine(event.getSession());
@@ -43,22 +47,8 @@ public class Servitor_guilds extends HTMLServitor {
         }
 
         UserSession userSession = loadedSessions.get(thisMachine);
-        System.out.println(userSession);
-        System.out.println(userSession.getUser());
         User user = Main.jda.getUserById(userSession.getUser().getId());
-        System.out.println(user);
-
-        List<Guild> allowedGuilds = new ArrayList<>();
-        for (Guild g : Main.jda.getGuilds()) {
-            if(user == null) break;
-            if(user.getMutualGuilds() == null || user.getMutualGuilds().size() == 1) continue;
-            if(user.getMutualGuilds().contains(g)) {
-                Rank rank = Rank.getRank(g.getMember(user));
-                if (rank != null && rank.hasRank(Rank.BOT_COMMANDER)) {
-                    allowedGuilds.add(g);
-                }
-            }
-        }
+        List<Guild> allowedGuilds = getAllowedGuilds(user);
 
         if(event.getSimpleParameters().containsKey("guild")) { // Display single guild
             Guild guild = null;
@@ -176,11 +166,14 @@ public class Servitor_guilds extends HTMLServitor {
         }
         else { // Display Guild List
             StringBuilder guildHTMLBuilder = new StringBuilder();
+            String unknownIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAACQ0lEQVR4AezZNZAUURSF4a7NyHB3t5npd08RIRHukOLu7k6GS4ITQoa7Q4i7a4o7rO/DZce6b+2pjt534r/67qzveo7jOI7jOI7jOI7jaDSvZEbgMO7LZ/mE+3LQjIhVIPTRMPWwCQWwpSd52Bivze/p/D7Ihc2wXL8Pv6fCFNjsk4n8nkZ6SkngASWmN6XnMzXxBTZ48ileldDzyQ7YkNtO6NniDWDDTopNTULPZabDhp8ZS+i5cEJzgOwn9FzySHXAdULPhS+qA15yewL5rDrgBbcnwGPVATe4PYGc1H8S8noCzNB/GeT1BLGGmm9EiVrsngA7Q5+wjd8TJGrpfxhj9gSmd4jHl/id+D2NTAt6PMbzeyrpn/VXwu78ng519b+UM3uKVhX//7MIDmFkrAK/dxzHcRy2HMRkjKyX3XIZr2B/7xUuyG5ZL2Mk7uV4oaCvvAjuaRJNMVfOyTMUwGaf5MsznMU8v4kXwHTDF3WvJ3FZipuw+uHW9zLmZYF28knRa8UqYJE8hC3b5CEWZf45x3RAQaheK15V1uIrLGlfZW2m37LMYH0f/MqvQS4seblYk/6VlIO6PoAMxIfkmLYPMjDtPz5yFX12GEc4U/0/MCxX9+nJRMaJ+hNQGQWEN8EMgo1mZrCXRHar+2TNK+E9bER737ySVwrGq/tkZiFsdDMLvVL8Nuo+Ga7xztP/BwY11H0y5MJGuFyvlNrl1H0y2GhX1ud/a38OBAAAABgG+Vvf4yuDBAQEBAQEvgIAAAAQM/51H4xXwfgaAAAAAElFTkSuQmCC";
+
             for (Guild guild : allowedGuilds) {
                 guildHTMLBuilder.append("<a href=\"?guild=").append(guild.getId()).append("\">");
-                guildHTMLBuilder.append("  <div class=\"guildContainer\">");
-                guildHTMLBuilder.append("    <img class=\"guildImage\" src=\"").append(guild.getIconUrl()).append("\"></img>");
-                guildHTMLBuilder.append("  </div>");
+                guildHTMLBuilder.append("<div class=\"guild-container\">");
+                guildHTMLBuilder.append("    <img class=\"guild-image\" src=\"").append(guild.getIconUrl() == null ? unknownIcon : guild.getIconUrl()).append("\"></img>");
+                guildHTMLBuilder.append("    <span class=\"guild-name\">").append(guild.getName()).append("</span>");
+                guildHTMLBuilder.append("</div>");
                 guildHTMLBuilder.append("</a>");
             }
 
@@ -225,6 +218,22 @@ public class Servitor_guilds extends HTMLServitor {
         return outFile;
     }
 
+    @Override
+    public File[] getStylesheets() {
+        File outFile1 = new File("documents/css/guilds.css");
+        File outFile2 = new File("documents/css/single_guild.css");
+
+        try {
+            FileUtils.createResource("documents/css/guilds.css", outFile1);
+            FileUtils.createResource("documents/css/single_guild.css", outFile2);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new File[] { outFile1, outFile2 };
+    }
+
     private File getSingleGuildDocument() {
         File outFile = new File("documents/html/single_guild.html");
 
@@ -254,5 +263,20 @@ public class Servitor_guilds extends HTMLServitor {
             e.printStackTrace();
         }
         return outFile;
+    }
+
+    public static List<Guild> getAllowedGuilds(User user) {
+        List<Guild> allowedGuilds = new ArrayList<>();
+        for (Guild g : Main.jda.getGuilds()) {
+            if(user == null) break;
+            if(user.getMutualGuilds() == null || user.getMutualGuilds().size() == 1) continue;
+            if(user.getMutualGuilds().contains(g)) {
+                Rank rank = Rank.getRank(g.getMember(user));
+                if ((rank != null && rank.hasRank(Rank.BOT_COMMANDER)) || g.getOwner().getUser().getId().equals(user.getId())) {
+                    allowedGuilds.add(g);
+                }
+            }
+        }
+        return allowedGuilds;
     }
 }

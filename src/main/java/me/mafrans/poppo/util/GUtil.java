@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.reflections.Reflections;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -328,5 +329,13 @@ public class GUtil {
             if(obj.equals(o)) i++;
         }
         return i;
+    }
+
+    private static Reflections reflections = null;
+    public static Reflections getReflections(String pack) {
+        if(reflections == null) {
+            reflections = new Reflections(pack);
+        }
+        return reflections;
     }
 }

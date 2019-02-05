@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import me.mafrans.poppo.util.timedtasks.PoppoRunnable;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -21,6 +22,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.awt.*;
 import java.util.Date;
 
+@Id("commands::mute")
 public class Command_mute implements ICommand {
     @Override
     public String getName() {

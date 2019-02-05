@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.Definition;
 import me.mafrans.poppo.util.web.DefinitionGetter;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
+@Id("commands::define")
 public class Command_define implements ICommand {
     @Override
     public String getName() {

@@ -1,6 +1,8 @@
 package me.mafrans.poppo.listeners;
 
 import me.mafrans.poppo.Main;
+import me.mafrans.poppo.util.Feature;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.config.SQLDataUser;
 import net.dv8tion.jda.core.entities.Message;
@@ -9,11 +11,14 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.*;
 
+@Id("stars::generate")
 public class StarListener extends ListenerAdapter {
     private List<String> timers = new ArrayList<>();
     private Map<String, Message> messages = new HashMap<>();
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        if(!Feature.isEnabled(event.getGuild(), "stars::generate")) return;
+
         if(event.getAuthor().isBot()) return;
 
         if(timers.contains(event.getAuthor().getId())) return;

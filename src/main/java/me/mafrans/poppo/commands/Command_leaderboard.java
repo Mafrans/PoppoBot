@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.config.DataUser;
 import me.mafrans.poppo.util.objects.StarComparator;
 import me.mafrans.poppo.util.timedtasks.CleanRunner;
@@ -18,6 +19,7 @@ import net.dv8tion.jda.core.entities.User;
 import java.awt.*;
 import java.util.List;
 
+@Id("commands::leaderboard")
 public class Command_leaderboard implements ICommand {
     @Override
     public String getName() {

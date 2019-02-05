@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.listeners.PollListener;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Poll;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.text.ParseException;
 import java.util.Date;
 
+@Id("commands::poll")
 public class Command_poll implements ICommand {
 
     @Override

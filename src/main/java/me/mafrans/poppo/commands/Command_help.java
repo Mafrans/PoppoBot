@@ -3,9 +3,11 @@ package me.mafrans.poppo.commands;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.*;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+@Id("commands::help")
 public class Command_help implements ICommand {
     @Override
     public String getName() {

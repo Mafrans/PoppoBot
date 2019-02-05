@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -17,6 +18,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Id("commands::move")
 public class Command_move implements ICommand {
     @Override
     public String getName() {

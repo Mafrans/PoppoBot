@@ -1,5 +1,6 @@
 package me.mafrans.poppo.commands;
 
+import me.mafrans.poppo.util.Id;
 import me.mafrans.smiteforge.GameMode;
 import me.mafrans.smiteforge.Player;
 import me.mafrans.smiteforge.RankedTier;
@@ -25,6 +26,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+@Id("commands::smite")
 public class Command_smite implements ICommand {
     @Override
     public String getName() {

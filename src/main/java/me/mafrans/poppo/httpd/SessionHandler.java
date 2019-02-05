@@ -46,6 +46,11 @@ public class SessionHandler {
         return machine;
     }
 
+    public static String redirect(String url) {
+        String js = "(function() { window.open('" + url + "','_self'); })();";
+        return "<html><body><script>" + js + "</script></body></html>";
+    }
+
     public UserSession makeSession(String auth) {
         DiscordAuthenticator authenticator = new DiscordAuthenticator.Builder()
                 .setOauthConfiguration(Main.config.httpd_url, callback)

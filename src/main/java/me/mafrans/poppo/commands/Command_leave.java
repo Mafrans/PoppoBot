@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -15,6 +16,7 @@ import net.dv8tion.jda.core.managers.AudioManager;
 import java.awt.*;
 import java.util.ArrayList;
 
+@Id("commands::leave")
 public class Command_leave implements ICommand {
     @Override
     public String getName() {

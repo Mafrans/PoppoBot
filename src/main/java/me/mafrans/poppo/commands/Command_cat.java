@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Cat;
 import me.mafrans.poppo.util.objects.CatBreed;
 import me.mafrans.poppo.util.objects.CatCategory;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.*;
 
-
+@Id("commands::cat")
 public class Command_cat implements ICommand {
     private String[] messages = new String[] {
             "Oh look, it's a ${breed_c} from ${origin_c}!",
