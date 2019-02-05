@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util.objects;
 
+import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.web.HTTPUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -150,15 +151,16 @@ public class CatBreed {
             };
             catBreed.setLifespan(lifeSpan);
 
-            int[] weightImperial = new int[] {
-                    Integer.parseInt(jsonObject.getString("weight_imperial").replace(" ", "").split("-")[0]),
-                    Integer.parseInt(jsonObject.getString("weight_imperial").replace(" ", "").split("-")[1])
-            };
-
-            UnitConverter toKilos = NonSI.POUND.getConverterTo(SI.KILOGRAM);
-            double minWeight = toKilos.convert(Measure.valueOf(weightImperial[0], NonSI.POUND).doubleValue(NonSI.POUND));
-            double maxWeight = toKilos.convert(Measure.valueOf(weightImperial[1], NonSI.POUND).doubleValue(NonSI.POUND));
-            catBreed.setWeight(new double[] {minWeight, maxWeight});
+            if(jsonObject.has("weight_imperial")) {
+                int[] weightImperial = new int[]{
+                        Integer.parseInt(jsonObject.getString("weight_imperial").replace(" ", "").split("-")[0]),
+                        Integer.parseInt(jsonObject.getString("weight_imperial").replace(" ", "").split("-")[1])
+                };
+                UnitConverter toKilos = NonSI.POUND.getConverterTo(SI.KILOGRAM);
+                double minWeight = toKilos.convert(Measure.valueOf(weightImperial[0], NonSI.POUND).doubleValue(NonSI.POUND));
+                double maxWeight = toKilos.convert(Measure.valueOf(weightImperial[1], NonSI.POUND).doubleValue(NonSI.POUND));
+                catBreed.setWeight(new double[] {minWeight, maxWeight});
+            }
 
             allBreeds.add(catBreed);
         }

@@ -85,6 +85,7 @@ public class Main {
         CommandHandler.addCommand(new Command_define());
         CommandHandler.addCommand(new Command_dog());
         CommandHandler.addCommand(new Command_endpoll());
+        CommandHandler.addCommand(new Command_execute());
         CommandHandler.addCommand(new Command_flip());
         CommandHandler.addCommand(new Command_gamble());
         CommandHandler.addCommand(new Command_generate());
@@ -96,6 +97,7 @@ public class Main {
         CommandHandler.addCommand(new Command_leave());
         CommandHandler.addCommand(new Command_mal());
         CommandHandler.addCommand(new Command_mention());
+        CommandHandler.addCommand(new Command_minesweeper());
         CommandHandler.addCommand(new Command_move());
         CommandHandler.addCommand(new Command_mute());
         CommandHandler.addCommand(new Command_paladins());
@@ -108,6 +110,7 @@ public class Main {
         CommandHandler.addCommand(new Command_skip());
         CommandHandler.addCommand(new Command_smite());
         CommandHandler.addCommand(new Command_stars());
+        CommandHandler.addCommand(new Command_time());
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
