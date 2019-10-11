@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Guilds</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+</head>
+<body>
+    {document.header}
+	<style>{document.style.guilds}</style>
+	
+	<div class="background"> </div>
+	<div class="header">
+		<image class="user-image" src="{variable.user_avatar_url}"></image>
+		<h2>{variable.user_name}</h2>
+		<h3>#{variable.user_discriminator}</h3>
+		<span>User ID: {variable.user_id}</p>
+	</div>
+
+	<div class="guild-list-container">
+		<h1 id="title">Available Guilds:</h1>
+		<h2 id="subtitle">Click to edit the options of a guild</h2>
+		<div style="height: 10px;"></div> <!-- Shitty Spacer -->
+		{variable.guild_list}
+	</div>
+</body>
+</html>

@@ -135,6 +135,12 @@
             <artifactId>google-api-services-kgsearch</artifactId>
             <version>v1-rev230-1.25.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.10</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/asm/asm -->
         <dependency>
             <groupId>asm</groupId>

@@ -1,0 +1,281 @@
+html {
+	scroll-behavior: smooth;
+}
+
+* {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0%;
+    background: #2C2F33;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.background {
+    height: 300px;
+    width: 100vw;
+    position: fixed;
+    background-image: url(https://discordapp.com/assets/697e63f59d8a1e1673fd9b551f674d1f.png);
+    background-repeat: repeat;
+    background-size: 300px;
+    top: 0;
+    z-index: -1;
+}
+
+a:link {
+	color: #33bddb;
+}
+
+p {
+	color: #ffffff;
+	font-size: 150%;
+}
+
+.container {
+    margin-top: 300px;
+    text-align: center;
+    background: #2C2F33;
+    -webkit-box-shadow: 0px -10px 32px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -10px 32px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px -10px 32px -22px rgba(0,0,0,0.75);
+	display: block;
+}
+
+.description-container h1 {
+    text-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.description-container {
+    display: block;
+    position: relative;
+    top: -175px;
+}
+
+.main-image-container {
+    display: inline-block;
+    border-radius: 50%;
+	width: 300px;
+	height: 300px;
+    background: #fff;
+    -webkit-box-shadow: 0px -10px 32px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -10px 32px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px -10px 32px -22px rgba(0,0,0,0.75);
+}
+
+.main-image {
+    border-radius: 50%;
+    height: 100%;
+    width: auto;
+}
+
+.login-box p {
+    font-size: 150%;
+    position: relative;
+    top: -5px;
+}
+
+.login-box {
+    margin: 30px 15px;
+    display: inline-block;
+    padding: 10px 25px 10px 25px;
+    background: #7289da;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    transition: all 0.2s ease-in-out;
+    color: #FFF;
+    width: 100px;
+    text-decoration: none;
+}
+
+.about-container {
+	background: #23272A;
+	padding: 2.5vw;
+	width: 80vw;
+	margin-left: 7.5vw;
+	margin-right: 7.5vw;
+	text-align: left;
+    -webkit-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    transition: filter 0.3s ease-in-out;
+	margin-bottom: 50px;
+}
+
+#about { /* The position where the scroll arrows will take you */
+	height: 1.5vw;
+	margin-top: 100px;
+}
+
+.about-container h1 {
+	margin-bottom: 20px;
+}
+
+.invert {
+    filter: invert(1.0);
+}
+
+.login-box:hover {
+    -webkit-box-shadow: 0px 20px 32px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 20px 32px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px 20px 32px -22px rgba(0,0,0,0.75);
+    transform: translateY(-2px);
+}
+
+
+.description-container h1 {
+    font-size: 400%;
+    color: #fff;
+    font-weight: 300;
+}
+
+.scroller {
+	filter: opacity(0);
+	position: relative;
+	top: 0px;
+	font-size: 100px;
+	color: #fff;
+}
+.scroller-container {
+	left: 50px;
+}
+
+#scroller-1 {
+	animation: scroller 4s infinite;
+}
+
+#scroller-2 {
+	animation: scroller 4s infinite;
+	margin-top: -100px;
+}
+
+@keyframes scroller {
+	0% {
+		top: 0px;
+		filter: opacity(0);
+	}
+	25% {
+		top: 0px;
+		filter: opacity(100);
+	}
+	75% {
+		top: 100px;
+		filter: opacity(100);
+	}
+	100% {
+		top: 100px;
+		filter: opacity(0);
+	}
+}
+
+.features-container {
+	text-align: left;
+    transition: filter 0.3s ease-in-out;
+	margin: 1vw 0 0 5.5vw;
+	margin-top: 100px;
+}
+
+.feature {
+	background: #23272A;
+	padding: 2.5vw;
+	width: 20vw;
+	min-height: 20vw;
+	margin: 2vw;
+	margin-right: 2.666666vw;
+	margin-bottom: 0;
+	display: inline-grid;
+	text-align: left;
+    -webkit-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+    transition: filter 0.3s ease-in-out;
+}
+
+.feature h2 {
+	font-size: 30px;
+	color: #fff;
+}
+
+.keep-scrolling h2 {
+	font-size: 30px;
+	color: #fff;
+}
+
+.keep-scrolling {
+    transition: filter 0.3s ease-in-out;
+    text-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5);
+	position: fixed;
+	padding: 10px;
+	text-align: center;
+	width: 100vw;
+	bottom: 0px;
+}
+
+.keep-scrolling-blur {
+    transition: filter 0.3s ease-in-out;
+    text-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5);
+	position: fixed;
+	padding: 10px;
+	text-align: center;
+	width: 100vw;
+	bottom: 0px;
+	background: rgba(0,0,0,0.3);
+}
+
+.keep-scrolling-blur {
+	filter: blur(15px);
+}
+
+#attribution {
+	position: absolute;
+	right: 10px;
+	padding: 10px;
+	color: rgba(255,255,255,0.2);
+}
+
+
+.cf:before,
+.cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+/**
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+.cf {
+  *zoom: 1;
+}

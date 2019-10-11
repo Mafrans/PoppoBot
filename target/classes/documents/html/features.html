@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Features</title>
+	<script>
+
+        function saveFeatures() {
+
+            var enabled = "";
+            var disabled = "";
+			
+			$(".individual-feature input").each(function( index ) {
+				if(this.checked) {
+					if(enabled === "") {
+						enabled += $(this).val(); 
+					}
+					else {
+						enabled += "," + $(this).val(); 
+					}
+				}
+				else {
+					if(disabled === "") {
+						disabled += $(this).val(); 
+					}
+					else {
+						disabled += "," + $(this).val(); 
+					}
+				}
+			});
+
+			setCookie("enabled", enabled, 1);
+			setCookie("disabled", disabled, 1);
+            window.open("{variable.httpd_url}/features?guild={variable.guild_id}", "_self");
+
+        }
+		
+		function hideSaveBanner() {
+			$("#save-banner").hide();
+		}
+
+        function setCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+    </script>
+</head>
+<body>
+    {document.header}
+	<style>{document.style.features}</style>
+	
+	<div id="save-banner" {variable.save_banner_visibility}>
+		<span>Saved your changes</span>
+		<span id="x" onclick="hideSaveBanner()">X</span>
+	</div>
+	
+	<h1 id="title">Features</h1>
+	<h2 id="subtitle">Enable or disable features for your server here, press 'Submit' when you are finished</h2>
+    {variable.features}
+	<button id="submit" onclick="saveFeatures()">Submit</button>
+</body>
+</html>
