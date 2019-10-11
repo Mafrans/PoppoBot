@@ -1,28 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <script>
-        function addCurrent() {
-            var linkToAdd = document.getElementById("twitchNameTextField").value;
-
-            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&addlink=" + linkToAdd.replace(" ","_"),"_self");
-        }
-
-        function deleteLink(linkToDelete) {
-            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&deletelink=" + linkToDelete.replace(" ","_"),"_self");
-        }
-    </script>
-</head>
-<body>
-    <div class="twitchLinkListContainer">
-        {variable.twitch_link_list}
-    </div>
-    <div class="addTwitchLinkContainer">
-        <input id="twitchNameTextField" type="text" name=\"twitchName\" value="Twitch Name">
-        <button type="button" onclick="addCurrent()">Add</button>
-     </div>
-</body>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+
+
+
+    <script>
+
+        function addCurrent() {
+
+            var linkToAdd = document.getElementById("twitchNameTextField").value;
+
+
+
+            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&addlink=" + linkToAdd.replace(" ","_"),"_self");
+
+        }
+
+
+
+        function deleteLink(linkToDelete) {
+
+            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&deletelink=" + linkToDelete.replace(" ","_"),"_self");
+
+        }
+
+
+        function updateFeatures() {
+            let featureBoxes = document.getElementsByClassName("feature");
+            let out = "";
+
+            out += "{";
+            let b = true;
+            for(let featureBox of featureBoxes) {
+                if(b) {
+                    b = false;
+                    out += "\"" + featureBox.value + "\"" + ":" + featureBox.checked;
+                    continue;
+                }
+                out += "," + "\"" + featureBox.value + "\"" + ":" + featureBox.checked;
+            }
+            out += "}";
+
+            console.log("{variable.httpd_url}/guilds?guild={variable.guild_id}&updatefeatures=" + out);
+            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&updatefeatures=" + out, "_self");
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <!--div class="twitchLinkListContainer">
+
+        {variable.twitch_link_list}
+
+    </div>
+
+    <div class="addTwitchLinkContainer">
+
+        <input id="twitchNameTextField" type="text" name=\"twitchName\" value="Twitch Name">
+
+        <button type="button" onclick="addCurrent()">Add</button>
+
+     </div-->
+
+    <div class="featureContainer">
+        <h3>Enabled Features</h3>
+        {variable.feature_list}
+    </div>
+    <style>
+        .featureContainer {
+            border: rgba(0, 0, 0, 0.5) 2px inset;
+            display: inline-block;
+        }
+    </style>
+
+</body>
+
 </html>

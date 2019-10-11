@@ -14,6 +14,7 @@ import me.mafrans.poppo.httpd.servitors.Servitor_help;
 import me.mafrans.poppo.httpd.servitors.Servitor_login;
 import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
 import me.mafrans.poppo.listeners.*;
+import me.mafrans.poppo.util.FeatureManager;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.MusicManager;
 import me.mafrans.poppo.util.TimerTasks;
@@ -55,8 +56,8 @@ public class Main {
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
         musicManager = new MusicManager();
-        javadins = new Javadins(config.hirez_dev_id, config.hirez_auth_key);
-        smiteForge = new SmiteForge(config.hirez_dev_id, config.hirez_auth_key);
+        //javadins = new Javadins(config.hirez_dev_id, config.hirez_auth_key);
+        //smiteForge = new SmiteForge(config.hirez_dev_id, config.hirez_auth_key);
 
         File databaseFile = new File("userdata/users.db");
         if(!databaseFile.getParentFile().exists()) {
@@ -114,6 +115,8 @@ public class Main {
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
 
+        CommandHandler.registerFeatures();
+
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
 
@@ -138,6 +141,7 @@ public class Main {
         for(Guild guild : jda.getGuilds()) {
             System.out.println(guild);
             serverPrefs.saveDefaults(guild);
+            new FeatureManager(guild).saveDefault();
         }
 
         Main.jda.getPresence().setStatus(OnlineStatus.ONLINE);

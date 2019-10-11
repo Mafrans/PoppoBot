@@ -26,7 +26,7 @@ public class Command_leaderboard implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Shows the star leaderboard.", "leaderboard", new String[] {"leaderboards"}, false);
+        return new CommandMeta(CommandCategory.FUN, "Shows the star leaderboard.", "leaderboard", new String[] {"leaderboards", "top", "leader"}, false);
     }
 
     @Override
@@ -49,13 +49,13 @@ public class Command_leaderboard implements ICommand {
             }
 
             if (i == 0) {
-                embedBuilder.addField(user.getName(), ":star2: " + dataUser.getStars(), false);
+                embedBuilder.addField(i + ". " + user.getName(), ":star2: " + dataUser.getStars(), false);
             }
             else if (i < 3) {
-                embedBuilder.addField(user.getName(), ":star: " + dataUser.getStars(), false);
+                embedBuilder.addField(i + ". " + user.getName(), ":star: " + dataUser.getStars(), false);
             }
             else {
-                embedBuilder.addField(user.getName(), String.valueOf(dataUser.getStars()), false);
+                embedBuilder.addField(i + ". " + user.getName(), String.valueOf(dataUser.getStars()), false);
             }
         }
         embedBuilder.setAuthor("Star Leaderboard", null, "attachment://star.png");

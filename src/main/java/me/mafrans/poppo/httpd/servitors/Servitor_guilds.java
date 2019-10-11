@@ -87,6 +87,16 @@ public class Servitor_guilds extends HTMLServitor {
             VARIABLES.put("httpd_url", Main.config.httpd_url);
             VARIABLES.put("guild_id", guild.getId());
 
+            if(event.getSimpleParameters().containsKey("updatefeatures")) {
+                prefs.put("features", new JSONObject(event.getSimpleParameters().get("updatefeatures")));
+                try {
+                    Main.serverPrefs.savePreferences(guild, prefs);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             if(event.getSimpleParameters().containsKey("addlink")) {
                 String linkToAdd = event.getSimpleParameters().get("addlink").toLowerCase();
                 if(!linkToAdd.isEmpty()) {
@@ -142,6 +152,17 @@ public class Servitor_guilds extends HTMLServitor {
                     e.printStackTrace();
                 }
             }
+
+            StringBuilder featureBuilder = new StringBuilder();
+            List<String> features = new ArrayList<>(prefs.getJSONObject("features").keySet());
+            Collections.sort(features);
+            for(String feature : features) {
+                boolean enabled = prefs.getJSONObject("features").getBoolean(feature);
+
+                featureBuilder.append(String.format("<input type=\"checkbox\" class=\"feature\" name=\"%s\" value=\"%s\" %s>%s<br>", feature, feature, enabled ? "checked" : "", feature));
+            }
+            featureBuilder.append("<button type=\"button\" onclick=\"updateFeatures()\" class=\"updateFeaturesButton\">Update</button>");
+            VARIABLES.put("feature_list", featureBuilder.toString());
 
             StringBuilder twitchLinkBuilder = new StringBuilder();
             for(int i = 0; i < prefs.getJSONArray("twitch_links").length(); i++) {

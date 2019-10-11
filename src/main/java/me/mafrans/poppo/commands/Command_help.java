@@ -2,6 +2,7 @@ package me.mafrans.poppo.commands;
 
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.*;
+import me.mafrans.poppo.util.FeatureManager;
 import me.mafrans.poppo.util.GUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -29,13 +30,17 @@ public class Command_help implements ICommand {
             for(CommandCategory commandCategory : CommandCategory.values()) {
                 StringBuilder content = new StringBuilder();
                 for (ICommand cmd : CommandHandler.getCommandList()) {
+                    FeatureManager manager = new FeatureManager(command.getMessage().getGuild());
+                    if(!manager.isEnabled("command:" + cmd.getName())) continue;
                     if(cmd.getMeta().isHidden()) continue;
                     if(cmd.getMeta().getCategory() == commandCategory) {
                         content.append("**").append(GUtil.capitalize(cmd.getName())).append(":** ").append(cmd.getMeta().getDescription()).append("\n");
                     }
                 }
 
-                embedBuilder.addField(commandCategory.getEmote() + commandCategory.getName(), content + "\n\u00AD", false);
+                if(!content.toString().isEmpty()) {
+                    embedBuilder.addField(commandCategory.getEmote() + commandCategory.getName(), content + "\n\u00AD", false);
+                }
             }
 
             channel.sendMessage(embedBuilder.build()).queue();
