@@ -8,8 +8,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.reflections.Reflections;
 
 import javax.imageio.ImageIO;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.awt.*;
 import java.io.*;
 import java.math.BigDecimal;
@@ -322,11 +325,55 @@ public class GUtil {
         return imageUrl;
     }
 
+    private static Map<String, ScriptEngine> engineMap = new HashMap<>();
+    public static ScriptEngine getScriptEngine(String name) {
+        if(!engineMap.containsKey(name)) {
+            engineMap.put(name, new ScriptEngineManager().getEngineByName(name));
+        }
+        return engineMap.get(name);
+    }
+
     public static int getDuplicatesOf(List<String> in, String o) {
         int i = 0;
         for(String obj : in) {
             if(obj.equals(o)) i++;
         }
         return i;
+    }
+
+    public static String getNumberEmote(int number) {
+        switch(number) {
+            case 0:
+                return ":zero:";
+            case 1:
+                return ":one:";
+            case 2:
+                return ":two:";
+            case 3:
+                return ":three:";
+            case 4:
+                return ":four:";
+            case 5:
+                return ":five:";
+            case 6:
+                return ":six:";
+            case 7:
+                return ":seven:";
+            case 8:
+                return ":eight:";
+            case 9:
+                return ":nine:";
+            case 10:
+                return ":keycap_ten:";
+        }
+        return ":asterisk:";
+    }
+
+    private static Reflections reflections = null;
+    public static Reflections getReflections(String pack) {
+        if(reflections == null) {
+            reflections = new Reflections(pack);
+        }
+        return reflections;
     }
 }

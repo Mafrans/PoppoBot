@@ -9,12 +9,10 @@ import me.mafrans.mahttpd.util.FileUtils;
 import me.mafrans.poppo.commands.*;
 import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.httpd.SessionHandler;
-import me.mafrans.poppo.httpd.servitors.Servitor_guilds;
-import me.mafrans.poppo.httpd.servitors.Servitor_help;
-import me.mafrans.poppo.httpd.servitors.Servitor_login;
-import me.mafrans.poppo.httpd.servitors.Servitor_loginprocess;
+import me.mafrans.poppo.httpd.servitors.*;
 import me.mafrans.poppo.listeners.*;
 import me.mafrans.poppo.util.FeatureManager;
+import me.mafrans.poppo.util.Feature;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.MusicManager;
 import me.mafrans.poppo.util.TimerTasks;
@@ -88,6 +86,7 @@ public class Main {
         CommandHandler.addCommand(new Command_define());
         CommandHandler.addCommand(new Command_dog());
         CommandHandler.addCommand(new Command_endpoll());
+        CommandHandler.addCommand(new Command_execute());
         CommandHandler.addCommand(new Command_flip());
         CommandHandler.addCommand(new Command_gamble());
         CommandHandler.addCommand(new Command_generate());
@@ -99,6 +98,7 @@ public class Main {
         CommandHandler.addCommand(new Command_leave());
         CommandHandler.addCommand(new Command_mal());
         CommandHandler.addCommand(new Command_mention());
+        CommandHandler.addCommand(new Command_minesweeper());
         CommandHandler.addCommand(new Command_move());
         CommandHandler.addCommand(new Command_mute());
         CommandHandler.addCommand(new Command_paladins());
@@ -111,6 +111,7 @@ public class Main {
         CommandHandler.addCommand(new Command_skip());
         CommandHandler.addCommand(new Command_smite());
         CommandHandler.addCommand(new Command_stars());
+        CommandHandler.addCommand(new Command_time());
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
@@ -125,6 +126,7 @@ public class Main {
         httpdServer.registerServitor(new Servitor_loginprocess(maHTTPD));
         httpdServer.registerServitor(new Servitor_guilds(maHTTPD));
         httpdServer.registerServitor(new Servitor_help(maHTTPD));
+        httpdServer.registerServitor(new Servitor_features(maHTTPD));
         httpdServer.setHomePage(new Servitor_login(maHTTPD));
 
         // Create Header and stylesheet file
@@ -145,11 +147,12 @@ public class Main {
         }
 
         Main.jda.getPresence().setStatus(OnlineStatus.ONLINE);
+        System.out.println("PoppoBot is Ready!");
+
+        Feature.cacheFeatures();
 
         CatBreed.cacheBreeds();
         CatCategory.cacheCategories();
         DogBreed.cacheBreeds();
-
-        System.out.println("PoppoBot is Ready!");
     }
 }

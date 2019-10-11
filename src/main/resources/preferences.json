@@ -3,5 +3,8 @@
     "features": {},
     "twitch_message_channel": "",
     "twitch_start_message": "",
-    "twitch_stop_message": ""
+    "twitch_stop_message": "",
+
+    "features": {
+    }
 }

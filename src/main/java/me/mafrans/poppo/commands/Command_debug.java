@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.StringFormatter;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.DataUser;
@@ -22,6 +23,7 @@ import java.util.*;
 
 import static me.mafrans.poppo.Main.config;
 
+@Id("commands::debug")
 public class Command_debug implements ICommand {
     @Override
     public String getName() {

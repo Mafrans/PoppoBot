@@ -4,6 +4,8 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
+import me.mafrans.poppo.util.GUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Id("commands::roll")
 public class Command_roll implements ICommand {
     @Override
     public String getName() {
@@ -40,7 +43,7 @@ public class Command_roll implements ICommand {
         if(args.length == 0) {
             channel.sendMessage(":game_die: Rolling a D" + sides).complete();
             Thread.sleep(500);
-            channel.sendMessage("You rolled a " + getNumberEmote(rollDie(6)) + "").queue();
+            channel.sendMessage("You rolled a " + GUtil.getNumberEmote(rollDie(6)) + "").queue();
             return true;
         }
 
@@ -68,7 +71,7 @@ public class Command_roll implements ICommand {
 
             StringBuilder diceBuilder = new StringBuilder();
             for(int d : rolledDice) {
-                diceBuilder.append(getNumberEmote(d));
+                diceBuilder.append(GUtil.getNumberEmote(d));
             }
 
             Random random = new Random();
@@ -87,33 +90,5 @@ public class Command_roll implements ICommand {
     private int rollDie(int sides) {
         Random random = new Random();
         return random.nextInt(sides) + 1;
-    }
-
-    private String getNumberEmote(int number) {
-        switch(number) {
-            case 0:
-                return ":zero:";
-            case 1:
-                return ":one:";
-            case 2:
-                return ":two:";
-            case 3:
-                return ":three:";
-            case 4:
-                return ":four:";
-            case 5:
-                return ":five:";
-            case 6:
-                return ":six:";
-            case 7:
-                return ":seven:";
-            case 8:
-                return ":eight:";
-            case 9:
-                return ":nine:";
-            case 10:
-                return ":keycap_ten:";
-        }
-        return ":asterisk:";
     }
 }

@@ -16,9 +16,15 @@
 
             var linkToAdd = document.getElementById("twitchNameTextField").value;
 
-
-
             window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&addlink=" + linkToAdd.replace(" ","_"),"_self");
+
+        }
+
+		function setChannel() {
+
+            var channelToSet = document.getElementById("messageChannel").value;
+
+            window.open("{variable.httpd_url}/guilds?guild={variable.guild_id}&setchannel=" + channelToSet.replace(" ","_"),"_self");
 
         }
 
@@ -56,6 +62,7 @@
 </head>
 
 <body>
+	{document.style.single_guild}
 
     <!--div class="twitchLinkListContainer">
 
@@ -69,7 +76,17 @@
 
         <button type="button" onclick="addCurrent()">Add</button>
 
-     </div-->
+	</div-->
+
+	<div class="messageChannelContainer">
+
+		<select id="messageChannel">
+			{variable.channel_options}
+		</select>
+
+        <button type="button" onclick="setChannel()">Set</button>
+
+	</div>
 
     <div class="featureContainer">
         <h3>Enabled Features</h3>

@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.Anime;
 import me.mafrans.poppo.util.objects.Manga;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Id("commands::myanimelist")
 public class Command_mal implements ICommand {
     @Override
     public String getName() {

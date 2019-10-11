@@ -7,6 +7,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.images.ImageBuilder;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -25,6 +26,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
 
+@Id("commands::paladins")
 public class Command_paladins implements ICommand {
     @Override
     public String getName() {

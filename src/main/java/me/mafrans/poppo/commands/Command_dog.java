@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Dog;
 import me.mafrans.poppo.util.objects.DogBreed;
 import me.mafrans.poppo.util.web.HTTPUtil;
@@ -21,6 +22,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 
+@Id("commands::dog")
 public class Command_dog implements ICommand {
 
     private String[] messagesSingle = new String[]{

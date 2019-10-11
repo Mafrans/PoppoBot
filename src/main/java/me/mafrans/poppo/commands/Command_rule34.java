@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.web.Rule34Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -14,6 +15,7 @@ import org.w3c.dom.Element;
 import java.util.ArrayList;
 import java.util.List;
 
+@Id("commands::rule34")
 public class Command_rule34 implements ICommand {
     @Override
     public String getName() {
