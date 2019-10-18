@@ -2,7 +2,6 @@ package me.mafrans.poppo.commands.util;
 
 import lombok.Getter;
 import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.FeatureManager;
 import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -43,18 +42,6 @@ public class CommandHandler {
             CommandMeta meta = cmd.getMeta();
 
             if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && ArrayUtils.contains(meta.getAliases(), words[0].toLowerCase()))) {
-                try {
-                    FeatureManager fm = new FeatureManager(message.getGuild());
-                    if(!fm.isEnabled("command:" + cmd.getName())) {
-                        System.out.println("command " + cmd.getName() + " is disabled");
-                        return null;
-                    }
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
                 outCommand.setLabel(words[0]);
                 outCommand.setCmd(name);
                 outCommand.setExecutor(cmd);
@@ -74,12 +61,6 @@ public class CommandHandler {
             }
         }
         return null;
-    }
-
-    public static void registerFeatures() {
-        for(ICommand command : commandList) {
-            FeatureManager.register("command:" + command.getName());
-        }
     }
 
     public static void addCommand(ICommand command) {
