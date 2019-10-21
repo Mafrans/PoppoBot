@@ -11,9 +11,11 @@ package me.mafrans.poppo.util;
 import java.io.File;
 import javax.xml.parsers.*;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.requests.restaction.MessageAction;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.*;
 
 import java.util.*;
@@ -211,7 +213,8 @@ public class Zork {
 
         file = new File(filename);
         if (!file.canRead()) {
-            sendMessage("Error opening file.  Exiting...");
+            sendMessage(":x: Error", "Error opening file.  Exiting...");
+            close();
             return;
         }
 
@@ -660,8 +663,8 @@ public class Zork {
                 }
             }
         } catch (Exception e) {
-            sendMessage("Invalid XML file, exiting");
-            System.exit(-1);
+            sendMessage(":x: Error", "Invalid XML file, exiting");
+            close();
             //e.printStackTrace();
         }
 
@@ -676,7 +679,7 @@ public class Zork {
 
 
         /* Print out the first entrance description, starting the game!*/
-        sendMessage(Rooms.get(currentRoom).description);
+        sendMessage(":map: Adventure", Rooms.get(currentRoom).description);
 
         /* There is no stopping in Zork, until we're done!!*/
         while (true) {
@@ -707,22 +710,41 @@ public class Zork {
         ZorkContainer tempContainer;
 
         /* Movement */
-        if (input.equals("n") || input.equals("s") || input.equals("e") || input.equals("w")) {
-            move(input);
+        if (input.equals("help") || input.equals("?")) {
+            sendMessage(":grey_question: Help",
+                    "**Available Commands:**\n" +
+                            "north - Go North\n" +
+                            "south - Go Sourth\n" +
+                            "west - Go West\n" +
+                            "east - Go East\n" +
+                            "inventory - Open your Inventory\n" +
+                            "pick up x - Pick up an Item\n" +
+                            "exit - Exit the adventure\n" +
+                            "open x - Open a container\n" +
+                            "inspect x - Inspect an item\n" +
+                            "put x [in y] - Place an item [in a container]\n" +
+                            "drop x - Drop an item\n" +
+                            "use x - Use an item\n" +
+                            "attack x [with y] - Attack an enemy [with an item]\n" +
+                            "help - Show this menu");
+        }
+        else if (input.equals("n") || input.equals("north") || input.equals("s") || input.equals("south") || input.equals("e") || input.equals("east") || input.equals("w") || input.equals("west")) {
+            move(input.substring(0, 1));
         }
         /* Inventory */
-        else if (input.equals("i")) {
+        else if (input.equals("i") || input.equals("inventory")) {
+            System.out.println("inventory");
             inventory();
         }
         /* Take */
-        else if (input.startsWith("take") && input.split(" ").length >= 1) {
-            tempString = input.split(" ")[1];
+        else if (input.startsWith("pick up") && input.split(" ").length >= 2) {
+            tempString = input.split(" ")[2];
             if ((Rooms.get(currentRoom)).item.get(tempString) != null) {
                 Inventory.put(tempString, tempString);
                 ZorkRoom tempRoom = (Rooms.get(currentRoom));
                 tempRoom.item.remove(tempString);
                 Rooms.put(tempRoom.name, tempRoom);
-                sendMessage("Item " + tempString + " added to inventory.");
+                sendMessage(":inbox_tray: Inventory", "Item " + tempString + " added to inventory.");
             } else {
                 /*Search all containers in the current room for the item!*/
                 boolean found = false;
@@ -732,26 +754,25 @@ public class Zork {
                         Inventory.put(tempString, tempString);
                         tempContainer.item.remove(tempString);
                         Containers.put(tempContainer.name, tempContainer);
-                        sendMessage("Item " + tempString + " added to inventory.");
+                        sendMessage(":inbox_tray: Inventory", "Item " + tempString + " added to inventory.");
                         found = true;
                         break;
                     }
                 }
                 if (!found)
-                    sendMessage("Error");
+                    sendMessage(":x: Error", "Error while taking item");
             }
         }
         /* Open Exit (you should be so lucky)*/
-        else if (input.equals("open exit")) {
+        else if (input.equals("exit")) {
             if (Rooms.get(currentRoom).type.equals("exit")) {
-                sendMessage("Game Over");
-                System.exit(0);
+                sendMessage(":cd: Game Over", "Game Over");
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error while exiting");
             }
         }
         /* Open a container */
-        else if (input.startsWith("open") && input.split(" ").length >= 1) {
+        else if (input.startsWith("open") && input.split(" ").length >= 2) {
             tempString = input.split(" ")[1];
             String found = Rooms.get(currentRoom).container.get(tempString);
             if (found != null) {
@@ -759,22 +780,22 @@ public class Zork {
                 tempContainer.isOpen = true;
                 containerInventory(tempContainer.item, tempString);
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error while opening.");
             }
         }
         /* Read an object */
-        else if (input.startsWith("read") && input.split(" ").length >= 1) {
+        else if (input.startsWith("inspect") && input.split(" ").length >= 1) {
             tempString = input.split(" ")[1];
             ZorkItem tempItem;
             if (Inventory.get(tempString) != null) {
                 tempItem = Items.get(tempString);
                 if (tempItem.writing != null && tempItem.writing != "") {
-                    sendMessage(tempItem.writing);
+                    sendMessage(":book: Reading", tempItem.writing);
                 } else {
-                    sendMessage("Nothing written.");
+                    sendMessage(":book: Reading", "Nothing written.");
                 }
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error while reading.");
             }
         }
         /* Drop an item*/
@@ -785,9 +806,9 @@ public class Zork {
                 tempRoom.item.put(tempString, tempString);
                 Rooms.put(tempRoom.name, tempRoom);
                 Inventory.remove(tempString);
-                sendMessage(tempString + " dropped.");
+                sendMessage(":outbox_tray: Inventory", tempString + " dropped.");
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error while dropping item.");
             }
         }
         /* Put an item somewhere */
@@ -798,30 +819,30 @@ public class Zork {
                 tempContainer = Containers.get(destination);
                 tempContainer.item.put(tempString, tempString);
                 Inventory.remove(tempString);
-                sendMessage("Item " + tempString + " added to " + destination + ".");
+                sendMessage(":inbox_tray: Inventory", "Item " + tempString + " added to " + destination + ".");
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error while using item");
             }
         }
         /* Turn on an item*/
-        else if (input.startsWith("turn on") && input.split(" ").length >= 3) {
-            tempString = input.split(" ")[2];
+        else if (input.startsWith("use") && input.split(" ").length >= 3) {
+            tempString = input.split(" ")[1];
             ZorkItem tempItem;
             if (Inventory.get(tempString) != null) {
                 tempItem = Items.get(tempString);
-                sendMessage("You activate the " + tempString + ".");
+                sendMessage(":gear: Interact", "You activate the " + tempString + ".");
                 if (tempItem != null) {
                     for (y = 0; y < tempItem.turnOnPrint.size(); y++) {
-                        sendMessage(tempItem.turnOnPrint.get(y));
+                        sendMessage(":gear: Interact", tempItem.turnOnPrint.get(y));
                     }
                     for (y = 0; y < tempItem.turnOnAction.size(); y++) {
                         performAction(tempItem.turnOnAction.get(y));
                     }
                 } else {
-                    sendMessage("Error");
+                    sendMessage(":x: Error", "Error while interacting.");
                 }
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error while interacting.");
             }
 
         }
@@ -834,25 +855,25 @@ public class Zork {
                 tempCreature = Creatures.get(tempString);
                 if (tempCreature != null && Inventory.get(weapon) != null) {
                     if (tempCreature.attack(this, weapon)) {
-                        sendMessage("You assault the " + tempString + " with the " + weapon + ".");
+                        sendMessage(":crossed_swords: Combat", "You assault the " + tempString + " with the " + weapon + ".");
                         for (y = 0; y < tempCreature.print.size(); y++) {
-                            sendMessage(tempCreature.print.get(y));
+                            sendMessage(":crossed_swords: Combat", tempCreature.print.get(y));
                         }
                         for (y = 0; y < tempCreature.action.size(); y++) {
                             performAction(tempCreature.action.get(y));
                         }
                     } else {
-                        sendMessage("Error");
+                        sendMessage(":x: Error", "Error in combat");
                     }
                 } else {
-                    sendMessage("Error");
+                    sendMessage(":x: Error", "Error in combat");
                 }
             } else
-                sendMessage("Error");
+                sendMessage(":x: Error", "Error in combat");
         }
         /* Invalid command*/
         else {
-            sendMessage("Error");
+            sendMessage(":x: Error", "Error in combat");
         }
         return;
     }
@@ -882,7 +903,7 @@ public class Zork {
             tempTrigger = Rooms.get(currentRoom).trigger.get(x);
             if (tempTrigger.evaluate(this)) {
                 for (y = 0; y < tempTrigger.print.size(); y++) {
-                    sendMessage(tempTrigger.print.get(y));
+                    sendMessage(":grey_exclamation: Trigger", tempTrigger.print.get(y));
                 }
                 for (y = 0; y < tempTrigger.action.size(); y++) {
                     performAction(tempTrigger.action.get(y));
@@ -905,7 +926,7 @@ public class Zork {
                     tempTrigger = tempItem.trigger.get(x);
                     if (tempTrigger.evaluate(this)) {
                         for (y = 0; y < tempTrigger.print.size(); y++) {
-                            sendMessage(tempTrigger.print.get(y));
+                            sendMessage(":grey_exclamation: Trigger", tempTrigger.print.get(y));
                         }
                         for (y = 0; y < tempTrigger.action.size(); y++) {
                             performAction(tempTrigger.action.get(y));
@@ -925,7 +946,7 @@ public class Zork {
                 tempTrigger = tempContainer.trigger.get(x);
                 if (tempTrigger.evaluate(this)) {
                     for (y = 0; y < tempTrigger.print.size(); y++) {
-                        sendMessage(tempTrigger.print.get(y));
+                        sendMessage(":grey_exclamation: Trigger", tempTrigger.print.get(y));
                     }
                     for (y = 0; y < tempTrigger.action.size(); y++) {
                         performAction(tempTrigger.action.get(y));
@@ -947,7 +968,7 @@ public class Zork {
                 tempTrigger = tempCreature.trigger.get(x);
                 if (tempTrigger.evaluate(this)) {
                     for (y = 0; y < tempTrigger.print.size(); y++) {
-                        sendMessage(tempTrigger.print.get(y));
+                        sendMessage(":grey_exclamation: Trigger", tempTrigger.print.get(y));
                     }
                     for (y = 0; y < tempTrigger.action.size(); y++) {
                         performAction(tempTrigger.action.get(y));
@@ -969,7 +990,7 @@ public class Zork {
                 tempTrigger = tempItem.trigger.get(x);
                 if (tempTrigger.evaluate(this)) {
                     for (y = 0; y < tempTrigger.print.size(); y++) {
-                        sendMessage(tempTrigger.print.get(y));
+                        sendMessage(":grey_exclamation: Trigger", tempTrigger.print.get(y));
                     }
                     for (y = 0; y < tempTrigger.action.size(); y++) {
                         performAction(tempTrigger.action.get(y));
@@ -991,7 +1012,7 @@ public class Zork {
                 tempTrigger = tempItem.trigger.get(x);
                 if (tempTrigger.evaluate(this)) {
                     for (y = 0; y < tempTrigger.print.size(); y++) {
-                        sendMessage(tempTrigger.print.get(y));
+                        sendMessage(":grey_exclamation: Trigger", tempTrigger.print.get(y));
                     }
                     for (y = 0; y < tempTrigger.action.size(); y++) {
                         performAction(tempTrigger.action.get(y));
@@ -1025,9 +1046,9 @@ public class Zork {
         destination = (Rooms.get(currentRoom)).border.get(fullDirection);
         if (destination != null) {
             currentRoom = destination;
-            sendMessage(Rooms.get(currentRoom).description);
+            sendMessage(":walking: Moving " + StringUtils.capitalize(fullDirection), Rooms.get(currentRoom).description);
         } else {
-            sendMessage("Can't go that way.");
+            sendMessage(":x: Error", "Can't go that way.");
         }
     }
 
@@ -1065,8 +1086,8 @@ public class Zork {
         }
         /*Game Over: pretty straight forward*/
         else if (action.equals("Game Over")) {
-            sendMessage("Victory!");
-            System.exit(0);
+            sendMessage(":tada: Victory!", "You have won the game.");
+            close();
         }
 
         /* Add: figure out what type the destination is, then what type the object is.  Then add object to destination if it makes sense */
@@ -1084,17 +1105,17 @@ public class Zork {
                 else if (objectType.equals("container"))
                     tempRoom.container.put(object, object);
                 else
-                    sendMessage("Error");
+                    sendMessage(":x: Error", "Unknown Error");
                 Rooms.put(tempRoom.name, tempRoom);
             } else if (destinationType.equals("container")) {
                 ZorkContainer tempContainer = Containers.get(destination);
                 if (objectType.equals("item"))
                     tempContainer.item.put(object, object);
                 else
-                    sendMessage("Error");
+                    sendMessage(":x: Error", "Unknown Error");
                 Containers.put(tempContainer.name, tempContainer);
             } else {
-                sendMessage("Error");
+                sendMessage(":x: Error", "Unknown Error");
             }
         }
 
@@ -1158,31 +1179,30 @@ public class Zork {
     }
 
     /* Print out the what's in a container when it's been opened*/
-    public void containerInventory(HashMap<String, String> Container, String Name) {
+    public void containerInventory(HashMap<String, String> container, String name) {
         String output = "";
-        if (Container.isEmpty()) {
-            sendMessage(Name + " is empty");
+        if (container.isEmpty()) {
+            sendMessage(":package: " + name, String.format("The %s is empty", name));
         } else {
-            System.out.print(Name + " contains ");
-            for (String key : Container.keySet()) {
+            for (String key : container.keySet()) {
                 output += key + ", ";
             }
             output = output.substring(0, output.length() - 2);
-            sendMessage(output + ".");
+            sendMessage(":package: " + name,String.format("The %s contains: %s.", name, output));
         }
     }
 
     /* Print out the inventory when user types i */
     public void inventory() {
-        String output = "Inventory: ";
+        StringBuilder output = new StringBuilder();
         if (Inventory.isEmpty()) {
-            sendMessage("Inventory: empty");
+            sendMessage(":briefcase: Inventory","Your Inventory is empty");
         } else {
             for (String key : Inventory.keySet()) {
-                output += key + ", ";
+                output.append(key).append(", ");
             }
-            output = output.substring(0, output.length() - 2);
-            sendMessage(output);
+            output = new StringBuilder(output.substring(0, output.length() - 2));
+            sendMessage(":briefcase: Inventory", "Your Inventory is " + output.toString());
         }
     }
 
@@ -1195,8 +1215,12 @@ public class Zork {
     public static List<Zork> registeredInstances = new ArrayList<>();
     private boolean closed = false;
 
-    public Message sendMessage(String message, boolean async) {
-        MessageAction msg = channel.sendMessage(message);
+    public Message sendMessage(String title, String message, boolean async) {
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setTitle(title);
+        embedBuilder.setDescription(message);
+        embedBuilder.setFooter("Write 'help' for help.", null);
+        MessageAction msg = channel.sendMessage(embedBuilder.build());
         if(async) {
             msg.queue();
             return null;
@@ -1204,8 +1228,8 @@ public class Zork {
         return msg.complete();
     }
 
-    public void sendMessage(String message) {
-        sendMessage(message, true);
+    public void sendMessage(String title, String message) {
+        sendMessage(title, message, true);
     }
 
     private String lastInput = null;
