@@ -4,14 +4,15 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Random;
 
+@Id("commands::8ball")
 public class Command_8ball implements ICommand {
 
     private String[] answers = {
@@ -44,7 +45,7 @@ public class Command_8ball implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Ask a question, get an answer!", "8ball <question>", Arrays.asList("can", "is", "does", "do", "a", "are", "has", "have", "why", "was", "are"), false);
+        return new CommandMeta(CommandCategory.FUN, "Ask a question, get an answer!", "8ball <question>", new String[] {"can", "is", "does", "do", "a", "are", "has", "have", "why", "was", "are"}, false);
     }
 
     @Override

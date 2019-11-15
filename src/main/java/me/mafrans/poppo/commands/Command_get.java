@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -14,8 +15,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
-
+@Id("commands::get")
 public class Command_get implements ICommand {
     @Override
     public String getName() {
@@ -24,7 +24,7 @@ public class Command_get implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Gets information from discord.", "get avatar|server [args...]", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Gets information from discord.", "get avatar|server [args...]", null, false);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Command_get implements ICommand {
     }
 
 
-    boolean getServer(Command command, TextChannel channel) {
+    private boolean getServer(Command command, TextChannel channel) {
         String[] args = command.getArgs();
         if(args.length < 2) {
             Guild guild = channel.getGuild();
@@ -88,7 +88,7 @@ public class Command_get implements ICommand {
     }
 
 
-    boolean getAvatar(Command command, TextChannel channel) {
+    private boolean getAvatar(Command command, TextChannel channel) {
         String[] args = command.getArgs();
         String uuid;
         if(args.length < 2) {
@@ -112,7 +112,7 @@ public class Command_get implements ICommand {
             channel.sendMessage("Could not find a user with that name or id.").queue();
             return true;
         }
-        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".png?size=2048";
+        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".gif?size=2048";
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(GUtil.randomColor());

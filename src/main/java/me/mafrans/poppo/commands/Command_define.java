@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.Definition;
 import me.mafrans.poppo.util.web.DefinitionGetter;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
+@Id("commands::define")
 public class Command_define implements ICommand {
     @Override
     public String getName() {
@@ -23,7 +25,6 @@ public class Command_define implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        String[] ignored = new String[] {"'"};
         return new CommandMeta(
                 CommandCategory.WEB,
                 "Gets definition data from Pearson or alternatively Urbandictionary.",
@@ -59,39 +60,36 @@ public class Command_define implements ICommand {
         final SelectionList selectionList = new SelectionList("Select result to show.", channel, command.getAuthor());
 
         for(final Definition definition : definitionList) {
-            selectionList.addAlternative(definition.getTitle() + (definition.getType() == null ? "" : " - " + definition.getType()), new Runnable() {
-                @Override
-                public void run() {
-                    EmbedBuilder embedBuilder = new EmbedBuilder();
-                    embedBuilder.setColor(GUtil.randomColor());
+            selectionList.addAlternative(definition.getTitle() + (definition.getType() == null ? "" : " - " + definition.getType()), () -> {
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setColor(GUtil.randomColor());
 
-                    if(definition.getTitle() != null) {
+                if(definition.getTitle() != null) {
 
-                        if (definition.getType() != null) {
-                            if(definition.getSource() != null)
-                                if(definition.getSource().equalsIgnoreCase("urbandictionary"))
-                                    embedBuilder.setAuthor(definition.getTitle() + " (" + definition.getType() + ")", "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
-                                else
-                                    embedBuilder.setAuthor(definition.getTitle() + " (" + definition.getType() + ")", "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
-
-                        }
-                        else {
+                    if (definition.getType() != null) {
+                        if(definition.getSource() != null)
                             if(definition.getSource().equalsIgnoreCase("urbandictionary"))
-                                embedBuilder.setAuthor(definition.getTitle(), "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
+                                embedBuilder.setAuthor(definition.getTitle() + " (" + definition.getType() + ")", "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
                             else
-                                embedBuilder.setAuthor(definition.getTitle(), "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
+                                embedBuilder.setAuthor(definition.getTitle() + " (" + definition.getType() + ")", "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
 
-                        }
                     }
-                    if(definition.getDefinition() != null)
-                        embedBuilder.setDescription(definition.getDefinition());
-                    if(definition.getExample() != null)
-                        embedBuilder.addField("Example", definition.getExample(), false);
+                    else {
+                        if(definition.getSource().equalsIgnoreCase("urbandictionary"))
+                            embedBuilder.setAuthor(definition.getTitle(), "https://urbandictionary.com", "https://lh3.ggpht.com/oJ67p2f1o35dzQQ9fVMdGRtA7jKQdxUFSQ7vYstyqTp-Xh-H5BAN4T5_abmev3kz55GH=s180");
+                        else
+                            embedBuilder.setAuthor(definition.getTitle(), "https://pearson.com", "https://media.glassdoor.com/sqll/854828/pearson-vue-squarelogo-1490376963914.png");
 
-                    System.out.println(selectionList.getMessage());
-                    selectionList.getMessage().delete().queue();
-                    channel.sendMessage(embedBuilder.build()).queue();
+                    }
                 }
+                if(definition.getDefinition() != null)
+                    embedBuilder.setDescription(definition.getDefinition());
+                if(definition.getExample() != null)
+                    embedBuilder.addField("Example", definition.getExample(), false);
+
+                System.out.println(selectionList.getMessage());
+                selectionList.getMessage().delete().queue();
+                channel.sendMessage(embedBuilder.build()).queue();
             });
         }
 

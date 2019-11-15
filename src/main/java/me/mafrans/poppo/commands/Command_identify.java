@@ -6,7 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
-import me.mafrans.poppo.util.StringFormatter;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.config.DataUser;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -15,10 +15,7 @@ import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.awt.*;
-import java.util.Arrays;
-import java.util.Random;
-
+@Id("commands::identify")
 public class Command_identify implements ICommand {
     @Override
     public String getName() {
@@ -31,7 +28,7 @@ public class Command_identify implements ICommand {
                 CommandCategory.UTILITY,
                 "Identifies a user.",
                 "identify <user>",
-                Arrays.asList("whos", "who's"),
+                new String[] {"whos", "who's"},
                 false);
     }
 
@@ -39,7 +36,8 @@ public class Command_identify implements ICommand {
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
         String[] args = command.getArgs();
         if(args.length != 1) return false;
-        String uuid = null;
+
+        String uuid;
         String query = StringUtils.join(args, " ");
 
         if(query.length() == 18 && NumberUtils.isDigits(args[0])) {

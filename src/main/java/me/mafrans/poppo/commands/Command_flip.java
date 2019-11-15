@@ -4,14 +4,14 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
+@Id("commands::flip")
 public class Command_flip implements ICommand {
 
     @Override
@@ -21,7 +21,7 @@ public class Command_flip implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Flips a coin!", "flip", Collections.singletonList("coin"), false);
+        return new CommandMeta(CommandCategory.FUN, "Flips a coin!", "flip", new String[] {"coin"}, false);
     }
 
     @Override

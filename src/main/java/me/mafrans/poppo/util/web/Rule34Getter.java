@@ -29,7 +29,6 @@ public class Rule34Getter {
                 System.out.println(baseUrl.replace("${page}", String.valueOf(pid)).replace("${tags}", StringUtils.join(tags, " ")));
 
                 //optional, but recommended
-                //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
                 doc.getDocumentElement().normalize();
                 NodeList nList = doc.getElementsByTagName("post");
 

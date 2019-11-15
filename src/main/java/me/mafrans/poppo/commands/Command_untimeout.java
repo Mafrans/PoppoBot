@@ -5,14 +5,14 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
-
+@Id("commands::untimeout")
 public class Command_untimeout implements ICommand {
     @Override
     public String getName() {
@@ -21,12 +21,13 @@ public class Command_untimeout implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Removes a timeout from a user.", "untimeout <user>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Removes a timeout from a user.", "untimeout <user>", new String[] {"untempban"}, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
         String[] args = command.getArgs();
+
         if(args.length != 1) return false;
 
         String uuid;

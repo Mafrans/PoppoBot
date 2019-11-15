@@ -7,6 +7,7 @@ import me.mafrans.poppo.Main;
 import java.io.IOException;
 import java.text.ParseException;
 
+@Deprecated
 public class HirezRefreshRunner implements Runnable {
     @Override
     public void run() {

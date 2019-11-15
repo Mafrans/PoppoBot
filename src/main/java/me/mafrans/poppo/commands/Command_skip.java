@@ -5,9 +5,8 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
-import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.YoutubeVideo;
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -16,6 +15,7 @@ import net.dv8tion.jda.core.managers.AudioManager;
 import java.util.ArrayList;
 import java.util.List;
 
+@Id("commands::skip")
 public class Command_skip implements ICommand {
     @Override
     public String getName() {
@@ -24,7 +24,7 @@ public class Command_skip implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Votes to skip the current song.", "skip", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.FUN, "Votes to skip the current song.", "skip", new String[] {"voteskip"}, false);
     }
 
     @Override
@@ -37,13 +37,12 @@ public class Command_skip implements ICommand {
         AudioManager manager = voiceChannel.getGuild().getAudioManager();
         if(manager.getConnectedChannel() != voiceChannel) {
             channel.sendMessage("\uD83C\uDFB5 You cannot skip a song you are not currently listening to.").queue();
+            return true;
         }
 
-        List<Member> skips = new ArrayList<>();
-        if(Main.musicManager.skipMap.containsKey(channel.getGuild())) {
-            skips = Main.musicManager.skipMap.get(channel.getGuild());
-        }
+        List<Member> skips = Main.musicManager.skipMap.getOrDefault(channel.getGuild(), new ArrayList<>());
         skips.add(channel.getGuild().getMember(command.getAuthor()));
+        Main.musicManager.skipMap.put(channel.getGuild(), skips);
 
         if(skips.size() >= (voiceChannel.getMembers().size()/2)) {
             System.out.println("if");

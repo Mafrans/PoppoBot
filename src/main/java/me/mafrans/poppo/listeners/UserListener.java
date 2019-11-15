@@ -9,19 +9,15 @@ import net.dv8tion.jda.core.events.user.update.UserUpdateNameEvent;
 import net.dv8tion.jda.core.events.user.update.UserUpdateOnlineStatusEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-import javax.xml.crypto.Data;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 public class UserListener extends ListenerAdapter {
     @Override
     public void onUserUpdateName(UserUpdateNameEvent event) {
         if(Main.userList.getUsersFrom("uuid", event.getUser().getId()).size() == 0) {
-            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl());
-            Main.userList.add(new SQLDataUser(dataUser));
+            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl(), 0);
+            Main.userList.put(new SQLDataUser(dataUser));
             return;
         }
 
@@ -35,14 +31,14 @@ public class UserListener extends ListenerAdapter {
         dataUser.setNames(names);
         System.out.println("New Names: " + dataUser.getNames());
 
-        Main.userList.add(new SQLDataUser(dataUser));
+        Main.userList.put(new SQLDataUser(dataUser));
     }
 
     @Override
     public void onUserUpdateOnlineStatus(UserUpdateOnlineStatusEvent event) {
         if(Main.userList.getUsersFrom("uuid", event.getUser().getId()).size() == 0) {
-            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl());
-            Main.userList.add(new SQLDataUser(dataUser));
+            DataUser dataUser = new DataUser(Arrays.asList(event.getUser().getName()), event.getUser().getId(), "Currently Online", event.getUser().getAvatarUrl(), 0);
+            Main.userList.put(new SQLDataUser(dataUser));
         }
 
         OnlineStatus prevOnlineStatus = event.getOldOnlineStatus();
@@ -54,12 +50,12 @@ public class UserListener extends ListenerAdapter {
 
             DataUser dataUser = Main.userList.getUsersFrom("uuid", event.getUser().getId()).get(0);
             dataUser.setLastOnlineTag(date);
-            Main.userList.add(new SQLDataUser(dataUser));
+            Main.userList.put(new SQLDataUser(dataUser));
         }
         else if((prevOnlineStatus == OnlineStatus.IDLE || prevOnlineStatus == OnlineStatus.INVISIBLE || prevOnlineStatus == OnlineStatus.OFFLINE) && (currentOnlineStatus == OnlineStatus.ONLINE || currentOnlineStatus == OnlineStatus.DO_NOT_DISTURB)) {
             DataUser dataUser = Main.userList.getUsersFrom("uuid", event.getUser().getId()).get(0);
             dataUser.setLastOnlineTag("Currently Online");
-            Main.userList.add(new SQLDataUser(dataUser));
+            Main.userList.put(new SQLDataUser(dataUser));
         }
     }
 }

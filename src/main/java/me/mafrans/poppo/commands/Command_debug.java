@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.StringFormatter;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.DataUser;
@@ -18,13 +19,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static me.mafrans.poppo.Main.config;
 
+@Id("commands::debug")
 public class Command_debug implements ICommand {
     @Override
     public String getName() {
@@ -53,7 +52,7 @@ public class Command_debug implements ICommand {
             case "help": {
                 channel.sendMessage("debug updateusers\n" +
                         "debug run <runnable class>\n" +
-                        "debuguser <add|remove> <userid>").queue();
+                        "debuguser <put|remove> <userid>").queue();
                 return true;
             }
             case "updateroles":
@@ -84,11 +83,11 @@ public class Command_debug implements ICommand {
 
                     if(Main.userList.getUsersFrom("uuid", user.getId()).size() == 0) {
                         System.out.println(String.format("[UpdateUsers] Creating new entry: %s", user.getName() + user.getDiscriminator()));
-                        Main.userList.add(new SQLDataUser(new DataUser(
+                        Main.userList.put(new SQLDataUser(new DataUser(
                                 Collections.singletonList(user.getName()),
                                 user.getId(),
                                 onlineStatus == OnlineStatus.ONLINE || onlineStatus == OnlineStatus.DO_NOT_DISTURB || onlineStatus == OnlineStatus.IDLE  ? "Currently Online" : GUtil.currentParsedDate(ZoneOffset.UTC),
-                                user.getAvatarUrl())));
+                                user.getAvatarUrl(), 0)));
                     }
                     else {
                         System.out.println(String.format("[UpdateUsers] Updating old entry: %s", user.getName() + user.getDiscriminator()));
@@ -96,13 +95,14 @@ public class Command_debug implements ICommand {
                         if(!dataUser.getNames().contains(user.getName())) {
                             List<String> names = new ArrayList<>(dataUser.getNames());
                             names.add(user.getName());
+                            dataUser.setNames(names);
                         }
                         if(dataUser.getLastOnlineTag().equals("Currently Online")) {
                             if(onlineStatus == OnlineStatus.OFFLINE || onlineStatus == OnlineStatus.INVISIBLE || onlineStatus == OnlineStatus.UNKNOWN) {
                                 dataUser.setLastOnlineTag(GUtil.currentParsedDate(ZoneOffset.UTC));
                             }
                         }
-                        Main.userList.add(new SQLDataUser(dataUser));
+                        Main.userList.put(new SQLDataUser(dataUser));
                     }
                 }
                 break;
@@ -125,22 +125,21 @@ public class Command_debug implements ICommand {
                     debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug run <class>`");
                     return true;
                 }
-                Class runClass;
+                Class<?> runClass;
                 try {
                     runClass = Class.forName(args[1]);
                 }
-                catch (ClassNotFoundException e) {
-                    debugSendMessageAsync(channel, "Could not find a class with the name of \"" + args[1] + ".java\"");
+                catch (ClassNotFoundException | ClassCastException e) {
+                    debugSendMessageAsync(channel, "Could not find a runnable class with the name of \"" + args[1] + ".java\"\n```" + e.getMessage() + "```");
                     break;
                 }
-                Object instance = runClass.newInstance();
-                if(instance instanceof Runnable) {
-                    Runnable runnable = (Runnable) instance;
-                    runnable.run();
-                    debugSendMessageAsync(channel, "Successfully ran runnable class \"" + args[1] + ".java\"");
+                if(!(runClass.getDeclaredConstructor().newInstance() instanceof Runnable)) {
+                    channel.sendMessage("Class is not runnable.").queue();
                     break;
                 }
-                channel.sendMessage("Class is not runnable.").queue();
+                Runnable instance = (Runnable) runClass.getDeclaredConstructor().newInstance();
+                instance.run();
+                debugSendMessageAsync(channel, "Successfully ran runnable class \"" + instance.getClass().getName() + "\"");
                 break;
 
             case "debuguser":
@@ -153,7 +152,7 @@ public class Command_debug implements ICommand {
                     break;
                 }
 
-                if(args[1].equalsIgnoreCase("add")) {
+                if(args[1].equalsIgnoreCase("put")) {
                     config.debug_users.add(args[2]);
 
                     debugSendMessageAsync(channel, "Added " + args[2] + " as a debug user.");
@@ -168,14 +167,14 @@ public class Command_debug implements ICommand {
 
                     config.debug_users.add(args[2]);
 
-                    channel.sendMessage("Added " + args[1] + " as a debug user.");
+                    channel.sendMessage("Added " + args[1] + " as a debug user.").queue();
                 }
                 else if(args[1].equalsIgnoreCase("list")) {
                     String[] debugUsers = config.debug_users.toArray(new String[0]);
                     debugSendMessageAsync(channel, StringFormatter.parseLines(new String[] {"```lua", Arrays.toString(debugUsers), "```"}));
                 }
                 else {
-                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug add|remove|list [userid]`");
+                    debugSendMessageAsync(channel, "Correct usage for command " + command.getCmd() + " is: `debug put|remove|list [userid]`");
                 }
                 break;
 
@@ -186,43 +185,32 @@ public class Command_debug implements ICommand {
                 }
 
                 for(Guild guild : Main.jda.getGuilds()) {
+                    PrivateChannel privateChannel = guild.getOwner().getUser().openPrivateChannel().complete();
                     if(args[1].equalsIgnoreCase("-rm")) {
                         if(!NumberUtils.isDigits(args[2])) {
-                            channel.sendMessage("Argument -rm requires a value: <time>");
+                            channel.sendMessage("Argument -rm requires a value: <time>").queue();
                             break;
                         }
 
                         int time = Integer.parseInt(args[2]);
                         try {
-                            final Message message = guild.getDefaultChannel().sendMessage(StringUtils.join(ArrayUtils.subarray(args, 3, args.length), " ")).complete();
+                            final Message message = privateChannel.sendMessage(StringUtils.join(ArrayUtils.subarray(args, 3, args.length), " ")).complete();
 
-                            TimerTasks.queueTask(new Runnable() {
-                                @Override
-                                public void run() {
-                                    message.delete();
-                                }
-                            }, time);
+                            TimerTasks.queueTask(() -> message.delete().queue(), time);
                         }
                         catch(IndexOutOfBoundsException ex) {
-                            System.out.println(ex);
+                            ex.printStackTrace();
                         }
 
                         break;
                     }
-
-                    final Message message = guild.getDefaultChannel().sendMessage(StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ")).complete();
-
-                    break;
+                    privateChannel.sendMessage(StringUtils.join(ArrayUtils.subarray(args, 1, args.length), " ")).complete();
                 }
         }
         return true;
     }
 
-    public void debugSendMessageAsync(TextChannel channel, String message) {
+    private void debugSendMessageAsync(TextChannel channel, String message) {
         channel.sendMessage("```lua\n" + message + "\n```").queue();
-    }
-
-    public Message debugSendMessageBlock(TextChannel channel, String message) {
-        return channel.sendMessage("```lua\n" + message + "\n```").complete();
     }
 }

@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.SelectionList;
 import me.mafrans.poppo.util.objects.YoutubeVideo;
 import me.mafrans.poppo.util.timedtasks.PoppoRunnable;
@@ -14,8 +15,7 @@ import net.dv8tion.jda.core.managers.AudioManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 
-import java.util.ArrayList;
-
+@Id("commands::play")
 public class Command_play implements ICommand {
     @Override
     public String getName() {
@@ -24,7 +24,7 @@ public class Command_play implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Searches and plays music from youtube.", "play <query|url>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.FUN, "Searches and plays music from youtube.", "play <query|url>", null, false);
     }
 
     @Override
@@ -66,6 +66,19 @@ public class Command_play implements ICommand {
             selectionList.show(channel);
 
             return true;
+        }
+        else {
+            YoutubeVideo video = Main.youtubeSearcher.getVideo(url);
+
+            if(video == null) {
+                channel.sendMessage("I can't seem to find that video, no matter how hard I look. Sorry.").queue();
+                return true;
+            }
+
+            if(!manager.isConnected()) {
+                Main.musicManager.joinChannel(channel, voiceChannel);
+            }
+            Main.musicManager.queue(channel, voiceChannel, video);
         }
 
         if(!manager.isConnected()) {

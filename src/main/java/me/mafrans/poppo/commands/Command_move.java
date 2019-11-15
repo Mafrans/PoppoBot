@@ -6,6 +6,8 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
+import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -14,9 +16,9 @@ import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@Id("commands::move")
 public class Command_move implements ICommand {
     @Override
     public String getName() {
@@ -25,18 +27,14 @@ public class Command_move implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Moves a message to the correct channel", "move <message-id[,message-id-2...]> <channel>", Arrays.asList(),false, false);
+        return new CommandMeta(CommandCategory.MODERATION, "Moves a message to the correct channel", "move <message-id[,message-id-2...]> <channel>", null,false, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-            embedBuilder.setDescription("You need the MESSAGE_MANAGE permission to use this command!");
-            embedBuilder.setColor(new Color(175, 0, 0));
-            channel.sendMessage(embedBuilder.build()).queue();
+
+        if(Rank.requirePermission(command, Permission.MESSAGE_MANAGE)) {
             return true;
         }
 

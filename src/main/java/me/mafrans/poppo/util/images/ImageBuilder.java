@@ -1,19 +1,25 @@
 package me.mafrans.poppo.util.images;
 
+//import com.jhlabs.image.GaussianFilter;
+import com.jhlabs.image.GaussianFilter;
+import lombok.Getter;
+import me.mafrans.poppo.util.GUtil;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.IOException;
 
 public class ImageBuilder {
     private int width;
     private int height;
     private BufferedImage bufferedImage;
-    private Graphics2D graphics;
+    @Getter private Graphics2D graphics;
     private ImageObserver observer;
-    private Font textFont = new Font("Roboto", Font.PLAIN, 16);
+    private Font textFont = GUtil.getTrueTypeFont("fonts/Lato-Regular.ttf");
     private Color color = new Color(255, 255, 255);
 
-    public ImageBuilder(int width, int height) {
+    public ImageBuilder(int width, int height) throws IOException, FontFormatException {
         this.width = width;
         this.height = height;
 
@@ -40,12 +46,34 @@ public class ImageBuilder {
         return this;
     }
 
-    public ImageBuilder addImage(Image image, int x, int y, int width, int height) {
-        graphics.drawImage(image, x, y, width, height, getObserver());
+    public ImageBuilder addImage(Image image, int x, int y, int width, int height, int hint) {
+        graphics.drawImage(image.getScaledInstance(width, height, hint), x, y, width, height, getObserver());
         return this;
     }
 
-    public ImageBuilder addBackground(Image background, FitType fitType, boolean stretchX, boolean stretchY) {
+    public ImageBuilder setRenderingHint(RenderingHints.Key key, Object value) {
+        graphics.setRenderingHint(key, value);
+        return this;
+    }
+
+    public ImageBuilder addShape(Shape shape, boolean fill) {
+        if(fill) {
+            graphics.fill(shape);
+        }
+        else {
+            graphics.draw(shape);
+        }
+        return this;
+    }
+
+    public static BufferedImage applyBlur(Image image, float blurAmount) {
+        GaussianFilter gaussianFilter = new GaussianFilter(blurAmount);
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        gaussianFilter.filter(toBufferedImage(image), bufferedImage);
+        return bufferedImage;
+    }
+
+    public ImageBuilder addBackground(Image background, FitType fitType, boolean stretchX, boolean stretchY, float blurAmount) {
         int imgX = 0;
         int imgY = 0;
         int imgWidth = background.getWidth(getObserver());
@@ -85,7 +113,7 @@ public class ImageBuilder {
             imgHeight = height;
         }
 
-        graphics.drawImage(background, imgX, imgY, imgWidth, imgHeight, getObserver());
+        graphics.drawImage(applyBlur(background, blurAmount), imgX, imgY, imgWidth, imgHeight, getObserver());
         return this;
     }
 
@@ -107,5 +135,24 @@ public class ImageBuilder {
     public Image build() {
         graphics.dispose();
         return bufferedImage;
+    }
+
+    public static BufferedImage toBufferedImage(Image img)
+    {
+        if (img instanceof BufferedImage)
+        {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bimage;
     }
 }

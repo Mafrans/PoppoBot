@@ -249,7 +249,7 @@ public class DogBreed {
                 dogBreed.setBredFor(details.getString("bred_for"));
             }
 
-            System.out.println("Initialized " + dogBreed.getName() + " (" + i + "/" + jsonArray.length() + ")");
+            //System.out.println("Initialized " + dogBreed.getName() + " (" + i + "/" + jsonArray.length() + ")");
             allBreeds.add(dogBreed);
         }
 

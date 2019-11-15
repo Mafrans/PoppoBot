@@ -32,7 +32,7 @@ public class AutoInsult implements Runnable {
                 }
 
                 if(containsQ) {
-                    qMembers.add(member);
+                    qMembers.put(member);
                 }
             }
 

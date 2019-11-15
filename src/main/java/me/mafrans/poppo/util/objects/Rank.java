@@ -2,6 +2,8 @@ package me.mafrans.poppo.util.objects;
 
 import lombok.Getter;
 import me.mafrans.poppo.Main;
+import me.mafrans.poppo.commands.util.Command;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.exceptions.ErrorResponseException;
@@ -12,12 +14,12 @@ import java.awt.*;
 import java.util.HashMap;
 
 public enum Rank {
-    BOT_COMMANDER("[Poppo] Bot Commander", new Color(30, 170, 170), new Object[0][0], true),
 
     MEMBER("[Poppo] Member", Color.WHITE, new Object[][]{}, false),
 
     MUTED("[Poppo] Muted", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}}, true),
-    TIMED_OUT("[Poppo] Timed Out", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}, true)
+    TIMED_OUT("[Poppo] Timed Out", new Color(120, 120, 120), new Object[][] {{Permission.MESSAGE_WRITE, false}, {Permission.MESSAGE_READ, false}}, true),
+    BOT_COMMANDER("[Poppo] Bot Commander", new Color(30, 170, 170), new Object[0][0], true)
     ;
 
 
@@ -43,6 +45,18 @@ public enum Rank {
         }
         this.roleMap = new HashMap<>();
         this.initialize = initialize;
+    }
+
+    public static boolean requirePermission(Command command, Permission permission) {
+        if(!command.isOverride() && !command.getMessage().getMember().hasPermission(permission)) {
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
+            embedBuilder.setDescription("You need the " + permission.toString() + " permission to use this command!");
+            embedBuilder.setColor(new Color(175, 0, 0));
+            command.getMessage().getChannel().sendMessage(embedBuilder.build()).queue();
+            return true;
+        }
+        return false;
     }
 
     public void initialize() {
@@ -92,6 +106,50 @@ public enum Rank {
         }
     }
 
+    public void initialize(Guild guild) {
+        if(!this.doInitialize()) return;
+        try {
+            System.out.println("Initializing " + this.name + " for guild " + guild.getName());
+            if (guild.getRolesByName(name, false).size() == 1) {
+                this.roleMap.put(guild, guild.getRolesByName(name, false).get(0));
+            }
+            else if (guild.getRolesByName(name, false).size() > 1) {
+                guild.getOwner().getDefaultChannel().sendMessage("There are too many roles named '" + name + "' in your server, there should be at most 1.").queue();
+            }
+            else {
+                RoleAction roleAction = guild.getController().createRole();
+                roleAction.setName(name);
+                roleAction.setColor(color);
+                Role role = roleAction.complete();
+
+                for(TextChannel textChannel : guild.getTextChannels()) {
+                    PermissionOverride permissionOverride = textChannel.getPermissionOverride(role);
+
+                    System.out.println(textChannel + ", " + permissionOverride);
+                    if(permissionOverride == null) {
+                        permissionOverride = textChannel.createPermissionOverride(role).complete();
+                    }
+
+                    for(Permission value : permissions.keySet()) {
+                        if(permissions.get(value)) {
+                            permissionOverride.getManager().grant(value).queue();
+                        }
+                        else {
+                            permissionOverride.getManager().deny(value).queue();
+                        }
+                    }
+                }
+
+                this.roleMap.put(guild, role);
+            }
+        }
+        catch (ErrorResponseException e) {
+            if(e.getErrorCode() != 30005) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public boolean hasRank(Rank rank) {
         if(rank == null) return false;
         return this.ordinal() >= rank.ordinal();
@@ -136,9 +194,5 @@ public enum Rank {
 
     public Role getRole(Guild guild) {
         return roleMap.get(guild);
-    }
-
-    public HashMap<Guild, Role> getRoleMap() {
-        return roleMap;
     }
 }

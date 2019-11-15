@@ -5,6 +5,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.web.Rule34Getter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -12,9 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@Id("commands::rule34")
 public class Command_rule34 implements ICommand {
     @Override
     public String getName() {
@@ -23,7 +24,7 @@ public class Command_rule34 implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.NSFW, "Gets a random image from the Genbooru rule34 database.", "rule34 <query>", Arrays.asList("r34", "genbooru"), false);
+        return new CommandMeta(CommandCategory.NSFW, "Gets a random image from the Genbooru rule34 database.", "rule34 <query>", new String[] {"r34", "genbooru"}, false);
     }
 
     @Override

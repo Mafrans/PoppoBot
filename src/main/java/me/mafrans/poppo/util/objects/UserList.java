@@ -15,8 +15,8 @@ import java.text.ParseException;
 import java.util.*;
 
 public class UserList {
-    Sql2o sql2o;
-    List<DataUser> cache;
+    private Sql2o sql2o;
+    private List<DataUser> cache;
 
     private String table = Main.config.database_table;
 
@@ -49,7 +49,8 @@ public class UserList {
                         "names varchar," +
                         "uuid varchar(127)," +
                         "lastOnlineTag varchar(127)," +
-                        "avatarUrl varchar(255)" +
+                        "avatarUrl varchar(255)," +
+                        "stars int" +
                         ")";
 
                 con.createQuery(query).executeUpdate();
@@ -61,24 +62,30 @@ public class UserList {
         }
     }
 
-    public boolean removeByUuid(String uuid) {
-        return remove(new SQLDataUser(getUsersFrom("uuid", uuid).get(0)));
+    public int length() {
+        try {
+            updateCache();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return cache.size();
     }
 
-    public boolean add(SQLDataUser dataUser) {
+    public boolean put(SQLDataUser dataUser) {
         if(getUsersFrom("uuid", dataUser.getUuid()).size() != 0) {
-            if(!removeByUuid(dataUser.getUuid())) return false;
+            removeByUuid(dataUser.getUuid());
         }
 
-        String keys = "";
-        String values = "";
+        StringBuilder keys = new StringBuilder();
+        StringBuilder values = new StringBuilder();
 
         for(String key : getFieldMap(dataUser).keySet()) {
-            if(keys.isEmpty()) keys = key;
-            else keys += ", " + key;
+            if(keys.length() == 0) keys = new StringBuilder(key);
+            else keys.append(", ").append(key);
 
-            if(values.isEmpty()) values = ":" + key;
-            else values += ", :" + key;
+            if(values.length() == 0) values = new StringBuilder(":" + key);
+            else values.append(", :").append(key);
         }
 
         String query = "INSERT INTO " + table + "(" + keys + ") values(" + values + ")";
@@ -87,7 +94,7 @@ public class UserList {
             Query query1 = con.createQuery(query);
 
             for(String key : getFieldMap(dataUser).keySet()) {
-                String value = getFieldMap(dataUser).get(key);
+                Object value = getFieldMap(dataUser).get(key);
                 query1.addParameter(key, value);
             }
 
@@ -102,17 +109,42 @@ public class UserList {
         }
     }
 
+    public void remove(List<SQLDataUser> dataUsers) {
+        for(SQLDataUser dataUser : dataUsers) {
+            remove(dataUser);
+        }
+    }
+
+    public void removeByUuid(String uuid) {
+        removeBy("uuid", uuid);
+    }
+
+    public void removeBy(String key, Object value) {
+        String query = "DELETE FROM " + table + " WHERE " + key + " = :value";
+        try (Connection con = sql2o.open()) {
+            Query query1 = con.createQuery(query);
+            query1.addParameter("value", value);
+
+            query1.executeUpdate();
+
+            updateCache();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean remove(SQLDataUser dataUser) {
-        String where = "";
+        StringBuilder where = new StringBuilder();
 
         boolean b = true;
         for(String key : getFieldMap(dataUser).keySet()) {
             if(b) {
                 b = false;
-                where += key + " = :" + key;
+                where.append(key).append(" = :").append(key);
             }
             else {
-                where += " AND " + key + " = :" + key;
+                where.append(" AND ").append(key).append(" = :").append(key);
             }
         }
 
@@ -122,7 +154,7 @@ public class UserList {
             Query query1 = con.createQuery(query);
 
             for(String key : getFieldMap(dataUser).keySet()) {
-                String value = getFieldMap(dataUser).get(key);
+                Object value = getFieldMap(dataUser).get(key);
                 query1.addParameter(key, value);
             }
 
@@ -156,7 +188,7 @@ public class UserList {
         cache = parseUsers(sqlUsers);
     }
 
-    public List<DataUser> getAllReports() {
+    public List<DataUser> getAllUsers() {
         return cache;
     }
 
@@ -203,22 +235,24 @@ public class UserList {
         }
     }
 
-    private Map<String, String> getFieldMap(DataUser dataUser) {
-        HashMap<String, String> hashMap = new HashMap<>();
+    private Map<String, Object> getFieldMap(DataUser dataUser) {
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("names", StringFormatter.arrayToString(dataUser.getNames().toArray(new String[0])));
         hashMap.put("uuid", dataUser.getUuid());
         hashMap.put("lastOnlineTag", dataUser.getLastOnlineTag());
         hashMap.put("avatarUrl", dataUser.getAvatarUrl());
+        hashMap.put("stars", dataUser.getStars());
 
         return hashMap;
     }
 
-    Map<String, String> getFieldMap(SQLDataUser dataUser) {
-        HashMap<String, String> hashMap = new HashMap<>();
+    private Map<String, Object> getFieldMap(SQLDataUser dataUser) {
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("names", dataUser.getNames());
         hashMap.put("uuid", dataUser.getUuid());
         hashMap.put("lastOnlineTag", dataUser.getLastOnlineTag());
         hashMap.put("avatarUrl", dataUser.getAvatarUrl());
+        hashMap.put("stars", dataUser.getStars());
 
         return hashMap;
     }

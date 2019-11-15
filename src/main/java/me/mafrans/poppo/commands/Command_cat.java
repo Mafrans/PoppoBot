@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Cat;
 import me.mafrans.poppo.util.objects.CatBreed;
 import me.mafrans.poppo.util.objects.CatCategory;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.*;
 
-
+@Id("commands::cat")
 public class Command_cat implements ICommand {
     private String[] messages = new String[] {
             "Oh look, it's a ${breed_c} from ${origin_c}!",
@@ -57,7 +58,7 @@ public class Command_cat implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.FUN, "Sends a random cat picture.", "cat [breed]", Arrays.asList("kitty", "catto", "kitten"), false);
+        return new CommandMeta(CommandCategory.FUN, "Sends a random cat picture.", "cat [breed]", new String[] {"kitty", "catto", "kitten"}, false);
     }
 
     @Override
@@ -99,7 +100,7 @@ public class Command_cat implements ICommand {
         return true;
     }
 
-    public void sendRandomCat(TextChannel channel, Map<String, String> header) throws IOException {
+    private void sendRandomCat(TextChannel channel, Map<String, String> header) throws IOException {
         Random random = new Random();
         JSONObject jsonObject = new JSONArray(HTTPUtil.GET("https://api.thecatapi.com/v1/images/search?size=full", header)).getJSONObject(0);
         Cat cat = Cat.parseCat(jsonObject);
@@ -122,10 +123,9 @@ public class Command_cat implements ICommand {
 
         embedBuilder.setFooter("Provided by The Cat API", null);
         channel.sendMessage(embedBuilder.build()).queue();
-        return;
     }
 
-    public String[] parseVariables(String string, Cat cat, Guild guild) {
+    private String[] parseVariables(String string, Cat cat, Guild guild) {
         Random random = new Random();
         String out = string;
 
@@ -161,7 +161,7 @@ public class Command_cat implements ICommand {
         return new String[] {out, breed.getUrl()};
     }
 
-    public String[] parseVariables(String string, CatBreed breed, Guild guild) {
+    private String[] parseVariables(String string, CatBreed breed, Guild guild) {
         Random random = new Random();
         String out = string;
 

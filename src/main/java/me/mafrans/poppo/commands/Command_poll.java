@@ -6,18 +6,18 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.listeners.PollListener;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Poll;
+import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.TextChannel;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Date;
 
+@Id("commands::poll")
 public class Command_poll implements ICommand {
 
     @Override
@@ -27,17 +27,13 @@ public class Command_poll implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.UTILITY, "Starts a poll and DMs you the result. The 'end-date' argument is a UTC timestamp formatted as [" + Poll.DATE_FORMAT.toPattern() + "], ex. " + Poll.DATE_FORMAT.format(new Date()), "poll [end-date]", Arrays.asList("vote", "voteoff"), false);
+        return new CommandMeta(CommandCategory.UTILITY, "Starts a poll and DMs you the result. The 'end-date' argument is a UTC timestamp formatted as [" + Poll.DATE_FORMAT.toPattern() + "], ex. " + Poll.DATE_FORMAT.format(new Date()), "poll [end-date]", new String[] {"vote", "voteoff"}, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-            embedBuilder.setDescription("You need the MESSAGE_MANAGE permission to use this command!");
-            embedBuilder.setColor(new Color(175, 0, 0));
-            channel.sendMessage(embedBuilder.build()).queue();
+
+        if(Rank.requirePermission(command, Permission.MESSAGE_MANAGE)) {
             return true;
         }
 

@@ -1,16 +1,21 @@
 package me.mafrans.poppo.util.images;
-
+/*
+import me.mafrans.javadins.Javadins;
+import me.mafrans.javadins.SessionInvalidException;
+import me.mafrans.poppo.Main;
+import me.mafrans.poppo.commands.Command_paladins;
 import me.mafrans.poppo.util.web.HTTPUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class ImageTester {
     private JLabel imageLabel;
     private JPanel mainPanel;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException, SessionInvalidException, FontFormatException {
         ImageTester imageTester = new ImageTester();
         JFrame frame = new JFrame("ImageTester");
         frame.setContentPane(imageTester.mainPanel);
@@ -19,15 +24,8 @@ public class ImageTester {
         frame.setVisible(true);
 
 
-        ImageBuilder imageBuilder = new ImageBuilder(500, 400);
-        imageBuilder.addBackground(HTTPUtil.getImage("https://i.imgur.com/A2tJq59.jpg"), ImageBuilder.FitType.CENTER, true, true);
-        imageBuilder.addText("Test", 200, 300, Font.PLAIN, 20);
-        imageBuilder.setColor(new Color(255, 0, 0));
-        imageBuilder.addText("Another Test", 400, 100, Font.ITALIC + Font.BOLD, 20);
-
-
-
-        Image image = imageBuilder.build();
+        Image image = Command_paladins.generateImage(new Javadins("2954", "A174F3ECB5854FEBBFD47F7FDF1AA7CC").getMatch(780306132));
         imageTester.imageLabel.setIcon(new ImageIcon(image));
     }
 }
+*/

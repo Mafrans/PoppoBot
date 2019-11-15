@@ -4,9 +4,11 @@ import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
+import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
+@Id("commands::ping")
 public class Command_ping implements ICommand {
     @Override
     public String getName() {

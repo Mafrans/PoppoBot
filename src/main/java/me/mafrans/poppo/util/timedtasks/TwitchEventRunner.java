@@ -28,18 +28,21 @@ public class TwitchEventRunner implements Runnable {
 
             if(prefs == null) continue;
             if(prefs.getJSONArray("twitch_links") == null || prefs.getJSONArray("twitch_links").length() == 0) continue;
-            String[] twitchLinks = (String[]) prefs.getJSONArray("twitch_links").toList().toArray();
-            if(twitchLinks.length == 0) break;
+            if(prefs.getJSONArray("twitch_links").length() == 0) break;
 
-            for(String twitchLink : twitchLinks) {
+            for(int i = 0; i < prefs.getJSONArray("twitch_links").length(); i++) {
+
+                String twitchLink = prefs.getJSONArray("twitch_links").getString(i);
+
                 boolean streamRunning = false;
                 try {
                     HashMap<String, String> params = new HashMap<>();
                     params.put("client_id", Main.config.twitch_token);
+                    System.out.println("https://api.twitch.tv/kraken/streams/" + twitchLink.toLowerCase());
                     streamRunning = HTTPUtil.getJSON("https://api.twitch.tv/kraken/streams/" + twitchLink.toLowerCase(), params).get("stream") instanceof JSONObject;
                 }
-                catch (IOException e) {
-                    e.printStackTrace();
+                catch (Exception e) {
+                    continue;
                 }
                 System.out.println(twitchLink + ": " + streamRunning);
 

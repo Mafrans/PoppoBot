@@ -1,7 +1,9 @@
 package me.mafrans.poppo.commands;
 
+import me.mafrans.poppo.util.Id;
 import me.mafrans.smiteforge.GameMode;
 import me.mafrans.smiteforge.Player;
+import me.mafrans.smiteforge.RankedTier;
 import me.mafrans.poppo.Main;
 import me.mafrans.poppo.commands.util.Command;
 import me.mafrans.poppo.commands.util.CommandCategory;
@@ -9,10 +11,11 @@ import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.SelectionList;
-import me.mafrans.smiteforge.RankedTier;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.requests.restaction.MessageAction;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,10 +23,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Id("commands::smite")
 public class Command_smite implements ICommand {
     @Override
     public String getName() {
@@ -32,11 +35,13 @@ public class Command_smite implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.WEB, "Gets information from the Smite API", "smite <name>", new ArrayList<>(), false);
+        return new CommandMeta(CommandCategory.WEB, "Gets information from the Smite API", "smite <name>", null, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
+        Main.smiteForge.updateConnection();
+
         String[] args = command.getArgs();
         if(args.length != 1) {
             return false;
@@ -52,12 +57,10 @@ public class Command_smite implements ICommand {
             Player player;
             try {
                 player = Main.smiteForge.getPlayer(id);
+                playerMap.put(id, player);
             }
-            catch (JSONException ex) {
-                channel.sendMessage("Huh, something went wrong. This could be because of a lot of different things, but one known cause is that your profile might be private. Make it public and try again.").queue();
-                return true;
+            catch (JSONException ignored) {
             }
-            playerMap.put(id, player);
         }
         SelectionList selectionList = new SelectionList("Select a Player", channel, command.getAuthor());
 
@@ -82,19 +85,11 @@ public class Command_smite implements ICommand {
             RankedTier finalTier = tier;
             GameMode finalMode = mode;
             selectionList.addAlternative(player.getName(), () -> {
-                EmbedBuilder embedBuilder = new EmbedBuilder();
+                selectionList.getMessage().delete().complete();
+                Message loadMessage = channel.sendMessage(":arrows_counterclockwise: Loading Profile...").complete();
 
-                switch(finalMode) {
-                    case CONQUEST_RANKED:
-                        embedBuilder.setThumbnail(GUtil.getSmiteConquestTierImage(finalTier));
-                        break;
-                    case DUEL_RANKED:
-                        embedBuilder.setThumbnail(GUtil.getSmiteDuelTierImage(finalTier));
-                        break;
-                    case JOUST_RANKED:
-                        embedBuilder.setThumbnail(GUtil.getSmiteJoustTierImage(finalTier));
-                        break;
-                }
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setThumbnail("attachment://rank.png");
 
                 if(player.getTeam().getId() != 0) {
                     embedBuilder.addField("Team", player.getTeam().getName(), true);
@@ -102,9 +97,9 @@ public class Command_smite implements ICommand {
 
                 embedBuilder.addField("Level", String.valueOf(player.getLevel()), true);
                 embedBuilder.addField("Worshippers", String.valueOf(player.getWorshippers()), true);
-                embedBuilder.addField("Conquest Rank", String.valueOf(player.getConquestTier().toDisplayString()), true);
-                embedBuilder.addField("Duel Rank", String.valueOf(player.getDuelTier().toDisplayString()), true);
-                embedBuilder.addField("Joust Rank", String.valueOf(player.getJoustTier().toDisplayString()), true);
+                embedBuilder.addField("Conquest Rank", GUtil.capitalize(player.getConquestTier().getTier().toString()), true);
+                embedBuilder.addField("Duel Rank", GUtil.capitalize(player.getDuelTier().getTier().toString()), true);
+                embedBuilder.addField("Joust Rank", GUtil.capitalize(player.getJoustTier().getTier().toString()), true);
                 embedBuilder.addField("Platform", player.getPlatform(), true);
                 embedBuilder.addField("Mastery Level", String.valueOf(player.getMasteryLevel()), true);
                 embedBuilder.addField("Account Created", GUtil.DATE_TIME_FORMAT.format(player.getDateCreated()), true);
@@ -152,27 +147,43 @@ public class Command_smite implements ICommand {
                 embedBuilder.addField("Most Played God", mostPlayedGod, true);
                 embedBuilder.setColor(GUtil.randomColor());
                 InputStream file = null;
-                if(!player.getAvatarUrl().isEmpty()) {
+                if (player.getAvatarUrl().isEmpty()) {
+                    embedBuilder.setAuthor(player.getName(), "http://smite.guru/profile/pc/" + player.getName().replaceFirst("\\[.+]", ""), null);
+                }
+                else {
                     try {
                         file = new URL(player.getAvatarUrl()).openStream();
                     }
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    embedBuilder.setAuthor(player.getName(), "http://smite.guru/profile/pc/" + player.getName(), "attachment://avatar.png");
+                    embedBuilder.setAuthor(player.getName(), "http://smite.guru/profile/pc/" + player.getName().replaceFirst("\\[.+]", ""), "attachment://avatar.png");
                 }
-                else {
-                    embedBuilder.setAuthor(player.getName(), "http://smite.guru/profile/pc/" + player.getName(), null);
-                }
+
                 MessageBuilder messageBuilder = new MessageBuilder();
                 messageBuilder.setEmbed(embedBuilder.build());
+
+                InputStream rankedImage = null;
+                switch(finalMode) {
+                    case CONQUEST_RANKED:
+                        rankedImage = GUtil.getSmiteConquestTierImage(finalTier);
+                        break;
+                    case DUEL_RANKED:
+                        rankedImage = GUtil.getSmiteDuelTierImage(finalTier);
+                        break;
+                    case JOUST_RANKED:
+                        rankedImage = GUtil.getSmiteJoustTierImage(finalTier);
+                        break;
+                }
+
+                loadMessage.delete().complete();
                 if (file != null) {
-                    channel.sendFile(file, "avatar.png", messageBuilder.build()).queue();
+                    MessageAction action = channel.sendFile(file, "avatar.png", messageBuilder.build()).addFile(rankedImage, "rank.png");
+                    action.queue();
                 }
                 else {
                     channel.sendMessage(embedBuilder.build()).queue();
                 }
-                selectionList.getMessage().delete().queue();
             });
         }
 

@@ -6,6 +6,7 @@ import me.mafrans.poppo.commands.util.CommandCategory;
 import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import me.mafrans.poppo.util.timedtasks.PoppoRunnable;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -19,9 +20,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Date;
 
+@Id("commands::mute")
 public class Command_mute implements ICommand {
     @Override
     public String getName() {
@@ -30,20 +31,17 @@ public class Command_mute implements ICommand {
 
     @Override
     public CommandMeta getMeta() {
-        return new CommandMeta(CommandCategory.MODERATION, "Mutes a user for a set amount of time.", "mute <user> [time]", Arrays.asList("stfu"), false);
+        return new CommandMeta(CommandCategory.MODERATION, "Mutes a user for a set amount of time.", "mute <user> [time]", new String[] {"stfu"}, false);
     }
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
 
-        if(!command.doOverride() && !command.getMessage().getMember().hasPermission(Permission.VOICE_MUTE_OTHERS)) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setAuthor("No Permission!", Main.config.httpd_url, command.getAuthor().getAvatarUrl());
-            embedBuilder.setDescription("You need the VOICE_MUTE_OTHERS permission to use this command!");
-            embedBuilder.setColor(new Color(175, 0, 0));
-            channel.sendMessage(embedBuilder.build()).queue();
+
+        if(Rank.requirePermission(command, Permission.VOICE_MUTE_OTHERS)) {
             return true;
         }
+
         String[] args = command.getArgs();
         if(args.length < 1) {
             return false;
