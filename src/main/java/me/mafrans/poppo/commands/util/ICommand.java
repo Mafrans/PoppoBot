@@ -23,7 +23,7 @@ public interface ICommand {
 
     /**
      * Command metadata describing the command's properties.
-     * @return Command Metadata.
+     * @return A {@link me.mafrans.poppo.commands.util.CommandMeta} object describing the command's metadata.
      */
     CommandMeta getMeta();
 

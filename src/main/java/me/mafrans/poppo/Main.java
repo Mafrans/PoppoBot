@@ -30,6 +30,7 @@ import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
 
 public class Main {
     public static JDA jda;
@@ -49,8 +50,10 @@ public class Main {
         config = ConfigManager.load();
         youtubeSearcher = new YoutubeSearcher();
         musicManager = new MusicManager();
-        //javadins = new Javadins(config.hirez_dev_id, config.hirez_auth_key);
-        //smiteForge = new SmiteForge(config.hirez_dev_id, config.hirez_auth_key);
+        javadins = new Javadins(config.hirez_dev_id, config.hirez_auth_key);
+        smiteForge = new SmiteForge(config.hirez_dev_id, config.hirez_auth_key);
+        javadins.updateConnection();
+        System.out.println(Arrays.toString(javadins.getPlayerIds("Mafrans")));
 
         File databaseFile = new File("userdata/users.db");
         if(!databaseFile.getParentFile().exists()) {
@@ -68,6 +71,7 @@ public class Main {
         jda.addEventListener(new PollListener());
         jda.addEventListener(new ServerListener());
         jda.addEventListener(new StarListener());
+        jda.addEventListener(new ZorkListener());
 
         TimerTasks.start();
 
@@ -110,6 +114,8 @@ public class Main {
         CommandHandler.addCommand(new Command_timeout());
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
+
+        CommandHandler.addCommand(new Command_adventure());
 
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();

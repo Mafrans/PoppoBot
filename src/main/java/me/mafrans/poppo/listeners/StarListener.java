@@ -25,7 +25,9 @@ public class StarListener extends ListenerAdapter {
 
         if(!event.getMessage().getContentDisplay().contains(" ")) return;
         if(event.getMessage().getContentDisplay().length() < 10) return;
-        if(event.getMessage().getContentDisplay().toLowerCase().startsWith(Main.config.command_prefix)) return;
+        for(String prefix : Main.config.command_prefix) {
+            if(event.getMessage().getContentDisplay().toLowerCase().startsWith(prefix)) return;
+        }
 
         if(Main.userList.getUsersFrom("uuid", event.getAuthor().getId()).isEmpty()) {
             DataUser dataUser = new DataUser(Collections.singletonList(event.getAuthor().getName()), event.getAuthor().getId(), "Currently Online", event.getAuthor().getAvatarUrl(), 1);

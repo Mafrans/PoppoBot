@@ -1,5 +1,6 @@
 httpd_url: 'http://localhost:8081'
-command_prefix: 'hey poppo '
+command_prefix:
+  - 'hey poppo '
 autoinsult_rate: '100'
 autoinsult_use: 'false'
 pearson_token: iiiijjjjkkkkllll
@@ -18,3 +19,5 @@ client_id: '241917754842546176'
 database_username: username
 google_token: AIzaSyDTvkFlcbxQiHwbXMrpaLGTQtERnfwQ0yI
 httpd_port: '8081'
+hirez_dev_id: 2954
+hirez_auth_key: A174F3ECB5854FEBBFD47F7FDF1AA7CC
