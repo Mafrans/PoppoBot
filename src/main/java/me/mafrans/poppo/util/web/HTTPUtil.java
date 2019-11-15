@@ -152,6 +152,7 @@ public class HTTPUtil {
         }
 
         String response = GET(sUrl + "?" + urlParameters.toString(), new HashMap<>());
+        System.out.println(response);
         return new JSONObject(response);
     }
 

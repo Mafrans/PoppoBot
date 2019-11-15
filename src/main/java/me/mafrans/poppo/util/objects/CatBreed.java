@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util.objects;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.web.HTTPUtil;
 import org.json.JSONArray;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CatBreed {
     private static List<CatBreed> allBreeds;
@@ -131,7 +133,10 @@ public class CatBreed {
     }
 
     public static List<CatBreed> cacheBreeds() throws IOException {
-        JSONArray jsonArray = new JSONArray(HTTPUtil.GET("https://api.thecatapi.com/v1/breeds", new HashMap<>()).replace(" ", ""));
+        Map<String, String> header = new HashMap<>();
+        header.put("x-api-key", Main.config.cat_api_token);
+
+        JSONArray jsonArray = new JSONArray(HTTPUtil.GET("https://api.thecatapi.com/v1/breeds", header).replace(" ", ""));
         allBreeds = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -139,7 +144,7 @@ public class CatBreed {
             catBreed.setId(jsonObject.getString("id"));
             catBreed.setName(jsonObject.getString("name"));
             catBreed.setDescription(jsonObject.getString("description"));
-            if(jsonObject.get("wikipedia_url") instanceof String) {
+            if(jsonObject.has("wikipedia_url") && jsonObject.get("wikipedia_url") instanceof String) {
                 catBreed.setUrl(jsonObject.getString("wikipedia_url"));
             }
             catBreed.setTemperament(jsonObject.getString("temperament").split(", "));

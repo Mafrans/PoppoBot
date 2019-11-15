@@ -30,6 +30,12 @@
 	margin-left: 10px;
 	margin-top: 10px;
 }
+
+a.button {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
 #subtitle {
 	font-size: 22px;
 	margin-left: 10px;
@@ -37,23 +43,9 @@
 	color: #ddd;
 }
 
-#submit:hover {
-	background: #bbb;
-	cursor: pointer;
-	border: solid 2px #ccc;
-}
-
-#submit:active {
-	transform: scale(0.95);
-}
-
 #submit {
-	color: #000;
 	margin: 10px;
-	background: #fff;
-	padding: 5px 15px 5px 15px;
-	font-size: 20px;
-	border: solid 2px #eee;
+	margin-bottom: 50px;
 }
 
 #save-banner {
@@ -72,4 +64,55 @@
 	right: 20px;
 	font-weight: bold;
 	cursor: pointer;
+}
+
+.header {
+	width: 100%;
+	position: fixed;
+	padding: 2.5px;
+	background: #2C2F33;
+	-webkit-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+	box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+	z-index: 2;
+}
+
+.header h2 {
+	margin-top: 2.5px;
+	margin-left: 5px;
+	display: inline-block;
+	color: #FFF;
+	font-size: 20px;
+}
+
+.header h3 {
+	left: 5px;
+	display: block;
+	color: #99AAB5;
+	top: -5px;
+	position: relative;
+	font-size: 16px;
+}
+
+.header span {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	color: #fff;
+	float: left;
+}
+
+.header .user-image {
+	border-radius: 50%;
+	height: 35px;
+	display: inline-block;
+	float: left;
+	margin: 5px;
+}
+
+.feature-list-container {
+	position: relative;
+	top: 200px;
+	padding: 10px;
+	background: #2C2F33;
 }

@@ -11,9 +11,7 @@ import me.mafrans.poppo.commands.util.CommandHandler;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.servitors.*;
 import me.mafrans.poppo.listeners.*;
-import me.mafrans.poppo.util.FeatureManager;
 import me.mafrans.poppo.util.Feature;
-import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.MusicManager;
 import me.mafrans.poppo.util.TimerTasks;
 import me.mafrans.poppo.util.config.ConfigManager;
@@ -27,13 +25,10 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 
 public class Main {
@@ -116,8 +111,6 @@ public class Main {
         CommandHandler.addCommand(new Command_unmute());
         CommandHandler.addCommand(new Command_untimeout());
 
-        CommandHandler.registerFeatures();
-
         System.out.println("MaHTTPD Web Server Started");
         maHTTPD = new MaHTTPD();
 
@@ -143,13 +136,12 @@ public class Main {
         for(Guild guild : jda.getGuilds()) {
             System.out.println(guild);
             serverPrefs.saveDefaults(guild);
-            new FeatureManager(guild).saveDefault();
         }
 
         Main.jda.getPresence().setStatus(OnlineStatus.ONLINE);
         System.out.println("PoppoBot is Ready!");
 
-        Feature.cacheFeatures();
+        Feature.saveDefaults();
 
         CatBreed.cacheBreeds();
         CatCategory.cacheCategories();

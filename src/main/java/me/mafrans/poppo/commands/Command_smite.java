@@ -40,6 +40,7 @@ public class Command_smite implements ICommand {
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
+        /*
         Main.smiteForge.updateConnection();
 
         String[] args = command.getArgs();
@@ -188,6 +189,10 @@ public class Command_smite implements ICommand {
         }
 
         selectionList.show(channel);
+        return true;
+        */
+
+        channel.sendMessage("This command is unavailable at the moment, it will be ready to use soon!").queue();
         return true;
     }
 }

@@ -1,5 +1,6 @@
 package me.mafrans.poppo.util.objects;
 
+import me.mafrans.poppo.Main;
 import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.web.HTTPUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DogBreed {
     private static List<DogBreed> allBreeds;
@@ -165,9 +167,10 @@ public class DogBreed {
     }
 
     public static List<DogBreed> cacheBreeds() throws IOException {
+        Map<String, String> header = new HashMap<>();
+        header.put("x-api-key", Main.config.dog_api_token);
 
-
-        JSONArray jsonArray = new JSONArray(HTTPUtil.GET("https://api.thedogapi.com/v1/breeds", new HashMap<>()).replace(" ", ""));
+        JSONArray jsonArray = new JSONArray(HTTPUtil.GET("https://api.thedogapi.com/v1/breeds", header).replace(" ", ""));
         allBreeds = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);

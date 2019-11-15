@@ -7,28 +7,30 @@
 	width: 100%;
 	position: fixed;
 	padding: 2.5px;
-    background: #2C2F33;
-    -webkit-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
-    box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+	background: #2C2F33;
+	-webkit-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
+	box-shadow: 0px 10px 32px -22px rgba(0,0,0,0.75);
 	z-index: 2;
 }
 
 .header h2 {
 	margin-top: 2.5px;
 	margin-left: 5px;
-    display: inline-block;
-    color: #FFF;
+	display: inline-block;
+	color: #FFF;
 	font-size: 20px;
 }
+
 .header h3 {
 	left: 5px;
-    display: block;
-    color: #99AAB5;
-    top: -5px;
-    position: relative;
-    font-size: 16px;
+	display: block;
+	color: #99AAB5;
+	top: -5px;
+	position: relative;
+	font-size: 16px;
 }
+
 .header span {
 	position: absolute;
 	right: 15px;
@@ -38,16 +40,16 @@
 }
 
 .header .user-image {
-    border-radius: 50%;
-    height: 35px;
-    display: inline-block;
-    float: left;
-    margin: 5px;
+	border-radius: 50%;
+	height: 35px;
+	display: inline-block;
+	float: left;
+	margin: 5px;
 }
 
 .guild-list-container {
 	position: relative;
-	top: 300px;
+	top: 200px;
 	padding: 10px;
 	background: #2C2F33;
 }
@@ -57,6 +59,7 @@
 	margin-left: 10px;
 	margin-top: 10px;
 }
+
 #subtitle {
 	font-size: 22px;
 	margin-left: 10px;
@@ -86,4 +89,9 @@
 	margin-bottom: 50px;
 	border-radius: 25%;
 	display: inline-block;
+}
+
+a.button {
+	margin-left: 10px;
+	margin-top: 10px;
 }

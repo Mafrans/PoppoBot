@@ -10,12 +10,14 @@ import me.mafrans.poppo.Main;
 import me.mafrans.poppo.httpd.Machine;
 import me.mafrans.poppo.httpd.SessionHandler;
 import me.mafrans.poppo.httpd.UserSession;
+import me.mafrans.poppo.util.Feature;
 import me.mafrans.poppo.util.Id;
 import me.mafrans.poppo.util.objects.Rank;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,6 +34,7 @@ public class Servitor_guilds extends HTMLServitor {
     public String serve(DocumentServeEvent event) throws HTTPInternalErrorException, HTTPNotFoundException {
         VARIABLES.put("oauth_url", "https://discordapp.com/oauth2/authorize?redirect_uri=" + Main.config.httpd_url + "/redirect&scope=identify%20guilds&response_type=code&client_id=" + Main.config.client_id);
         VARIABLES.put("add_url", "https://discordapp.com/api/oauth2/authorize?client_id=" + Main.config.client_id + "&permissions=8&redirect_uri=" + Main.config.httpd_url+ "/redirect&scope=bot");
+        VARIABLES.put("httpd_url", Main.config.httpd_url);
 
         SessionHandler handler = Main.sessionHandler;
         Map<Machine, UserSession> loadedSessions = handler.getLoadedSessions();
@@ -74,16 +77,13 @@ public class Servitor_guilds extends HTMLServitor {
                 throw new HTTPInternalErrorException();
             }
 
-            VARIABLES.put("httpd_url", Main.config.httpd_url);
             VARIABLES.put("guild_id", guild.getId());
 
             if(event.getSimpleParameters().containsKey("updatefeatures")) {
-                prefs.put("features", new JSONObject(event.getSimpleParameters().get("updatefeatures")));
-                try {
-                    Main.serverPrefs.savePreferences(guild, prefs);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
+                JSONObject features = new JSONObject(event.getSimpleParameters().get("updatefeatures"));
+                for(String id : features.keySet()) {
+                    Feature feature = new Feature(guild, id);
+                    feature.setEnabled(features.getBoolean(id));
                 }
             }
 
@@ -143,17 +143,6 @@ public class Servitor_guilds extends HTMLServitor {
                 }
             }
 
-            StringBuilder featureBuilder = new StringBuilder();
-            List<String> features = new ArrayList<>(prefs.getJSONObject("features").keySet());
-            Collections.sort(features);
-            for(String feature : features) {
-                boolean enabled = prefs.getJSONObject("features").getBoolean(feature);
-
-                featureBuilder.append(String.format("<input type=\"checkbox\" class=\"feature\" name=\"%s\" value=\"%s\" %s>%s<br>", feature, feature, enabled ? "checked" : "", feature));
-            }
-            featureBuilder.append("<button type=\"button\" onclick=\"updateFeatures()\" class=\"updateFeaturesButton\">Update</button>");
-            VARIABLES.put("feature_list", featureBuilder.toString());
-
             StringBuilder twitchLinkBuilder = new StringBuilder();
             for(int i = 0; i < prefs.getJSONArray("twitch_links").length(); i++) {
                 String twitchLink = prefs.getJSONArray("twitch_links").getString(i);
@@ -190,7 +179,7 @@ public class Servitor_guilds extends HTMLServitor {
             String unknownIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAACQ0lEQVR4AezZNZAUURSF4a7NyHB3t5npd08RIRHukOLu7k6GS4ITQoa7Q4i7a4o7rO/DZce6b+2pjt534r/67qzveo7jOI7jOI7jOI7jaDSvZEbgMO7LZ/mE+3LQjIhVIPTRMPWwCQWwpSd52Bivze/p/D7Ihc2wXL8Pv6fCFNjsk4n8nkZ6SkngASWmN6XnMzXxBTZ48ileldDzyQ7YkNtO6NniDWDDTopNTULPZabDhp8ZS+i5cEJzgOwn9FzySHXAdULPhS+qA15yewL5rDrgBbcnwGPVATe4PYGc1H8S8noCzNB/GeT1BLGGmm9EiVrsngA7Q5+wjd8TJGrpfxhj9gSmd4jHl/id+D2NTAt6PMbzeyrpn/VXwu78ng519b+UM3uKVhX//7MIDmFkrAK/dxzHcRy2HMRkjKyX3XIZr2B/7xUuyG5ZL2Mk7uV4oaCvvAjuaRJNMVfOyTMUwGaf5MsznMU8v4kXwHTDF3WvJ3FZipuw+uHW9zLmZYF28knRa8UqYJE8hC3b5CEWZf45x3RAQaheK15V1uIrLGlfZW2m37LMYH0f/MqvQS4seblYk/6VlIO6PoAMxIfkmLYPMjDtPz5yFX12GEc4U/0/MCxX9+nJRMaJ+hNQGQWEN8EMgo1mZrCXRHar+2TNK+E9bER737ySVwrGq/tkZiFsdDMLvVL8Nuo+Ga7xztP/BwY11H0y5MJGuFyvlNrl1H0y2GhX1ud/a38OBAAAABgG+Vvf4yuDBAQEBAQEvgIAAAAQM/51H4xXwfgaAAAAAElFTkSuQmCC";
 
             for (Guild guild : allowedGuilds) {
-                guildHTMLBuilder.append("<a href=\"?guild=").append(guild.getId()).append("\">");
+                guildHTMLBuilder.append("<a href=\"./features?guild=").append(guild.getId()).append("\">");
                 guildHTMLBuilder.append("<div class=\"guild-container\">");
                 guildHTMLBuilder.append("    <img class=\"guild-image\" src=\"").append(guild.getIconUrl() == null ? unknownIcon : guild.getIconUrl()).append("\"></img>");
                 guildHTMLBuilder.append("    <span class=\"guild-name\">").append(guild.getName()).append("</span>");

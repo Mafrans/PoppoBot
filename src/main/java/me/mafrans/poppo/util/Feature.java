@@ -94,4 +94,16 @@ public class Feature {
             }
         }
     }
+
+    public static void saveDefaults() {
+        if(getFeatureCache().isEmpty()) {
+            cacheFeatures();
+        }
+        for(Guild guild : Main.jda.getGuilds()) {
+            for (Class clazz : featureCache.keySet()) {
+                Feature feature = new Feature(guild, clazz);
+                feature.setEnabled(feature.isEnabled()); // Stupid way to do it, but works
+            }
+        }
+    }
 }

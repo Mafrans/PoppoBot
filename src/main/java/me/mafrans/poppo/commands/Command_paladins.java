@@ -40,6 +40,7 @@ public class Command_paladins implements ICommand {
 
     @Override
     public boolean onCommand(Command command, TextChannel channel) throws Exception {
+        /*
         String[] args = command.getArgs();
         if (args.length < 1) {
             return false;
@@ -217,6 +218,10 @@ public class Command_paladins implements ICommand {
         }
 
         return false;
+        */
+
+        channel.sendMessage("This command is unavailable at the moment, it will be ready to use soon!").queue();
+        return true;
     }
 
     private static Image generateImage(Match match) throws IOException, FontFormatException, ParseException {

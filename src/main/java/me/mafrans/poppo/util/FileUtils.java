@@ -32,7 +32,7 @@ public class FileUtils {
                 sb.append("\n");
             }
 
-            sb.append((String)lines.get(i));
+            sb.append(lines.get(i));
         }
 
         return sb.toString();
@@ -48,7 +48,7 @@ public class FileUtils {
                     sb.append("\n");
                 }
 
-                sb.append((String)lines.get(i));
+                sb.append(lines.get(i));
             }
 
             return sb.toString();
@@ -58,12 +58,12 @@ public class FileUtils {
     }
 
     public static void writeFile(File file, String string) throws IOException {
-        Files.write(file.toPath(), Arrays.asList(string.split("\n")), Charset.forName("UTF-8"));
+        Files.write(file.toPath(), Arrays.asList(string.split("\\r?\\n")), Charset.forName("UTF-8"));
     }
 
     public static void writeFileSupressed(File file, String string) {
         try {
-            Files.write(file.toPath(), Arrays.asList(string.split("\n")), Charset.forName("UTF-8"));
+            writeFile(file, string);
         } catch (IOException var3) {
             ;
         }

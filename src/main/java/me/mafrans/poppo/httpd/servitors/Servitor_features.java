@@ -79,24 +79,36 @@ public class Servitor_features extends HTMLServitor {
 
             VARIABLES.put("httpd_url", Main.config.httpd_url);
             VARIABLES.put("guild_id", guild.getId());
+            VARIABLES.put("guild_name", guild.getName());
+            VARIABLES.put("guild_icon", guild.getIconUrl());
+            VARIABLES.put("guild_members", String.valueOf(guild.getMembers().size()));
             VARIABLES.put("save_banner_visibility", "hidden");
 
-            if(!event.getCookies().read("enabled").isEmpty() || event.getCookies().read("disabled").isEmpty()) {
-                if (!event.getCookies().read("enabled").isEmpty()) {
-                    String[] enabledIds = event.getCookies().read("enabled").split(",");
+            String enabledCookie = event.getCookies().read("enabled");
+            String disabledCookie = event.getCookies().read("disabled");
+            if(enabledCookie == null) enabledCookie = "";
+            if(disabledCookie == null) disabledCookie = "";
+
+            if(!enabledCookie.isEmpty() || !disabledCookie.isEmpty()) {
+                if (!enabledCookie.isEmpty()) {
+                    String[] enabledIds = enabledCookie.split(",");
                     for (String id : enabledIds) {
                         new Feature(guild, id).setEnabled(true);
                     }
                 }
-                if(event.getCookies().read("disabled").isEmpty()) {
-                    String[] disabledIds = event.getCookies().read("disabled").split(",");
+                if(!disabledCookie.isEmpty()) {
+                    String[] disabledIds = disabledCookie.split(",");
                     for (String id : disabledIds) {
                         new Feature(guild, id).setEnabled(false);
                     }
                 }
+
+                // TODO: Make event.getCookies() actually allow writing to cookies, rather than doing nothing.
                 event.getCookies().delete("enabled");
                 event.getCookies().delete("disabled");
-                return SessionHandler.redirect(Main.config.httpd_url + "/features?guild=" + guild.getId() + "&saved=true");
+                if(!event.getSimpleParameters().containsKey("saved")) {
+                    return SessionHandler.redirect(Main.config.httpd_url + "/features?guild=" + guild.getId() + "&saved=true");
+                }
             }
 
             if(event.getSimpleParameters().containsKey("saved")) {

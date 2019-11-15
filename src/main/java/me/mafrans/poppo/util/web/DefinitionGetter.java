@@ -21,7 +21,13 @@ public class DefinitionGetter {
         List<Definition> definitionList = new ArrayList<>();
         HashMap<String, String> preferences = new HashMap<>();
         preferences.put("headword", query.toLowerCase());
-        preferences.put("apikey", Main.config.pearson_token);
+
+
+        /*
+            Pearson seems to have gotten rid of their old Developer system. Not sure how the API works now.
+            It seems to work as long as the API Key is not actually defined in the header.
+         */
+        //preferences.put("apikey", Main.config.pearson_token);
 
         JSONObject json = HTTPUtil.getJSON("https://api.pearson.com/v2/dictionaries/ldoce5/entries", preferences);
 

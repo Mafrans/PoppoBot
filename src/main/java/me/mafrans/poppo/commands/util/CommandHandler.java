@@ -1,28 +1,54 @@
 package me.mafrans.poppo.commands.util;
 
 import lombok.Getter;
-import me.mafrans.poppo.Main;
-import me.mafrans.poppo.util.FeatureManager;
 import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static me.mafrans.poppo.Main.config;
 
-public class CommandHandler {
-    @Getter private static List<ICommand> commandList = new ArrayList<>();
+/**
+ * A static utility class that manages and handles commands.
+ *
+ * @author Mafrans
+ * @version 1.5
+ * @since 1.0
+ */
+public final class CommandHandler {
+    private CommandHandler() {
+    }
 
-    public static Command parseCommand(Message message) {
+    /**
+     * Cache containing all available commands.
+     */
+    @Getter
+    private static List<ICommand> commandList = new ArrayList<>();
+
+    /**
+     * Parse a discord message into a Command object.
+     *
+     * @param message The message that should be parsed.
+     * @return A functioning command object, or {@literal null} if none were found
+     */
+    public static Command parseCommand(final Message message) {
         String content = message.getContentRaw();
-        if(!content.toLowerCase().startsWith(config.command_prefix.toLowerCase())) {
+
+        String prefix = null;
+        for (String p : config.command_prefix) {
+            if (content.toLowerCase().startsWith(p.toLowerCase())) {
+                prefix = p;
+                break;
+            }
+        }
+
+        if (prefix == null) {
             return null;
         }
 
-        String[] words = content.substring(config.command_prefix.length()).split(" ");
+        String[] words = content.substring(prefix.length()).split(" ");
 
         System.out.println(Arrays.toString(words));
 
@@ -30,30 +56,33 @@ public class CommandHandler {
         outCommand.setAuthor(message.getAuthor());
         outCommand.setMessage(message);
 
-        if(Main.config.overlord_users.contains(message.getAuthor().getId()) && (words[words.length-1].equalsIgnoreCase("please")||words[words.length-1].equalsIgnoreCase("pls"))) {
-            outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length - 1));
+        List<String> overlords = config.overlord_users;
+        if (overlords.contains(message.getAuthor().getId())
+            && (words[words.length - 1].equalsIgnoreCase("please")
+                || words[words.length - 1].equalsIgnoreCase("pls"))) {
+
+            outCommand.setArgs(
+                    ArrayUtils.subarray(
+                            words,
+                            1,
+                            words.length - 1
+                    )
+            );
             outCommand.setOverride(true);
-        }
-        else {
+
+        } else {
             outCommand.setArgs(ArrayUtils.subarray(words, 1, words.length));
         }
 
-        for(ICommand cmd : commandList) {
+        for (ICommand cmd : commandList) {
             String name = cmd.getName().toLowerCase();
             CommandMeta meta = cmd.getMeta();
 
-            if(name.equalsIgnoreCase(words[0]) || (meta.getAliases() != null && ArrayUtils.contains(meta.getAliases(), words[0].toLowerCase()))) {
-                try {
-                    FeatureManager fm = new FeatureManager(message.getGuild());
-                    if(!fm.isEnabled("command:" + cmd.getName())) {
-                        System.out.println("command " + cmd.getName() + " is disabled");
-                        return null;
-                    }
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+            if (name.equalsIgnoreCase(words[0])
+                || (meta.getAliases() != null
+                    && ArrayUtils.contains(
+                            meta.getAliases(),
+                            words[0].toLowerCase()))) {
 
                 outCommand.setLabel(words[0]);
                 outCommand.setCmd(name);
@@ -62,27 +91,33 @@ public class CommandHandler {
             }
         }
 
-        if(outCommand.getExecutor() == null) return null;
+        if (outCommand.getExecutor() == null) {
+            return null;
+        }
 
         return outCommand;
     }
 
-    public static ICommand getCommand(String name) {
-        for(ICommand command : commandList) {
-            if(command.getName().equalsIgnoreCase(name)) {
+    /**
+     * Get a command executor from it's name.
+     * @param name Command name
+     * @return A functioning command executor,
+     * or {@literal null} if none were found.
+     */
+    public static ICommand getCommand(final String name) {
+        for (ICommand command : commandList) {
+            if (command.getName().equalsIgnoreCase(name)) {
                 return command;
             }
         }
         return null;
     }
 
-    public static void registerFeatures() {
-        for(ICommand command : commandList) {
-            FeatureManager.register("command:" + command.getName());
-        }
-    }
-
-    public static void addCommand(ICommand command) {
+    /**
+     * Add a command to the cache.
+     * @param command The command to add.
+     */
+    public static void addCommand(final ICommand command) {
         commandList.add(command);
     }
 }

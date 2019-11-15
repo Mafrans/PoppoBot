@@ -1,43 +1,62 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Features</title>
-	<script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            let urlParams = new URLSearchParams(window.location.search);
+            let saved = urlParams.get("saved");
+            console.log("saved: ", saved)
+            if(saved == "true") {
+                setCookie("enabled", null, 1);
+                setCookie("disabled", null, 1);
+            }
+        });
+
 
         function saveFeatures() {
-
             var enabled = "";
             var disabled = "";
-			
-			$(".individual-feature input").each(function( index ) {
-				if(this.checked) {
-					if(enabled === "") {
-						enabled += $(this).val(); 
+			var features = document.querySelectorAll(".individual-feature input");
+
+			for(let i = 0; i < features.length; i++) {
+				let feature = features[i];
+
+				if(feature.checked) {
+					if(enabled == "") {
+						enabled += feature.value;
 					}
 					else {
-						enabled += "," + $(this).val(); 
+						enabled += "," + feature.value;
 					}
 				}
 				else {
-					if(disabled === "") {
-						disabled += $(this).val(); 
+					if(disabled == "") {
+						disabled += feature.value;
 					}
 					else {
-						disabled += "," + $(this).val(); 
+						disabled += "," + feature.value;
 					}
 				}
-			});
+			}
 
 			setCookie("enabled", enabled, 1);
 			setCookie("disabled", disabled, 1);
-            window.open("{variable.httpd_url}/features?guild={variable.guild_id}", "_self");
 
+            window.open("{variable.httpd_url}/features?guild={variable.guild_id}", "_self");
         }
-		
+
+
+
 		function hideSaveBanner() {
-			$("#save-banner").hide();
+			document.getElementById("save-banner").style.display = "none";
 		}
+
+
 
         function setCookie(name,value,days) {
             var expires = "";
@@ -48,21 +67,42 @@
             }
             document.cookie = name + "=" + (value || "")  + expires + "; path=/";
         }
-
     </script>
+
 </head>
+
 <body>
-    {document.header}
-	<style>{document.style.features}</style>
-	
-	<div id="save-banner" {variable.save_banner_visibility}>
-		<span>Saved your changes</span>
-		<span id="x" onclick="hideSaveBanner()">X</span>
-	</div>
-	
-	<h1 id="title">Features</h1>
-	<h2 id="subtitle">Enable or disable features for your server here, press 'Submit' when you are finished</h2>
+{document.header}
+<style>
+    {document.style.features}
+</style>
+
+<div id="save-banner" {variable.save_banner_visibility}>
+    <span>Saved your changes</span>
+    <span id="x" onclick="hideSaveBanner()">X</span>
+</div>
+
+<div class="background"> </div>
+<div class="header">
+    <image class="user-image" src="{variable.guild_icon}"></image>
+    <h2>{variable.guild_name}</h2>
+    <h3>{variable.guild_members} Members</h3>
+    <span>Guild ID: {variable.guild_id}</span>
+</div>
+
+<div class="feature-list-container">
+    <a href="./guilds" class="button">
+        Back
+    </a>
+
+    <h1 id="title">Features</h1>
+    <h2 id="subtitle">Enable or disable features for your server here, press 'Submit' when you are finished</h2>
+
     {variable.features}
-	<button id="submit" onclick="saveFeatures()">Submit</button>
+
+    <a class="button" id="submit" onclick="saveFeatures()">Submit</a>
+</div>
+
 </body>
+
 </html>

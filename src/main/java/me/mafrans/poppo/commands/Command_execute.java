@@ -7,6 +7,7 @@ import me.mafrans.poppo.commands.util.CommandMeta;
 import me.mafrans.poppo.commands.util.ICommand;
 import me.mafrans.poppo.util.FileUtils;
 import me.mafrans.poppo.util.GUtil;
+import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,6 +15,7 @@ import javax.script.ScriptEngine;
 import java.util.HashMap;
 import java.util.Map;
 
+@Id("commands::execute")
 public class Command_execute implements ICommand {
     @Override
     public String getName() {

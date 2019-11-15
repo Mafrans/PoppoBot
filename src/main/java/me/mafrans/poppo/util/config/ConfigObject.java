@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ConfigObject {
 
-    public String command_prefix;
+    public String[] command_prefix;
     public String token;
     public String client_id;
     public String client_secret;
