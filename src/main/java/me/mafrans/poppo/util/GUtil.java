@@ -295,7 +295,7 @@ public class GUtil {
     }
 
     public static Font getTrueTypeFont(String path) throws IOException, FontFormatException {
-        return Font.createFont(Font.TRUETYPE_FONT, ClassLoader.getSystemResourceAsStream(path));
+        return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(ClassLoader.getSystemResourceAsStream(path)));
     }
 
     public static InputStream getPaladinsTierImage(@NotNull RankedTier rankedTier) {

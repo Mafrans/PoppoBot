@@ -224,6 +224,8 @@ public class Command_paladins implements ICommand {
 
         final Font lato = GUtil.getTrueTypeFont("fonts/Lato-Regular.ttf");
 
+        System.out.println("Font: " + lato.toString());
+
         String mapName = match.getMap().replaceFirst("Ranked ", "");
         System.out.println(mapName);
 
