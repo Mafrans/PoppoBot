@@ -77,7 +77,7 @@ public class GUtil {
 
     public static String addLeadingUntil(String in, int length, String toAdd) {
         if(in.length() > length) {
-            return in.substring(in.length()-2, in.length());
+            return in.substring(in.length()-2);
         }
 
         StringBuilder out = new StringBuilder();

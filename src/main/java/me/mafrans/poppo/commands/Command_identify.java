@@ -68,7 +68,7 @@ public class Command_identify implements ICommand {
 
 
         User user = Main.jda.getUserById(uuid);
-        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".png?size=2048";
+        String avatarUrl = user.getEffectiveAvatarUrl() + "?size=2048";
         System.out.println(userData.getNames());
         MessageEmbed embed = new EmbedBuilder()
                 .setColor(GUtil.randomColor())
