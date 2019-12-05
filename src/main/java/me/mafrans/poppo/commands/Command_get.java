@@ -9,6 +9,7 @@ import me.mafrans.poppo.util.GUtil;
 import me.mafrans.poppo.util.Id;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import org.apache.commons.lang3.ArrayUtils;
@@ -51,18 +52,7 @@ public class Command_get implements ICommand {
         String[] args = command.getArgs();
         if(args.length < 2) {
             Guild guild = channel.getGuild();
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setThumbnail(guild.getIconUrl());
-            embedBuilder.setTitle(guild.getName());
-            embedBuilder.addField("Members", String.valueOf(guild.getMembers().size()), true);
-            embedBuilder.addField("Owner", String.valueOf(guild.getOwner().getAsMention()), true);
-            embedBuilder.addField("Creation Date", String.valueOf(guild.getCreationTime()), true);
-            embedBuilder.addField("ID", String.valueOf(guild.getId()), true);
-            embedBuilder.addField("Icon Url", String.valueOf(guild.getIconUrl()), true);
-            embedBuilder.addField("Emotes", String.valueOf(guild.getEmotes().size()), true);
-            embedBuilder.setColor(GUtil.randomColor());
-
-            channel.sendMessage(embedBuilder.build()).queue();
+            channel.sendMessage(makeServerEmbed(channel, guild)).queue();
             return true;
         }
 
@@ -72,6 +62,12 @@ public class Command_get implements ICommand {
             return true;
         }
 
+
+        channel.sendMessage(makeServerEmbed(channel, guild)).queue();
+        return true;
+    }
+
+    private MessageEmbed makeServerEmbed(TextChannel channel, Guild guild) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setThumbnail(guild.getIconUrl());
         embedBuilder.setTitle(guild.getName());
@@ -82,9 +78,7 @@ public class Command_get implements ICommand {
         embedBuilder.addField("Icon Url", String.valueOf(guild.getIconUrl()), true);
         embedBuilder.addField("Emotes", String.valueOf(guild.getEmotes().size()), true);
         embedBuilder.setColor(GUtil.randomColor());
-
-        channel.sendMessage(embedBuilder.build()).queue();
-        return true;
+        return embedBuilder.build();
     }
 
 
@@ -112,7 +106,9 @@ public class Command_get implements ICommand {
             channel.sendMessage("Could not find a user with that name or id.").queue();
             return true;
         }
-        String avatarUrl = "https://cdn.discordapp.com/avatars/" + uuid + "/" + user.getAvatarId() + ".gif?size=2048";
+
+        System.out.println(user.getEffectiveAvatarUrl());
+        String avatarUrl = user.getEffectiveAvatarUrl() + "?size=2048";
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(GUtil.randomColor());
