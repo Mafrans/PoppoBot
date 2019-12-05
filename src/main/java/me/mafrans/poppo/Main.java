@@ -72,6 +72,7 @@ public class Main {
         jda.addEventListener(new ServerListener());
         jda.addEventListener(new StarListener());
         jda.addEventListener(new ZorkListener());
+        jda.addEventListener(new MALListener());
 
         TimerTasks.start();
 

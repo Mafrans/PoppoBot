@@ -55,6 +55,7 @@ public class Command_execute implements ICommand {
             engine.put("jda", Main.jda);
         }
 
+
         if (!Main.config.overlord_users.contains(command.getAuthor().getId())) {
             for(String key : forbidden.keySet()) {
                 if(code.toLowerCase().contains(key.toLowerCase())) {

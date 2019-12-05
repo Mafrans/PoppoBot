@@ -1,22 +1,24 @@
-httpd_url: 'http://localhost:8081'
-command_prefix: 'poppo '
+httpd_url: 'http://poppobot.ga'
+command_prefix:
+  - 'hey poppo '
+  - 'p!'
 autoinsult_rate: '100'
 autoinsult_use: 'false'
 pearson_token: iiiijjjjkkkkllll
 database_table: userlist
 overlord_users:
-  -
-token: aaaabbbbccccdddd
+  - 150525424047357952
+token: MjQxOTE3NzU0ODQyNTQ2MTc2.DvFUuw.5veuDMXldn2z-0ywpsC8j-Kux8o
 twitch_token: mmmmnnnnoooopppp
-cat_api_token: qqqqrrrrssssttttt
-dog_api_token: uuuuvvvvxxxxyyyy
-hirez_dev_id: zzzz
-hirez_auth_key: aaaabbbbccccdddd
+cat_api_token: 81fc2173-bf54-428a-9232-df323bd0e0e2
+dog_api_token: f0d3c2dc-b355-45cf-8eac-c08e36bee827
 debug_users:
-  -
-client_secret: POxCSgSZvMVB7zpYG2Gu8rMAaEREFjfy
-database_password: password
-client_id: '12345678987654321'
-database_username: username
-google_token: eeeeffffgggghhhh
-httpd_port: '8081'
+  - 150525424047357952
+client_secret: C6jXdAJ7U7LlcsdHRdUNoKUoSh_bE2Xn
+database_password: Ag9pi5pSHh!dcOS$r9J$znI&RA5#Gj
+client_id: '241917754842546176'
+database_username: root
+google_token: AIzaSyDTvkFlcbxQiHwbXMrpaLGTQtERnfwQ0yI
+httpd_port: '80'
+hirez_dev_id: 2954
+hirez_auth_key: A174F3ECB5854FEBBFD47F7FDF1AA7CC

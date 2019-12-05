@@ -1,5 +1,12 @@
 package me.mafrans.poppo.util.objects;
 
+import me.mafrans.poppo.util.GUtil;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Manga {
@@ -34,6 +41,65 @@ public class Manga {
         this.endDate = endDate;
         this.members = members;
         this.title = title;
+    }
+
+    public static Manga make(JSONObject object) throws ParseException {
+        Manga manga = new Manga();
+        manga.setChapters(object.getInt("chapters"));
+        manga.setVolumes(object.getInt("volumes"));
+        manga.setPublished(object.getBoolean("publishing"));
+        manga.setScore(object.getDouble("score"));
+        manga.setTitle(object.getString("title"));
+        manga.setSynopsis(object.getString("synopsis"));
+        manga.setImageUrl(object.getString("image_url"));
+        manga.setUrl(object.getString("url"));
+        manga.setType(object.getString("type"));
+        manga.setMembers(object.getInt("members"));
+        manga.setMalId(object.getInt("mal_id"));
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        manga.setStartDate(null);
+        manga.setEndDate(null);
+        if(object.get("start_date") != null && object.get("start_date") instanceof String) {
+            Date startDate = dateFormat.parse(object.getString("start_date").substring(0, 10));
+            manga.setStartDate(startDate);
+        }
+        if(object.get("end_date") != null && object.get("end_date") instanceof String) {
+            Date endDate = dateFormat.parse(object.getString("end_date").substring(0, 10));
+            manga.setEndDate(endDate);
+        }
+
+        return manga;
+    }
+
+    public MessageEmbed getGenericEmbed() {
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setAuthor(this.getTitle() + "(" + this.getType() + ")", this.getUrl(), "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png");
+        embedBuilder.setThumbnail(this.getImageUrl());
+        embedBuilder.addField("Synopsis", this.getSynopsis(), false);
+        embedBuilder.addField("Professionally Published", this.isPublished() ? "Yes" : "No", true);
+
+        if(this.getChapters() > 0 || this.getVolumes() > 0) {
+            if(this.getVolumes() > 0) {
+                embedBuilder.addField("Chapters", this.getVolumes() + " Volumes " + this.getChapters() + " Chapters", true);
+            }
+            else {
+                embedBuilder.addField("Chapters", this.getChapters() + " Chapters", true);
+            }
+        }
+
+
+        if(this.getStartDate() != null) {
+            embedBuilder.addField("First Released", GUtil.DATE_TIME_FORMAT.format(this.getStartDate()).substring(0, 10), true);
+        }
+        if(this.getEndDate() != null) {
+            embedBuilder.addField("Completed", GUtil.DATE_TIME_FORMAT.format(this.getEndDate()).substring(0, 10), true);
+        }
+        embedBuilder.addField("Score", this.getScore() + " / 10", true);
+        embedBuilder.addField("Members", String.valueOf(this.getMembers()), true);
+        embedBuilder.setColor(GUtil.randomColor());
+
+        return embedBuilder.build();
     }
 
     public int getMalId() {

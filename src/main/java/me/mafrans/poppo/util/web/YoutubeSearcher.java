@@ -15,12 +15,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YoutubeSearcher {
-    private final String searchBaseUrl = "https://www.googleapis.com/youtube/v3/search?type=video&part=id,snippet&q=${query}&key=${token}&maxResults=${maxResults}";
-    private final String videoBaseUrl = "https://www.googleapis.com/youtube/v3/videos?type=video&part=id,snippet&id=${id}&key=${token}&maxResults=${maxResults}";
+    private final String searchBaseUrl = "https://www.googleapis.com/youtube/v3/search?type=video&part=id,snippet&q=%s&key=%s&maxResults=%s";
+    private final String videoBaseUrl = "https://www.googleapis.com/youtube/v3/videos?type=video&part=id,snippet&id=%s&key=%s&maxResults=%s";
 
     public YoutubeVideo[] GetVideos(String query, int amount) throws IOException, ParseException {
-        String url = searchBaseUrl.replace("${query}", query.replace(" ", "%20")).replace("${token}", Main.config.google_token).replace("${maxResults}", String.valueOf(amount));
+        String url = String.format(searchBaseUrl, query.replace(" ", "%20"), Main.config.google_token, amount);
 
+        System.out.println(url);
         System.out.println(HTTPUtil.GET(url, new HashMap<>()));
         JSONObject jsonObject = new JSONObject(HTTPUtil.GET(url, new HashMap<>()));
         if(!jsonObject.has("items")) {
@@ -50,7 +51,7 @@ public class YoutubeSearcher {
         }
 
         String id = matcher.group();
-        String videoUrl = videoBaseUrl.replace("${id}", id).replace("${token}", Main.config.google_token).replace("${maxResults}", "1");
+        String videoUrl = String.format(videoBaseUrl, id, Main.config.google_token, 1);
         JSONObject jsonObject = new JSONObject(HTTPUtil.GET(videoUrl, new HashMap<>()));
 
         if(!jsonObject.has("items")) {
