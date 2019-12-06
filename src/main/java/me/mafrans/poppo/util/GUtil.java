@@ -3,6 +3,8 @@ package me.mafrans.poppo.util;
 import me.mafrans.javadins.RankedTier;
 import me.mafrans.poppo.util.images.ImageBuilder;
 //import me.mafrans.javadins.RankedTier;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Message;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -73,6 +75,38 @@ public class GUtil {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         ImageIO.write(ImageBuilder.toBufferedImage(image),formatName, os);
         return new ByteArrayInputStream(os.toByteArray());
+    }
+
+    public static String sanitizeMentions(Message message) {
+        String content = message.getContentRaw();
+
+        Pattern pattern = Pattern.compile("<@([0-9]+)>");
+        Matcher matcher = pattern.matcher(content);
+
+        while(matcher.find()) {
+            String grp = matcher.group();
+            String id = grp.substring(2, grp.length()-1);
+            System.out.println(id);
+
+            content = content.replace(grp, "**@" + message.getGuild().getMemberById(id).getEffectiveName() + "**");
+        }
+
+        return content;
+    }
+
+    public static String sanitizeMentions(String content, Guild guild) {
+        Pattern pattern = Pattern.compile("<@([0-9]+)>");
+        Matcher matcher = pattern.matcher(content);
+
+        while(matcher.find()) {
+            String grp = matcher.group();
+            String id = grp.substring(2, grp.length()-1);
+            System.out.println(id);
+
+            content = content.replace(grp, "**@" + guild.getMemberById(id).getEffectiveName() + "**");
+        }
+
+        return content;
     }
 
     public static String addLeadingUntil(String in, int length, String toAdd) {
